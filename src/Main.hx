@@ -1,4 +1,5 @@
 package ;
+import bt.BTApp;
 import haxe.ui.Toolkit;
 import haxe.ui.components.DropDown.CalendarDropDownHandler;
 import tests.XapiSendSerialized;
@@ -21,7 +22,7 @@ class Main
 		CalendarDropDownHandler.DATE_FORMAT = "%d.%m.%Y";
 		//
 		//trace("wtf");
-		var main = new tm.TMApp();
+		var main = new BTApp();
 		//var main = new XapiSendSerialized();
 	}	
 }

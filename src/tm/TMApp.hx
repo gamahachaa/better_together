@@ -6,7 +6,7 @@ import data.Transaction;
 import haxe.Exception;
 import tm.TMMailer;
 import tm.Info;
-import tm.Question;
+//import tm.Question;
 import tm.Tracker;
 
 import ui.AgentListing;
@@ -86,7 +86,7 @@ class TMApp extends AppBase
 	//var info:Component;
 	public function new()
 	{
-		super(TMMailer, tm.Tracker);
+		super(TMMailer, Tracker);
 		currentForm = null;
 		forms = new Map<String, Component>();
 		trace("start");

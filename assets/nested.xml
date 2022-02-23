@@ -1,5 +1,0 @@
-<vbox style="padding:5px;background-color: red;">
-    <button text="Button" />
-    <button text="Button" />
-    <button text="Button" />
-</vbox>

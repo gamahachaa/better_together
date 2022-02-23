@@ -3,6 +3,6 @@
     <!--<import resource="assets/ui/header.xml"/>-->
    <import resource="assets/ui/metadatas.xml"/>
    <import resource="assets/ui/content.xml"/>
-   <import resource="assets/ui/info.xml"/>
+   <!--<import resource="assets/ui/info.xml"/>-->
    <!--<import resource="assets/ui/footer.xml"/>-->
 </hbox>

@@ -15,6 +15,6 @@
 -cp C:/HaxeToolkit/haxe/lib/haxeui-core/git
 -cp C:/HaxeToolkit/haxe/lib/haxeui-html5/git
 -cp ../_myPackages/quality
--js bin/BetterTogether.js
+-js bin/better_together.js
 -D haxeJSON
 -main Main
