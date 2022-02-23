@@ -1,0 +1,10 @@
+<box>
+	<hbox id="handleobjections"
+		  styleName="questions"
+		  userData='{"points":5,"criticality":"none"}'
+		  >
+		<import resource="assets/ui/components/question_agree_na.xml"
+				omitRoot="true"
+				/>
+	</hbox>
+</box>

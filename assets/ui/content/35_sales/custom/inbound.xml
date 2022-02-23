@@ -1,0 +1,5 @@
+<vbox>
+	<import resource="assets/ui/content/35_sales/custom/inbound/opportunity.xml" omitRoot="true" />
+	<import resource="assets/ui/content/35_sales/custom/inbound/argumentation.xml" omitRoot="true" />
+	<import resource="assets/ui/content/35_sales/custom/inbound/validation.xml" omitRoot="true" />
+</vbox>

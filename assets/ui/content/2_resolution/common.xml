@@ -1,0 +1,7 @@
+<vbox>
+	
+	<import resource="assets/ui/content/2_resolution/common/diagnostic.xml" omitRoot="true" />
+	<import resource="assets/ui/content/2_resolution/common/solution.xml" omitRoot="true" />
+	<import resource="assets/ui/content/2_resolution/common/proactivity.xml" omitRoot="true" />
+	<import resource="assets/ui/content/2_resolution/common/system.xml" omitRoot="true" />
+</vbox>

@@ -1,0 +1,5 @@
+<group layout="horizontal" id="agreement" styleNames="agreement">
+			<optionbox text="{{AGREE}}" id="y" />
+			<optionbox text="{{DISAGREE}}" id="n" />
+			<optionbox text="{{NA}}" id="na" />
+		</group>

@@ -1,0 +1,10 @@
+<box>
+	<hbox id="validation"
+		  styleName="questions"
+		  userData='{"points":5,"criticality":"business"}'
+		  >
+		<import resource="assets/ui/components/question_agree_na.xml"
+				omitRoot="true"
+				/>
+	</hbox>
+</box>

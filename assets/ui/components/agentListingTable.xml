@@ -1,0 +1,23 @@
+<tableview id="table">
+	<header width="100%">
+		<column width="100"
+				id="agent"
+				text="agent"
+				sortable="true"
+				/>
+		<column width="80"
+				id="tm"
+				text="tm"
+				sortable="true"
+				/>
+		<column id="timestamp"
+				text="timestamp"
+				width="200"
+				sortable="true"
+				/>
+		<column width="80"
+				id="success"
+				text="success"
+				/>
+	</header>
+</tableview>

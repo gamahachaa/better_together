@@ -1,0 +1,9 @@
+<textarea 
+			styleName="justify"
+			height="36px"
+	width="60%"
+			hidden="false" 
+			id="justify" 
+			placeholder=""
+			
+		/>

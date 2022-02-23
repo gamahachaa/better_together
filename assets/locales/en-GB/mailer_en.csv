@@ -1,0 +1,21 @@
+KEY;VALUE
+INBOUND;Inbound
+MAIL;E-mail
+CASE;Case
+FAILED_ONLY;Send {{DISAGREE}} only
+ALL;Send all topics
+CC_TM_TL;cc to 
+FROM;from
+TO;to
+BY;by
+OF;of
+HELLO;Hello
+OVERALL_SCORE;Overall Score
+CRITICAL_MISTAKES;Critical mistake(s)
+NON_CRITICAL_MISTAKES;Non critical mistake(s)
+MORE_THAN_TWO_MISTAKES;More than 2 mistakes
+TWO_MISTAKES_IN_A_DOMAIN;Two or more errors in the same category (see below)
+CRITICAL_ICON;"&#x02A3B;"
+LEGEND;"<span class=""critical"">&#x02A3B;</span> &#61; Critical topic"
+SUBMIT;SUBMIT
+DISCLAIMER;This is an automatic email sent from the qook mailbox. You don’t need to reply to this email as qook will not process it. However, if you wish to make a comment to the evaluator, please forward the email instead.

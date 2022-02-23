@@ -1,0 +1,15 @@
+<box>
+
+	<hbox id="identification"
+		  styleName="questions"
+		  userData='{"points":5,"criticality":"compliance"}'
+		  
+		  >
+        
+		<import resource="assets/ui/components/question_agree.xml"
+				omitRoot="true"
+				/>
+
+	</hbox>
+
+</box>

@@ -1,0 +1,11 @@
+<box>
+	<vbox id="topic" stylename="simple noncritical">
+		<label styleName="question"
+			   id="question"
+			   >
+		</label>
+
+		<import resource="assets/ui/components/agree_critical.xml" />
+	</vbox>
+	<import resource="assets/ui/components/justify.xml" />
+</box>

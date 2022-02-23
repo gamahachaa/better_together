@@ -1,0 +1,6 @@
+<group layout="horizontal" id="agreement" styleNames="agreement critical">
+			<optionbox text="{{AGREE}}" id="y" />
+			<optionbox text="{{DISAGREE}}" id="n" />
+	<optionbox text="{{NA}}" id="na" />
+	<!--<image resource="assets/images/eye.png"></image>-->
+		</group>

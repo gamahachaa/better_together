@@ -1,0 +1,72 @@
+<vbox id="info"
+	  width="47%"
+	  hidden="true"
+	  verticalAlign="center"
+	  >
+	<!--label styleName="h2"
+		 text="{{INFO}}"
+		 id="infoTitle"
+		 >
+		 </label-->
+	<hbox 
+		  width="100%"
+		  >
+		<scrollview height="700"
+					width="100%"
+					contentWidth="100%"
+					>
+			<hbox id="description"
+				  width="100%"
+				  >
+				<vbox width="27%">
+					<label id="topicTitle"
+						   styleName="h3"
+						   htmlText="{{DEFAULT_INFO_TITLE}}"
+						   />
+					<!--<hbox>-->
+					<label id="criticality" />
+					<label id="points" />
+
+					<!--</hbox>-->
+				</vbox>
+				<label styleName="chapters"
+					   id="questionDesc"
+					   htmlText="{{DEFAULT_INFO_DESC}}"
+					   width="73%"
+					   />
+
+			</hbox>
+			<hbox id="passed"
+				  width="100%"
+				  >
+				<label text="{{AGREE}}"
+					   styleName="h4"
+					   width="9%"
+					   />
+				<label id="passedDesc"
+					   htmlText="passed blah blah"
+					   styleName="chapters"
+					   wordWrap="true"
+					   width="90%"
+					   />
+			</hbox>
+			<hbox id="failed"
+				  width="100%"
+				  >
+				<label text="{{DISAGREE}}"
+					   styleName="h4"
+					   width="9%"
+					   />
+				<label id="failedDesc"
+					   htmlText="failed blah blah"
+					   styleName="chapters"
+					   width="90%"
+					   />
+			</hbox>
+			<!--/grid-->
+		</scrollview>
+		<image resource="images/close.png"
+			   id="closeInfo"
+			   />
+	</hbox>
+</vbox>

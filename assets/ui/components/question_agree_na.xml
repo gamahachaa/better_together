@@ -1,0 +1,21 @@
+<box>
+	<!--image resource="images/eye.png"
+		   id="iconInfo"
+		   width="20"
+		   height="20"
+		   >
+	</image-->
+	<vbox styleName="simple"
+		  width="35%">
+		<label styleName="question"
+			   id="question"
+			   >
+		</label>
+
+		<import resource="assets/ui/components/agree_na.xml" />
+	</vbox>
+	<import resource="assets/ui/components/justify.xml" />
+	<!--image resource="images/arrow-icon.png"
+		   id="pointer"
+		   /-->
+</box>

@@ -1,0 +1,4 @@
+<vbox>
+	<import resource="assets/ui/content/4_closing/common/closing.xml" omitRoot="true" />
+	
+</vbox>

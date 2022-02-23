@@ -1,0 +1,6 @@
+<vbox>
+	<import resource="assets/ui/content/3_communication/common/softskills.xml" omitRoot="true" />
+	<import resource="assets/ui/content/3_communication/common/professionalism.xml" omitRoot="true" />
+	<import resource="assets/ui/content/3_communication/common/structure.xml" omitRoot="true" />
+	
+</vbox>

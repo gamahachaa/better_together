@@ -1,0 +1,3 @@
+<vbox>
+	<import resource="assets/ui/content/3_communication/custom/ticket/contactMode.xml" omitRoot="true" />
+</vbox>

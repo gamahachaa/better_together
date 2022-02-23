@@ -1,0 +1,5 @@
+<vbox>
+	<import resource="assets/ui/content/3_communication/custom/inbound/listening.xml" omitRoot="true" />
+	<import resource="assets/ui/content/3_communication/custom/inbound/speech.xml" omitRoot="true" />
+	<import resource="assets/ui/content/3_communication/custom/inbound/blanks.xml" omitRoot="true" />
+</vbox>

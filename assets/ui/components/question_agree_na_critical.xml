@@ -1,0 +1,13 @@
+<hbox>
+	<image resource="images/eye.png" id="iconInfo"></image>
+	<vbox styleName="topic">
+		<label styleName="question"
+			   id="question"
+			   htmlText="abcedefghijklmn"
+			   >
+		</label>
+
+		<import resource="assets/ui/components/agree_na_critical.xml" />
+	</vbox>
+	<import resource="assets/ui/components/justify.xml" />
+</hbox>

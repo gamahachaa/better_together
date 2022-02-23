@@ -1,0 +1,5 @@
+<vbox>
+	<import resource="assets/ui/content/1_opening/common/opening.xml" omitRoot="true" />
+	<import resource="assets/ui/content/1_opening/common/identification.xml" omitRoot="true" />
+	
+</vbox>

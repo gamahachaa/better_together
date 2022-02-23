@@ -1,0 +1,54 @@
+<!--<scrollview width="100%" height="100%" contentWidth="100%">-->
+<vbox id="telesales"
+	  styleName="content"
+	  width="100%"
+	  >
+    <!--label styleName="h2"
+		   text="{{INBOUND}}"
+		   id="inboundTitle"
+		   /-->
+	
+		<vbox styleName="contentBlocks opening"
+			  id="opening"
+			
+			  >
+			<label htmlText="{{common.opening}}" styleName="h2"/>
+			<import resource="assets/ui/content/1_opening/common.xml"
+					omitRoot="true"
+					/>
+
+		</vbox>
+		<vbox styleName="contentBlocks resolution"
+			  id="resolution">
+			<label htmlText="{{common.resolution}}" styleName="h2"/>
+			<import resource="assets/ui/content/2_resolution/custom/telesales.xml"
+					omitRoot="true" />
+
+		</vbox>
+		<vbox styleName="contentBlocks communication"
+			  id="communication">
+			<label htmlText="{{common.communication}}" styleName="h2"/>
+					<import resource="assets/ui/content/3_communication/custom/inbound.xml"
+					omitRoot="true" />
+			<import resource="assets/ui/content/3_communication/common.xml"
+					omitRoot="true" />
+
+
+		</vbox>
+		<vbox styleName="contentBlocks sales"
+			  id="sales">
+			<label htmlText="{{common.sales}}" styleName="h2"/>
+
+			<import resource="assets/ui/content/35_sales/custom/telesales.xml"
+					omitRoot="true" />
+
+		</vbox>
+		<vbox styleName="contentBlocks closing"
+			  id="closing">
+			<label htmlText="{{common.closing}}" styleName="h2"/>
+			<import resource="assets/ui/content/4_closing/common.xml"
+					omitRoot="true" />
+
+		</vbox>
+    
+</vbox>

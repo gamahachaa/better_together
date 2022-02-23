@@ -1,0 +1,73 @@
+KEY;VALUE
+MAIN_TITLE;Transaction Monitoring
+AGREE;Passed
+DISAGREE;Failed
+NA;n/a
+ERROR;Error
+FORM_HELP;Select the type of transaction you are observing
+DIALOG_APPLY_YOURSELF;Come on {0}... Try harder!
+DIALOG_MSG_SUCCESS_TRUE;All good. Email successfully sent
+DIALOG_MSG_SUCCESS_FALSE;Not successful. Something went wrong :(
+DIALOG_TITLE_SUCCESS_TRUE;Monitoring email and tracking
+DIALOG_TITLE_SUCCESS_FALSE;Monitoring email and tracking
+ALERT_AGENT_NOT_SEARCHED;You haven't selected a person to monitor.
+ALERT_AGENT_NOT_FOUND;Agent was not found in the active directory.
+ALERT_MONITORING_SUMMARY;Monitoring summary is incomplete.
+ALERT_TRANSACTION_SUMMARY;Tansaction summary is incomplete.
+ALERT_MONITORING_REASON;You did not choose a monitoring reason.
+ALERT_MONITORING_TYPE;You did not choose a monitoring type.
+ALERT_UNANSWERED_QUESTIONS;Some topics are left without statements!
+ALERT_ADD_ARGUEMENT_WHEN_DISAGREE;Please argue why you don't think that this applies to you!
+ALERT_TRANSACTION_DATE_NOT_SET;You did not set a date for the transaction.
+ALERT_TRANSACTION_ID_NOT_SET;How will we be able to verify your assertions if we can't identify the transaction?
+ALERT_TRANSACTION_TYPE;No transaction type was selected...
+ALERT_TRANSACTION_FUTURR_DATE;The transaction date is in the future...
+TRANSACTION_SUMMARY;Transaction summary
+TRANSACTION_SUMMARY_HELP;Note that this will be sent to the agent
+TRANSACTION_SUMMARY_TOOLTIP;You can use Markdown syntax that will be formated in the email.
+TRANSACTION_SUMMARY_PLACEHOLDER;Briefly summarize the customer's use case here.
+TRANSACTION_TYPE;Type
+TRANSACTION_WHEN_HELP;Date and time when the transaction occured
+TRANSACTION_WHEN_DATE;Date
+TRANSACTION_WHEN_DATE_HELP;Pick a date
+TRANSACTION_WHEN_TIME;Time
+TRANSACTION_ID;Identifier
+TRANSACTION_ID_HELP;Enter here a clear transaction identifier: - SO ticket ID - call recording ID - email subject etc... 
+SELECT_DATE;Pick...
+MONITORING_SUMMARY;Monitoring summary
+MONITORING_SUMMARY_HELP;Note that this will be sent to the agent
+MONITORING_SUMMARY_PLACEHOLDER;Briefly summarize your observations on how the agents handled the transaction here.
+MONITORED_BY;Observed by
+TRANSACTION_AGENT;Agent
+TRANSACTION_AGENT_HELP;Enter agent's NT. If found, the email will be displayed
+MONITORING_COACH_HELP;This should be you
+MONITORING_COACH_LOGMEOUT;Not me... log me out!
+MONITORING_REASON;Reason
+MONITORING_REASON_HELP;Select the reason for doing this monitoring
+MONITORING_REASON_BASIC;Basic
+MONITORING_REASON_BASIC_HELP;Normal/regular monitoring (2 x month)
+MONITORING_REASON_EXTRA;Extra
+MONITORING_REASON_EXTRA_HELP;New starter monitoring (4 x month)
+MONITORING_REASON_FOCUS;Focus
+MONITORING_REASON_FOCUS_HELP;Additional monitoring after critical errors (+2 in the following month)
+MONITORING_REASON_SPEAKOUT;Better Together
+MONITORING_REASON_SPEAKOUT_HELP;Monitoring agent to agent
+MONITORING_REASON_CALLIBRATION;Calibr.
+MONITORING_REASON_CALLIBRATION_HELP;Calibrations are not sent to the monitoree/agent
+MONITORING_TYPE;Type 
+MONITORING_TYPE_HELP;How are you performing this monitoring?
+MONITORING_TYPE_REMOTE;Remotely
+MONITORING_TYPE_REMOTE_HELP;Monitored agent is not by your side
+MONITORING_TYPE_SIDEBYSIDE;Side by side
+MONITORING_TYPE_SIDEBYSIDE_HELP;Monitored agent is by your side
+;
+passed_placeholder;Comment if you wish
+failed_placeholder;You must tell us why
+;
+SEND_ALL_TOOLTIP;Choose to send either all topics ({{AGREE}}, {{DISAGREE}} and {{NA}}), or {{DISAGREE}} only
+;
+LOGIN_USERNAME;Username
+LOGIN_PASSWORD;Password
+LOGIN_BTN;Let's coach!
+SHOW_PWD;Click me to display the entered password
+SEND_REPORT_TO_TL;send the report to my damm manager

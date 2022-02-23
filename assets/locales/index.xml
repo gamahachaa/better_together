@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	
+	<!--Add list of files you're including in your localization here
+	    The engine will NOT load any files that are not listed.	
+	-->
+	
+	<!-- <file id="data" value="data.tsv"/> -->
+	<!-- <file id="data" value="more_data.tsv"/> -->
+	<!-- <file id="data" value="flow.txt"/> -->
+    
+    <file id="data" value="tm_fr.txt"/>
+    <file id="data" value="tm_de.txt"/>
+    <file id="data" value="tm_it.txt"/>
+    <file id="data" value="tm_en.txt"/>
+	
+</data>

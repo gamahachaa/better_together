@@ -1,0 +1,13 @@
+<group 
+	
+	   layout="horizontal"
+	   id="agreement"
+	   styleNames="agreement"
+	   >
+	<optionbox text="{{AGREE}}"
+			   id="y"
+			   />
+	<optionbox text="{{DISAGREE}}"
+			   id="n"
+			   />
+</group>

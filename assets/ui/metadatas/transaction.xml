@@ -1,0 +1,120 @@
+<vbox styleName="topic"
+	  id="transaction"
+	  width="100%"
+	  >
+	<label text="TRANSACTION"
+		   styleName="h1"
+		   id="transactionTitle"
+		   />
+	<hbox>
+	<label text="{{TRANSACTION_ID}}"
+		   verticalAlign="center"
+		   tooltip="{{TRANSACTION_ID_HELP}}"
+		   styleName="h2meta"
+		   />
+	<textfield id="transactionID"
+			   placeholder="Expl: S.O. 1234567 "
+			   
+			   />
+    </hbox>
+	<hbox>
+		<label text="{{TRANSACTION_AGENT}}"
+			   verticalAlign="center"
+			   tooltip="{{TRANSACTION_AGENT_HELP}}"
+			   styleName="h2meta"
+			   />
+		
+		<textfield id="agentNt"
+			   placeholder="agent"
+			   allowFocus="true"
+			   tooltip="{{TRANSACTION_AGENT_HELP}}"
+			   />
+		<image resource="images/search_btn.png" id="agentBtn"></image>
+		<image resource="images/check-green-icon.png" id="agewntOK" hidden="true"/>
+		
+	</hbox>
+    <hbox height="40px">
+		<label id="agentlabel"
+			   text="   "
+			   />
+		
+		
+	</hbox>
+	
+	<hbox>
+		<label text="{{TRANSACTION_WHEN_DATE}}"
+			   styleName="h2meta"
+			   tooltip="{{TRANSACTION_WHEN_HELP}}"
+			   />
+		<dropdown text="{{SELECT_DATE}}"
+				  type="date"
+				  id="TRANSACTION_WHEN"
+				  allowFocus="true"
+				  />
+		<label text="H" styleName="h2meta"/>
+		<number-stepper pos="00"
+						step="1"
+						min="00"
+						max="23"
+						width="38px"
+						id="TRANSACTIONWHENHOURS"
+						allowFocus="true"
+						/>
+		<label text="S"
+			   styleName="h2meta"
+			   />
+		<number-stepper pos="00"
+						step="5"
+						min="00"
+						max="55"
+						width="38px"
+						id="TRANSACTION_WHEN_MINUTES"
+						allowFocus="true"
+						/>
+		
+	</hbox>
+	
+	<hbox>
+		<label text="{{TRANSACTION_TYPE}}"
+			   styleName="h2meta"
+			   />
+	<group
+			   id="formSwitcher"
+		   verticalAlign="center"
+			   >
+			<optionbox id="inbound"
+					   text="inbound"
+					   styleName="metaLabels"
+					   />
+			<optionbox id="mail"
+					   text="mail"
+					   styleName="metaLabels"
+					   />
+			<optionbox id="telesales"
+					   text="telesales"
+					   hidden="false"
+					   styleName="metaLabels"
+					   />
+			<optionbox id="ticket"
+					   text="ticket"
+					   hidden="false"
+					   styleName="metaLabels"
+					   />
+		</group>
+	</hbox>
+	<label text="{{TRANSACTION_SUMMARY}}"
+		   tooltip="{{TRANSACTION_SUMMARY_HELP}}"
+		   id="tsummary"
+		   styleName="h2meta"
+		   />
+	<textarea tooltip="{{TRANSACTION_SUMMARY_TOOLTIP}}"
+			  id="transactionsummary"
+			  styleName="summarries"
+			  allowFocus="true"
+			  placeholder="{{TRANSACTION_SUMMARY_PLACEHOLDER}}"
+			  width="100%"
+			  height="75"
+			  autoScrollToBottom="true"
+			  />
+
+</vbox>

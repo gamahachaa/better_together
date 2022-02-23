@@ -1,0 +1,10 @@
+<box>
+	<hbox id="softskills"
+		  styleName="questions"
+		  userData='{"points":15,"criticality":"non critical"}'
+		  >
+		<import resource="assets/ui/components/question_agree.xml"
+				omitRoot="true"
+				/>
+	</hbox>
+</box>

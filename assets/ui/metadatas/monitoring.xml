@@ -1,0 +1,95 @@
+<vbox styleName="topic"
+	  id="monitoring"
+	  width="100%"
+	  >
+	<label text="MONITORING"
+		   styleName="h1"
+		   id="monitoringTitle"
+		   />
+
+	<grid>
+		<label styleName="h2meta"
+			   text="Coach"
+			   tooltip="{{MONITORING_COACH_HELP}}"
+			   />
+		<label tooltip="{{MONITORING_COACH_LOGMEOUT}}"
+			   id="coachemail"
+			   styleName="correct"
+			   >
+		</label>
+		<label text="Reason:"
+			   verticalAlign="center"
+			   id="monitoringReason"
+			   styleName="h2meta"
+			   tooltip="{{MONITORING_REASON_HELP}}"
+			   />
+		<group layout="horizontal"
+			   id="reason"
+			   verticalAlign="center"
+			   >
+			<optionbox text="Basic"
+					   id="basic"
+					   tooltip="{{MONITORING_REASON_BASIC_HELP}}"
+					   styleName="metaLabels"
+					   />
+			<optionbox text="Extra"
+					   id="extra"
+					   tooltip="{{MONITORING_REASON_EXTRA_HELP}}"
+					   styleName="metaLabels"
+					   />
+			<optionbox text="Focus"
+					   id="focus"
+					   tooltip="{{MONITORING_REASON_FOCUS_HELP}}"
+					   styleName="metaLabels"
+					   />
+			<optionbox text="{{MONITORING_REASON_SPEAKOUT}}"
+					   id="speakout"
+					   tooltip="{{MONITORING_REASON_SPEAKOUT_HELP}}"
+					   hidden="true"
+					   styleName="metaLabels"
+					   />
+			<optionbox text="{{MONITORING_REASON_CALLIBRATION}}"
+					   id="calibration"
+					   tooltip="{{MONITORING_REASON_CALLIBRATION_HELP}}"
+					   styleName="metaLabels"
+					   />
+		</group>
+		<label text="{{MONITORING_TYPE}}"
+			   verticalAlign="center"
+			   id="monitoringType"
+			   styleName="h2meta"
+			   tooltip="{{MONITORING_TYPE_HELP}}"
+			   />
+		<group layout="horizontal"
+			   id="type"
+			   verticalAlign="center"
+			   >
+			<optionbox text="{{MONITORING_TYPE_REMOTE}}"
+					   id="remote"
+					   tooltip="{{MONITORING_TYPE_REMOTE_HELP}}"
+					   styleName="metaLabels"
+					   />
+			<optionbox text="{{MONITORING_TYPE_SIDEBYSIDE}}"
+					   id="sideBySide"
+					   tooltip="{{MONITORING_TYPE_SIDEBYSIDE_HELP}}"
+					   styleName="metaLabels"
+					   />
+			<!--<optionbox text="Focus" />-->
+		</group>
+	</grid>
+	<label text="{{MONITORING_SUMMARY}}"
+		   verticalAlign="top"
+		   id="msummary"
+		   styleName="h2meta"
+		   tooltip="{{MONITORING_SUMMARY_HELP}}"
+		   />
+	<textarea id="monitoringsummary"
+			  width="100%"
+			  height="30px"
+			  allowFocus="true"
+			  styleName="summarries"
+			  tooltip="{{MONITORING_SUMMARY_HELP}}"
+			  placeholder="{{MONITORING_SUMMARY_PLACEHOLDER}}"
+			  />
+	<!--<textarea id="ta01" placeholder="Do an overal analyse in few words ..." width="300%" height="150px" allowFocus="true" />-->
+</vbox>

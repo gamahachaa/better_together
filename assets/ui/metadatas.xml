@@ -1,0 +1,8 @@
+<vbox id="metadatas" width="18%" styleName="metadatas">
+	
+	<import resource="assets/ui/metadatas/header.xml" />
+	<import resource="assets/ui/metadatas/transaction.xml" />
+	
+	<import resource="assets/ui/metadatas/monitoring.xml" />
+	<import resource="assets/ui/metadatas/footer.xml" />
+</vbox>
