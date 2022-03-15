@@ -1,0 +1,152 @@
+<hbox text="{{AGENT_TITLE}}"
+	  icon="images/arrow-icon.png"
+	  id="agent_tab"
+	  width="100%"
+	  height="100%"
+	  >
+	<vbox width="50%"
+		  height="100%"
+		  >
+		<hbox>
+			<label text="{{TRANSACTION_AGENT}}"
+				   verticalAlign="center"
+				   tooltip="{{TRANSACTION_AGENT_HELP}}"
+				   styleName="h2meta"
+				   id="agent_label"
+				   />
+
+			<textarea id="agents_nt"
+					  placeholder="agent"
+					  allowFocus="true"
+					  tooltip="{{TRANSACTION_AGENT_HELP}}"
+					  />
+			<image resource="images/search_btn.png"
+				   id="agents_search_btn"
+				   >
+			</image>
+			<tableview id="agents_search_result"
+					   width="230"
+					   height="200"
+					   contentWidth="100%"
+					   >
+				<header width="100%">
+					<column id="selected"
+							text="X"
+							width="26"
+							style="text-align:center;"
+							/>
+					<column id="mail"
+							text="Agent's email"
+							width="100%"
+							/>
+					<!--<column id="colB" text="His TL's email" width="75" />-->
+				</header>
+
+				<item-renderer verticalAlign="center">
+					<checkbox id="selected" />
+				</item-renderer>
+				<item-renderer verticalAlign="center">
+					<label id="mail"
+						   width="100%"
+						   />
+				</item-renderer>
+				<!--<item-renderer>
+					 <label id="colB" width="100%" />
+					 </item-renderer> -->
+
+				<!--data>
+					<item selected="true"
+						  mail="Nicolas.Aerts@salt.ch"
+						  id="Nicolas.Aerts@salt.ch"
+						  />
+					<item selected="false"
+						  mail="Stefano.Orlando@salt.ch"
+						  id="Stefano.Orlando@salt.ch"
+						  />
+					<item selected="false"
+						  mail="Bruno.Baudry@salt.ch"
+						  id="Bruno.Baudry@salt.ch"
+						  />
+					<item selected="true"
+						  mail="DariaMalgorzata.Grzeskiewicz@salt.ch"
+						  id="DariaMalgorzata.Grzeskiewicz@salt.ch"
+						  />
+					<item selected="false"
+						  mail="Aron.Peter@salt.ch"
+						  id="Aron.Peter@salt.ch"
+						  />
+
+				</data-->
+			</tableview>
+			<!--<image resource="images/check-green-icon.png" id="agewntOK" hidden="true"/>-->
+
+		</hbox>
+
+
+		<hbox>
+			<label text="TRANSACTION"
+				   styleName="h1"
+				   id="transactionTitle"
+				   />
+			<hbox>
+				<label text="{{CUSTOMER_ID}}"
+					   verticalAlign="center"
+					   tooltip="{{CUSTOMER_ID_HELP}}"
+					   styleName="h2meta"
+					   />
+				<textfield id="customerId"
+						   placeholder="Expl: S.O. 0781234567"
+						   />
+				<label text="{{TRANSACTION_ID}}"
+					   verticalAlign="center"
+					   tooltip="{{TRANSACTION_ID_HELP}}"
+					   styleName="h2meta"
+					   />
+				<textfield id="transactionID"
+						   placeholder="Expl: S.O. 1234567 "
+						   />
+			</hbox>
+		</hbox>
+		<vbox>
+			<label text="{{PRODUCT}}"
+				   verticalAlign="center"
+				   tooltip="{{PRODUCT_HELP}}"
+				   styleName="h2meta"
+				   />
+			<dropdown id="productDropDown"
+					  width="150"
+					  dropdownWidth="200"
+					  searchable="true"
+					  searchPrompt="{{SEARCH_ME}}"
+					  >
+			</dropdown>
+			<label text="{{FEEDBACK_CATEGORY}}"
+				   verticalAlign="center"
+				   tooltip="{{FEEDBACK_CATEGORY_HELP}}"
+				   styleName="h2meta"
+				   />
+			<dropdown id="feedbackLevel1"
+					  width="150"
+					  dropdownWidth="200"
+					  searchable="true"
+					  searchPrompt="{{SEARCH_ME}}"
+					  >
+			</dropdown>
+			<dropdown id="feedbackLevel2"
+					  width="150"
+					  dropdownWidth="200"
+					  searchable="true"
+					  searchPrompt="{{SEARCH_ME}}"
+					  >
+			</dropdown>
+			 <tree-view id="tv1" width="360" height="200" />
+		</vbox>
+	</vbox>
+	<vbox width="50%"
+		  height="100%"
+		  >
+		<textarea id="agent_summary">
+
+		</textarea>
+	</vbox>
+</hbox>

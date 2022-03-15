@@ -1,0 +1,6 @@
+<vbox text="{{PROCESS_TITLE}}"
+	 icon="images/check-green-icon.png"
+	 id="process"
+	 >
+	<button text="Page 2" />
+</vbox>

@@ -1,8 +1,205 @@
-<hbox id="main" width="100%" height="100%">
-    <style source="../css/main.css" />
-    <!--<import resource="assets/ui/header.xml"/>-->
-   <import resource="assets/ui/metadatas.xml"/>
-   <import resource="assets/ui/content.xml"/>
-   <!--<import resource="assets/ui/info.xml"/>-->
-   <!--<import resource="assets/ui/footer.xml"/>-->
-</hbox>
+<vbox id="main"
+	width="100%"
+	height="100%">
+	<style source="../css/main.css" />
+	<hbox id="header"
+		height="5%"
+		width="100%">
+		<import resource="assets/ui/metadatas/header.xml"
+			omitRoot="true" />
+	</hbox>
+	<hbox id="content_box"
+		height="95%"
+		width="100%">
+		<vbox id="reasons_box"
+			height="100%"
+			width="50%">
+			<vbox id="reasons_categories_box"
+				height="50%"
+				width="100%">
+				<label id="reasons_categories_label"
+					text="{{reasons_categories_label}}"
+					height="5%"
+					styleName="h2"
+					width="100%" />
+				<tree-view id="reasons_categories_tree"
+					height="95%"
+					width="100%" />
+			</vbox>
+			<hbox id="reasons_description_box"
+				height="45%"
+				width="100%">
+				<vbox id="reasons_description_defect_box"
+					height="100%"
+					width="50%">
+					<label id="reasons_description_defect_label"
+						text="{{reasons_description_defect_label}}"
+						height="5%"
+						width="100%" 
+						styleName="h2"
+						/>
+					<textarea id="reasons_description_defect_textarea"
+						height="95%"
+						width="100%" />
+				</vbox>
+				<vbox id="reasons_description_fix_box"
+					height="100%"
+					width="50%">
+					<label id="reasons_description_fix_label"
+						text="{{reasons_description_fix_label}}"
+						height="5%"
+						styleName="h2"
+						width="100%" />
+					<textarea id="reasons_description_fix_textarea"
+						height="95%"
+						width="100%" />
+				</vbox>
+			</hbox>
+		</vbox>
+		<vbox id="details_box"
+			height="100%"
+			width="50%">
+			<!--label id="details_label"
+				text="{{details_label}}"
+				height="5%"
+				width="100%" /-->
+			<hbox id="details_customer_box"
+				height="15%"
+				width="100%">
+				<vbox id="details_customer_id_box"
+					height="100%"
+					width="30%">
+					<label id="details_customer_id_label"
+						text="{{details_customer_id_label}}"
+						height="20%"
+						   styleName="h2"
+						width="100%" />
+					<textfield id="details_customer_id_textfield"
+						height="20%"
+						width="100%" />
+				</vbox>
+				<vbox id="details_customer_so_box"
+					height="100%"
+					width="30%">
+					<label id="details_customer_so_label"
+						text="{{details_customer_so_label}}"
+						   styleName="h2"
+						height="20%"
+						width="100%" />
+					<textfield id="details_customer_so_textfield"
+						height="20%"
+						width="100%" />
+				</vbox>
+				<vbox id="details_product_box"
+					height="100%"
+					width="30%">
+					<label id="details_product_label"
+						text="{{details_product_label}}"
+						   styleName="h2"
+						height="20%"
+						width="100%" />
+					<dropdown id="details_product_dropdown"
+						width="200"
+						dropdownWidth="200"
+						text="{{details_product_dropdown}}" />
+				</vbox>
+			</hbox>
+			<vbox id="details_person_box"
+				height="40%"
+				width="100%">
+				<label id="details_person_label"
+					text="{{details_person_label}}"
+					height="5%"
+					styleName="h2"
+					width="100%" />
+				<label id="details_person_selector_input_label"
+					text="{{details_person_selector_input_label}}"
+					height="5%"
+					
+					width="100%" />
+				<hbox id="details_person_selector_box"
+					height="95%"
+					width="100%">
+					<textarea id="details_person_selector_input_textarea"
+						height="95%"
+						width="25%" />
+					<button id="details_person_selector_button"
+						height="50%"
+						width="10%"
+						verticalAlign="center"
+						icon="images/search_big_btn.png" />
+					<vbox id="details_person_selector_display_box"
+						height="100%"
+						width="65%">
+						<label id="details_person_selector_display_label"
+							text="{{details_person_selector_display_label}}"
+							height="5%"
+							styleName="h2"
+							width="100%" />
+						<tableview id="details_person_selector_display_tableview"
+							width="100%"
+							height="95%"
+							contentWidth="100%">
+							<header width="100%">
+								<column id="selected"
+									text="X"
+									width="5%"
+									style="text-align:center;" />
+								<column id="mail"
+									text="Agent"
+									width="48%" />
+								<column id="tl"
+									text="Manager"
+									width="48%" />
+							</header>
+							<item-renderer verticalAlign="center">
+								<checkbox id="selected" />
+							</item-renderer>
+							<item-renderer verticalAlign="center">
+								<label id="mail" />
+							</item-renderer>
+							<item-renderer verticalAlign="center">
+								<label id="tl" />
+							</item-renderer>
+						</tableview>
+					</vbox>
+				</hbox>
+			</vbox>
+			<vbox id="details_process_box"
+				height="15%"
+				width="100%">
+				<label id="details_process_label"
+					text="{{details_process_label}}"
+					height="20%"
+					styleName="h2"
+					width="100%" />
+				<textfield id="details_process_textfield"
+					height="20%"
+					width="100%" />
+			</vbox>
+			<hbox id="details_sub_box"
+				height="15%"
+				width="100%">
+				<vbox id="details_tools_box"
+					height="100%"
+					width="50%">
+					<label id="details_tools_label"
+						text="{{details_tools_label}}"
+						height="20%"
+						styleName="h2"
+						width="100%" />
+					<dropdown id="details_tools_dropdown"
+						width="200"
+						dropdownWidth="200"
+						text="{{details_tools_dropdown}}" />
+				</vbox>
+			</hbox>
+			<vbox id="footer"
+				height="15%"
+				width="100%">
+				<import resource="assets/ui/metadatas/footer.xml"
+					omitRoot="true" />
+			</vbox>
+		</vbox>
+	</hbox>
+</vbox>

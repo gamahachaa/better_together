@@ -1,0 +1,7 @@
+<vbox text="{{TOOLS_TITLE}}"
+	 icon="haxeui-core/styles/default/haxeui_tiny.png"
+	 disabled="true"
+	 id="tools"
+	 >
+	<button text="Page 3" />
+</vbox>

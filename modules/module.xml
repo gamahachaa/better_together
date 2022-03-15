@@ -9,118 +9,38 @@
 	</resources>
 	<locales path="locale/">
 		<locale id="en">
-			<resource path="locale/en-GB/tm_en.csv"
-					  prefix="main"
-					  />
-			<resource path="locale/en-GB/telesales_en.csv"
+			<resource path="locale/en-GB/bt_en.csv"
 					  prefix="main"
 					  />			
 			<resource path="locale/en-GB/mailer_en.csv"
 					  prefix="mailer"
 					  />
-			<resource path="locale/en-GB/all_en.csv"
-					  prefix="common"
-					  />
-			<resource path="locale/en-GB/inbound_en.properties"
-					  prefix="inbound"
-					  />
-			<resource path="locale/en-GB/mail_en.properties"
-					  prefix="mail"
-					  />
-			<resource path="locale/en-GB/ticket_en.properties"
-					  prefix="ticket"/>
-
-			<resource path="locale/en-GB/telesales_en.csv"
-					  prefix="telesales"
-					  />
-			<resource path="locale/en-GB/telesales_en.properties"
-					  prefix="telesales"
-					  />
 		</locale>
 		<locale id="fr">
-			<resource path="locale/fr-FR/tm_fr.csv"
+			<resource path="locale/fr-FR/bt_fr.csv"
 					  prefix="main"
 					  />
 			<resource path="locale/fr-FR/mailer_fr.csv"
 					  prefix="mailer"
 					  />
-			<resource path="locale/fr-FR/all_fr.csv"
-					  prefix="common"
-					  />
-			<resource path="locale/fr-FR/telesales_fr.csv"
-					  prefix="main"
-					  />
-			<resource path="locale/fr-FR/inbound_fr.properties"
-					  prefix="inbound"
-					  />
-			
-			<resource path="locale/fr-FR/mail_fr.properties"
-					  prefix="mail"
-					  />
-			<resource path="locale/fr-FR/ticket_fr.properties"
-					  prefix="ticket"
-					  />
-			<resource path="locale/fr-FR/telesales_fr.csv"
-					  prefix="telesales"
-					  />
-			<resource path="locale/fr-FR/telesales_fr.properties"
-					  prefix="telesales"
-					  />			
+						
 		</locale>
 		<locale id="de">
-			<resource path="locale/de-DE/tm_de.csv"
+			<resource path="locale/de-DE/bt_de.csv"
 					  prefix="main"
 					  />
 			<resource path="locale/de-DE/mailer_de.csv"
 					  prefix="mailer"
 					  />
-			<resource path="locale/de-DE/all_de.csv"
-					  prefix="common"
-					  />
-			<resource path="locale/de-DE/telesales_de.csv"
-					  prefix="telesales"
-					  />			
-			<resource path="locale/de-DE/inbound_de.properties"
-					  prefix="inbound"
-					  />
-			<resource path="locale/de-DE/mail_de.properties"
-					  prefix="mail"
-					  />
-			<resource path="locale/de-DE/ticket_de.properties"
-					  prefix="ticket"
-					  />
-			<resource path="locale/de-DE/telesales_de.csv"
-					  prefix="telesales"
-					  />
-			<resource path="locale/de-DE/telesales_de.properties"
-					  prefix="telesales"
-					  />
+			
 		</locale>
 		<locale id="it">
-			<resource path="locale/it-IT/tm_it.csv"
+			<resource path="locale/it-IT/bt_it.csv"
 					  prefix="main"
 					  />
 			<resource path="locale/it-IT/mailer_it.csv"
 					  prefix="mailer"
-					  />
-			<resource path="locale/it-IT/all_it.csv"
-					  prefix="common"
-					  />
-			<resource path="locale/it-IT/telesales_it.csv"
-					  prefix="telesales"
-					  />			
-			<resource path="locale/it-IT/inbound_it.properties"
-					  prefix="inbound"
-					  />
-			<resource path="locale/it-IT/mail_it.properties"
-					  prefix="mail"
-					  />
-			<resource path="locale/it-IT/ticket_it.properties"
-					  prefix="ticket"
-					  />
-			<resource path="locale/it-IT/telesales_it.properties"
-					  prefix="telesales"
-					  />			
+					  />		
 		</locale>
 		<!--<locale id="en" resource="locale/en-GB/tm_en.properties" />-->
 		<!--<locale id="de" resource="locale/de-DE/tm_de.txt" />-->

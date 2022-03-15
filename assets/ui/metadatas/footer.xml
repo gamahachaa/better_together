@@ -1,43 +1,13 @@
 <!--<hbox width="100%">-->
-<vbox width="100%" id="footer">
-
+<vbox width="100%" id="footer" height="10%">
 	<!--<hbox width="50%" />-->
-	<hbox>
-		
 	
-	<checkbox id="cctl"
-				selected="false"
-				
-				text="{{CC_TM_TL}}"
-				hidden="true"
-				/>
-		<label text=""
-			   id="cctl_text"
-			   
-			   />
-	</hbox>
-	<grid id="sendGroup" columns="3" width="100%">
-        
-		<checkbox id="sendAll"
-				selected="true"
-				width="65%"
-				tooltip="{{SEND_ALL_TOOLTIP}}"
-				/>
-		
-		<!--label text="Send all"
-			   id="slider2"
-			   width="52%"
-			   styleName="metaLabels"
-			   /-->
-		
-		<button id="send"
-				text="{{SUBMIT}}"
-				width="35%"
-				/>
-	</grid>
-	<label text="Version 0.5"
-		   textAlign="center"
-		   id="version"
-		   >
-	</label>
+	
+		<!--hbox width="60%" horizontalAlign="right" >
+			
+			<checkbox id="cctl_checkbox" selected="false" text="{{cctl_checkbox}}" hidden="false"  horizontalAlign="right"/>
+			<label text="{{cctl_text}}" id="cctl_label" horizontalAlign="right" />
+		</hbox-->
+		<button id="send_button" text="{{send_button}}" width="50%" horizontalAlign="right"/>
+	
 </vbox>

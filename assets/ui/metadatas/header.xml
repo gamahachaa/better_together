@@ -1,30 +1,11 @@
-<vbox id="header">
-	<!--label text="TM"
-		   styleName="h1"
-		   /-->
-	<group id="langSwitcher"
-		   layout="horizontal"
-		   width="20%"
-		   >
-		<optionbox value="en-GB"
-				   text="en"
-				   id="en"
-				   selected="true"
-				   />
-		<optionbox value="fr-FR"
-				   text="fr"
-				   id="fr"
-				   />
-		<optionbox value="de-DE"
-				   text="de"
-				   id="de"
-				   />
-		
-		<optionbox value="it-IT"
-				   text="it"
-				   id="it"
-				   />
-	</group>
-
-
-</vbox>
+<hbox id="header" height="2%" width="100%">
+	<label id="app_label" text="{{app_label}}" height="5%" width="75%" />
+		<group id="langSwitcher_group" layout="horizontal" width="15%">
+			<optionbox value="en-GB" text="en" id="en" selected="true" />
+			<optionbox value="fr-FR" text="fr" id="fr" />
+			<optionbox value="de-DE" text="de" id="de" />
+			<optionbox value="it-IT" text="it" id="it" />
+		</group>
+		<label text="{{version_label}}" textAlign="center" id="version_label" width="5%" />
+	
+</hbox>

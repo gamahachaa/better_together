@@ -1,0 +1,61 @@
+LOGIN_USERNAME;Username
+LOGIN_PASSWORD;Password
+wtf;What the Fudge !!!
+send_button;Send
+cctl_checkbox;cc to 
+app_label;Better Together
+version_label;Version {0}
+cctl_label;fabien.renard@salt.ch
+reasons_categories_label;I want to report that :
+reasons_categories_tree_alert;reasons_categories_tree_alert
+reasons_description_defect_label;What was wrong ?
+reasons_description_defect_textarea_alert;reasons_description_defect_textarea_alert
+reasons_description_fix_label;How should it be ?
+reasons_description_fix_textarea_alert;reasons_description_fix_textarea_alert
+details_label;Details
+details_customer_id_label;Cutomer ID (MSISDN or Contractor)
+details_customer_id_textfield_alert;details_customer_id_textfield_alert
+details_customer_so_label;S.O ticket N°
+details_customer_so_textfield_alert;details_customer_so_textfield_alert
+details_person_label;Who is involded?
+details_person_selector_input_label;NT, email, or First and last Names (One person per line) 
+details_person_selector_display_label;Found these
+details_person_selector_display_tableview_alert;details_person_selector_display_tableview_alert
+details_person_selector_input_textarea_alert;details_person_selector_input_textarea_alert
+details_process_label;URL of the process documentation or identifier ?
+details_process_textfield_alert;details_process_textfield_alert
+details_tools_label;Which tool ?
+details_product_label;Product
+details_product_dropdown_alert;details_product_dropdown_alert
+details_product_dropdown;Select...
+details_tools_dropdown;Select...
+details_tools_dropdown_alert;details_tools_dropdown_alert
+LOGIN_BTN;Let’s be {{app_label}}
+details_person_selector_display_tableview_searching;Searching ...
+catAgent;some agent
+catAgent_ticket;did a ticket
+catAgent_ticket_unnecessary;that was unnecessary.
+catAgent_ticket_duplicate;that turns out to be a duplicate.
+catAgent_ticket_incomplete;with incomplete information.
+catAgent_ticket_wrongcat;but selected a wrong category.
+catAgent_ticket_wronglang;but selected a wrong language.
+catAgent_ticket_notool;but should have used the dedicated tool instead.
+catAgent_answering;answering customer's needs
+catAgent_answering_wronginfo;provided wrong information.
+catAgent_answering_wrongoto;incorrectly filled in the OTO ID
+catAgent_answering_wrongpp;suggested a wrong price plan.
+catAgent_answering_wrongoption;suggested a wrong option/package.
+catAgent_answering_noret;instead of a retention did a new order.
+catAgent_misbehaviour;misbehaved by
+catAgent_misbehaviour_tool;incorrectly manipulating a tools.
+catAgent_misbehaviour_attitude;having an incorrect attitude.
+catProcess;some process
+catProcess_dysfunction;is not functioning.
+catProcess_wrongdocumentation;is wrongly documented.
+catProcess_nodocumentation;need a qook documentation.
+catTool;some tool
+catTool_missingfunk;is missing a functionality.
+catTool_access;did not grant me access.
+you;you
+search_many_agent_error_title;Error searching for peoples.
+search_many_agent_error_content;Could not find {0} agents : {1}.

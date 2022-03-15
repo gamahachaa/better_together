@@ -51,26 +51,26 @@
 				  id="TRANSACTION_WHEN"
 				  allowFocus="true"
 				  />
-		<label text="H" styleName="h2meta"/>
+		
 		<number-stepper pos="00"
 						step="1"
 						min="00"
 						max="23"
-						width="38px"
+						width="55px"
 						id="TRANSACTIONWHENHOURS"
 						allowFocus="true"
 						/>
-		<label text="S"
-			   styleName="h2meta"
-			   />
+		<label text="H" styleName="h4"/>
 		<number-stepper pos="00"
 						step="5"
 						min="00"
 						max="55"
-						width="38px"
+						width="55px"
 						id="TRANSACTION_WHEN_MINUTES"
 						allowFocus="true"
-						/>
+						/> <label text="S"
+			   styleName="h4"
+			   />
 		
 	</hbox>
 	
