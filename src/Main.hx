@@ -19,9 +19,11 @@ class Main
 {
 	
 	public static var _mainDebug:Bool;
+	public static var PARAMS:URLSearchParams;
 	public static function main()
 	{
 		CalendarDropDownHandler.DATE_FORMAT = "%d.%m.%Y";
+		PARAMS = new URLSearchParams(Browser.location.search);
 		//
 		//trace("wtf");
 		var main = new BTApp();

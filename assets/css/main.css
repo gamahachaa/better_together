@@ -28,24 +28,36 @@ EFFBB8 grayish pink2
 */
 
 #main{
-	/*background-color: #000000;*/
+	background-color: #000000;
 	padding-left:8px;
 	padding-right:8px;
 }
 .alert{
-	border-color:#EC9A29;
-	border-width: 4px !important;
-	padding: 4px !important;
-	box-shadow: #EC9A29 2px 2px 2px 2px ouset; 
+	border-color:$highlight-color;
 }
 textfield, textarea{
 	border-width: 4px !important;
+}
+.h1{
+	color:$title-color;
+	font-size: 1.5rem;
+	font-family:serif;
+	font-variant: small-caps;
+	font-family: 'script1-script-casual-normal', sans-serif;
 }
 .h2{
 	/*background-color:#c2e812;*/
 	padding-left:4px;
 	font-size: 1rem;
 }
+#send_button{
+	font-size: 1.5rem;
+	color:$title-color;
+}
+#app_label, #send_button, .button{
+	font-family: 'Inspiration', cursive !important;
+	font-family: 'Kaushan Script', cursive !important;
+	}
 /****************************************************/
 /****************************************************/
 /***************** LOGIN PAGE ***********************/
@@ -69,11 +81,24 @@ textfield, textarea{
 }
 #credentials .h2meta
 {
-	background-color:#fff;
-	opacity:0.5;
+	/*background-color:#fff;*/
+	/*opacity:0.5;*/
 	font-family: "Consolas", monospace;
 	padding: 4px
 }
 #login{
 	border-radius: 16px;
+}
+#login, #feedback
+{
+	margin-left:3rem;
+}
+#feedback
+{
+	color:#000;
+	background-color:$error-color;
+	padding-left:4px;
+	padding-right:4px;
+	padding-top:2px;
+	padding-bottom:2px;
 }

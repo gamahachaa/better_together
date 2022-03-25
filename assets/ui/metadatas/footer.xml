@@ -1,5 +1,5 @@
 <!--<hbox width="100%">-->
-<vbox width="100%" id="footer" height="10%">
+<vbox width="100%" id="footer" height="100%">
 	<!--<hbox width="50%" />-->
 	
 	
@@ -8,6 +8,6 @@
 			<checkbox id="cctl_checkbox" selected="false" text="{{cctl_checkbox}}" hidden="false"  horizontalAlign="right"/>
 			<label text="{{cctl_text}}" id="cctl_label" horizontalAlign="right" />
 		</hbox-->
-		<button id="send_button" text="{{send_button}}" width="50%" horizontalAlign="right"/>
+		<button id="send_button" text="{{send_button}}" width="30%" horizontalAlign="right" icon="images/send_btn.png" styleName="button" />
 	
 </vbox>

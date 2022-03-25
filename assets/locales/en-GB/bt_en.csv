@@ -1,39 +1,51 @@
 LOGIN_USERNAME;Username
 LOGIN_PASSWORD;Password
+SHOW_PWD;Show password
 wtf;What the Fudge !!!
 send_button;Send
 cctl_checkbox;cc to 
 app_label;Better Together
-version_label;Version {0}
+version_label;v
 cctl_label;fabien.renard@salt.ch
 reasons_categories_label;I want to report that :
-reasons_categories_tree_alert;reasons_categories_tree_alert
-reasons_description_defect_label;What was wrong ?
-reasons_description_defect_textarea_alert;reasons_description_defect_textarea_alert
-reasons_description_fix_label;How should it be ?
-reasons_description_fix_textarea_alert;reasons_description_fix_textarea_alert
+reasons_categories_tree_alert;You must first select a reason !
+reasons_description_defect_label;What happened?
+reasons_description_defect_textarea_alert;You did not describe what happened !
+reasons_description_defect_textarea_tooltip;Describe here what you found that is wrong.
+reasons_description_fix_label;How should it be next ?
+reasons_description_fix_textarea_alert;You did not tell us how it should be !
+reasons_description_fix_textarea_tooltip;Describe here how it should be. If there is a documented process to support your claim, paste it in the -{{details_process_label}}- field.
 details_label;Details
-details_customer_id_label;Cutomer ID (MSISDN or Contractor)
-details_customer_id_textfield_alert;details_customer_id_textfield_alert
-details_customer_so_label;S.O ticket N°
-details_customer_so_textfield_alert;details_customer_so_textfield_alert
-details_person_label;Who is involded?
-details_person_selector_input_label;NT, email, or First and last Names (One person per line) 
-details_person_selector_display_label;Found these
-details_person_selector_display_tableview_alert;details_person_selector_display_tableview_alert
-details_person_selector_input_textarea_alert;details_person_selector_input_textarea_alert
-details_process_label;URL of the process documentation or identifier ?
-details_process_textfield_alert;details_process_textfield_alert
+details_customer_id_label;Cutomer(s) ID (MSISDN or Contractor)
+details_customer_id_textfield_alert;Please identify the customer
+details_customer_id_textfield_tooltip;Expl: 078 777 77 77 or 31234567\nyou can add several but one per line. If you add also a matching SO ticket number, please add it on the same line
+details_customer_id_textfield_alert_badFormat;Wrongly formated customer IDs:
+details_customer_so_label;S.O ticket(s) N°
+details_customer_so_textfield_tooltip;12456789,\nyou can add several but one per line. If you add also a matching customer ID number, please add it on the same line
+details_customer_so_textfield_alert;Please give us a valid Super Office ticket number, you can add several but one per line. If you add also a matching customer ID number, please add it on the same line.
+details_customer_so_textfield_alert_badFormat
+details_customer_so_textfield_alert_badFormat;Wrongly formated ticket numbers:
+details_person_label;Who is involved?
+details_person_label_tooltip;NT, email, or first and last names as in Super Office's (One person per line). Then click on the eye magnifier to search the email in the company's active directory.
+details_person_selector_display_label;Verify that it is the correct, then select whom to send it to.
+details_person_selector_display_tooltip;Double check that it is the correct person.
+details_person_selector_display_tableview_alert;No one is selected !
+details_person_selector_input_textarea_alert;You must add at least one person !
+details_process_label;URL of the process documentation ?
+details_process_textfield_alert;You must input a valid process identifier.
+details_process_textfield_tooltip;https://qoom.salt.ch/customer-process/discover/salt_company_info/stores_adress_list
 details_tools_label;Which tool ?
 details_product_label;Product
-details_product_dropdown_alert;details_product_dropdown_alert
-details_product_dropdown;Select...
-details_tools_dropdown;Select...
-details_tools_dropdown_alert;details_tools_dropdown_alert
-LOGIN_BTN;Let’s be {{app_label}}
+details_product_dropdown_alert;You haven't selected any product
+details_product_dropdown;{{details_dropdown_prompt}}
+details_tools_dropdown;{{details_dropdown_prompt}}
+details_dropdown_prompt;Select...
+details_tools_dropdown_alert;You haven't selected any tool !
+LOGIN_BTN;Let’s do {{app_label}}
 details_person_selector_display_tableview_searching;Searching ...
 catAgent;some agent
 catAgent_ticket;did a ticket
+catAgent_ticket_stateoftheart;that was the state of the art !
 catAgent_ticket_unnecessary;that was unnecessary.
 catAgent_ticket_duplicate;that turns out to be a duplicate.
 catAgent_ticket_incomplete;with incomplete information.
@@ -41,6 +53,7 @@ catAgent_ticket_wrongcat;but selected a wrong category.
 catAgent_ticket_wronglang;but selected a wrong language.
 catAgent_ticket_notool;but should have used the dedicated tool instead.
 catAgent_answering;answering customer's needs
+catAgent_answering_stateoftheart;did a fantastic job !
 catAgent_answering_wronginfo;provided wrong information.
 catAgent_answering_wrongoto;incorrectly filled in the OTO ID
 catAgent_answering_wrongpp;suggested a wrong price plan.
@@ -56,6 +69,6 @@ catProcess_nodocumentation;need a qook documentation.
 catTool;some tool
 catTool_missingfunk;is missing a functionality.
 catTool_access;did not grant me access.
-you;you
+
 search_many_agent_error_title;Error searching for peoples.
 search_many_agent_error_content;Could not find {0} agents : {1}.

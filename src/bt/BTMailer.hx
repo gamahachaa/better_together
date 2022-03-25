@@ -3,88 +3,238 @@ import bt.BTApp.Validator;
 import haxe.ui.core.Component;
 import haxe.ui.locale.LocaleManager;
 import http.MailHelper;
+import regex.ExpReg;
 import roles.Actor;
 import roles.Coach;
+import xapi.types.StatementRef;
 using Lambda;
 using StringTools;
-
+using helpers.Translator;
+using string.StringUtils;
+using regex.ExpReg;
 /**
  * ...
  * @author bb
  */
-class BTMailer extends MailHelper 
+class BTMailer extends MailHelper
 {
 	var sentence:String;
+	static inline var BT_MAIL:String = "Better-Together@salt.ch";
+	static inline var QOOK_MAIL:String = "qook@salt.ch";
 
-	public function new(url:String) 
+	public function new(url:String)
 	{
 		super(url);
 	}
-	public static function BATCH_SEND(map:Map<Component,Validator>, listMapper:Component, bodyFilter:Array<Component> ,mail:BTMailer, coach:Coach)
+	public static function BATCH_SEND(
+		cat:String,
+		map:Map<Component,Validator>,
+		listMapper:Component,
+		bodyFilter:Array<Component>,
+		mail:BTMailer,
+		coach:Coach,
+		stmtRefs:Array<StatementRef>
+	):Int
 	{
-		mail.setBody(mail.setBTFeedbackBody(map, bodyFilter) + coach.buildEmailBody());
-		
-		for ( i in cast(map.get(listMapper).value, Array<Dynamic>).map((e)->(return e.actor)))
+		var agentRelated = cat.indexOf(BTApp.CAT_AGENT)>-1;
+		var processRelated = cat.indexOf(BTApp.CAT_PROCESS) >-1;//remove
+		var subject = '';
+		var personsInvolved = cast(map.get(listMapper).value, Array<Dynamic>);
+		#if !debug
+		var ccs = [coach.mbox.substr(7)];
+		#else
+		//var ccs = [coach.mbox.substr(7)];
+		var ccs = [coach.mbox.substr(7)];
+		#end
+
+		var nbOfMailsToSend = 0;
+		var stmtRefIndex = 0;
+		var coachBody = coach.buildEmailBody();
+		var body = '<h1>${"HELLO".T()}';
+
+		if (personsInvolved.length > 0)
 		{
-			//trace(i);
-			mail.setSubject('[[${LocaleManager.instance.lookupString("app_label")}]] from ${coach.sAMAccountName} to ${i.name} "${mail.sentence}"');
+			nbOfMailsToSend = personsInvolved.length;
+			for ( i in personsInvolved.map((e)->(return e.actor)))
+			{
+				body = '<h1>${"HELLO".T()}';
+				try
+				{
+					//body += ' ${i.firstName},</h1>';
+					body += ' ${i.manager.firstName},</h1>';
+					body += mail.setBTFeedbackBody( stmtRefs[stmtRefIndex++], map, bodyFilter,coachBody, cast(i, Actor));
+					mail.setBody(body);
+					if (agentRelated)
+						subject = '[${Main._mainDebug?"TEST":""}${"app_label".T()}] ${"FROM".T()} ${coach.sAMAccountName} ${"TO".T()} ${i.name} "${mail.sentence}"';
+					else
+						subject = '[${Main._mainDebug?"TEST":""} ${"app_label".T()}] ${"FROM".T()} ${coach.sAMAccountName} "${mail.sentence}"';
+					mail.setSubject(subject);
+					mail.setFrom(coach.mbox.substr(7)); // if spamm qook@salt.ch
+					#if debug
+					//mail.setCc(agentRelated? Lambda.concat(ccs, []):ccs);
+					mail.setCc(agentRelated? Lambda.concat(ccs, [i.manager.mbox.substr(7)]):ccs);
+					#else
+					mail.setCc(agentRelated? Lambda.concat(ccs, [i.manager.mbox.substr(7)]):ccs);
+					#end
+					mail.setTo([BT_MAIL]);
+					mail.setBcc(["bruno.baudry@salt.ch"]);
+					#if debug
+					if ( Main._mainDebug)
+						mail.send(true);
+					else
+						mail.send(false);
+					#else
+					mail.send(true);
+					#end
+				}
+				catch (e)
+				{
+					trace(e);
+				}
+
+			}
+		}
+		else
+		{
+			nbOfMailsToSend = 1;
+			body += ',</h1>';
+			body += mail.setBTFeedbackBody( stmtRefs[0], map, bodyFilter, coachBody);
+			subject = '[${Main._mainDebug?"TEST":""} ${"app_label".T()}] ${"FROM".T()} ${coach.sAMAccountName} "${mail.sentence}"';
+			mail.setBody(body);
+			//#if debug
+			//trace("bt.BTMailer::BATCH_SEND::subject", subject );
+			//#end
+			mail.setSubject(subject);
+			mail.setBcc(["bruno.baudry@salt.ch"]);
 			mail.setFrom(coach.mbox.substr(7)); // if spamm qook@salt.ch
 			#if debug
-			mail.setCc([i.manager.mbox.substr(7) ]);
+			//mail.setCc(ccs);
+			//mail.setTo([coach.mbox.substr(7)]);
+			//mail.setCc(Lambda.concat(ccs, [coach.manager.mbox.substr(7)]));
+			mail.setCc(ccs);
+			mail.setTo([BT_MAIL]);
 			#else
-			mail.setCc([i.manager.mbox.substr(7), coach.mbox.substr(7), "Better-Together@salt.ch"]);
+			mail.setCc(ccs);
+			mail.setTo([BT_MAIL]);
 			#end
-			mail.setTo([i.mbox.substr(7)]);
-			mail.send(false);
+
+			#if debug
+			if ( Main._mainDebug)
+				mail.send(true);
+			else
+				mail.send(false);
+			#else
+			mail.send(true);
+			#end
 		}
+		return nbOfMailsToSend;
 	}
-	override public function setBody(content:String, ?addCommonStyle:Bool = true, ?customeStyle:String = "") 
+	override public function setBody(content:String,  ?addCommonStyle:Bool = true, ?customeStyle:String = "")
 	{
 		super.setBody(content, addCommonStyle, customeStyle);
 	}
-	public function setBTFeedbackBody( validated:Map<Component,Validator>, ?skip:Array<Component>=null)
+	public function setBTFeedbackBody(
+		statmentRef:StatementRef,
+		validated:Map<Component,Validator>,
+		?skips:Array<Component> = null,
+		?coachBody:String = "",
+		?personInvolved:Actor)
 	{
-		//var t = Lambda.filter(Lambda.array(validated), (e)->(skip.indexOf(e.label)==-1));
 		var body = "";
-		 var t = validated.array().filter((e)->(skip.indexOf(e.label) ==-1));
-		 t.sort((a, b)->(return a.order - b.order));
+		var catReg = new EReg("^cat[A-Z]{1}[a-zA-Z_]+","g");
 		
-		
-		
-		for (v in t)
+		var t = [];
+		try
 		{
-			if (v.ready)
+			for (k => i in validated)
 			{
-				body += '<h3>${v.label.text}</h3>';
-				/** @todo make it better ... */
-				if (v.alert == "reasons_categories_tree_alert")
-				   body += '<p>${buildSentenceForCategory(v.value)}</p>';
-				else 
-					body += '<p>${v.value}</p>';
+				if (skips.indexOf(k) ==-1) t.push(i);
 			}
+			//var t = validated.filter((e)->(skips.indexOf(e) ==-1)).array();
+			t.sort((a, b)->(return a.order - b.order));
+
+			for (v in t)
+			{
+				if (v.ready && (v.value !="" || v.value !=[]))
+				{
+					//val = v.value;
+					body += '<h3>${v.label.text}</h3>';
+					/** @todo make it better ... */
+					if (catReg.match(v.value))
+						body += '<p>${buildSentenceForCategory(v.value,personInvolved)}</p>';
+					else if (Std.isOfType(v.value, Array))
+					{
+						body += "<ul>";
+						if (ExpReg.SO_TICKET.STRING_TO_REG().match(v.value[0]))
+						{
+							for ( i in cast(v.value,Array<Dynamic>))
+							{
+								body += "<li>"+cast(i, String).buildSOLink() +"</li>";
+							}
+						}
+						else
+						{
+							for ( i in cast(v.value,Array<Dynamic>))
+							{
+								body += "<li>"+i+"</li>";
+							}
+						}
+						body += "</ul>";
+					}
+					else
+						body += '<p>${v.value}</p>';
+				}
+
+			}
+
+			body = body + "CLOSING".T() + coachBody;
+			body = body + '<br/><em>Qast-id: ${statmentRef.id}</em><br/>';
+		}
+		catch (e)
+		{
+			trace(e);
 		}
 		#if debug
 		trace("bt.BTMailer::setBTFeedbackBody::body", body );
 		#end
 		return body;
 	}
-	function buildSentenceForCategory(cat:String):String 
+
+	inline function buildSentenceForCategory(cat:String, ?involved:Actor):String
 	{
-		var s:Array<String> = cat.split(BTApp.CAT_STRING_SEPERATOR);
-		sentence = "";
-		while (s.length >0)
-		{
-			sentence = LocaleManager.instance.lookupString(s.join(BTApp.CAT_STRING_SEPERATOR)) + " " + sentence ;
-			s.pop();
-		}
-		var agentCat = LocaleManager.instance.lookupString("catAgent");
-		var you = LocaleManager.instance.lookupString("you");
+		var you="";
+		var agentCat = "";
+		var bodySentence = "";
 		#if debug
-		trace("bt.BTMailer::setBTFeedbackBody::agentCat, you", agentCat, you );
+		trace("bt.BTMailer::buildSentenceForCategory",  cat);
 		#end
-		
-		return sentence = sentence.replace(agentCat, you);
+		try{
+			var s:Array<String> = cat.split(BTApp.CAT_STRING_SEPERATOR);
+			//sentence = "";
+			while (s.length >0)
+			{
+				bodySentence = s.join(BTApp.CAT_STRING_SEPERATOR).T() + " " + bodySentence ;
+				s.pop();
+			}
+			agentCat = "catAgent".T();
+			you = "you".T();
+
+			#if debug
+			trace("bt.BTMailer::buildSentenceForCategory::sentence", sentence );
+			#end
+		}
+		catch (e)
+		{
+			trace(e);
+		}
+		sentence = bodySentence;
+		if (involved != null)
+		{
+			bodySentence = bodySentence.replace(agentCat, '<a href="${involved.mbox}">${involved.name}</a>').trim();
+		}
+
+		return bodySentence;
 		//reasons_categories_label.text = LocaleManager.instance.lookupString("{{reasons_categories_label}}") + " " + sentence;
 	}
-	
+
 }
