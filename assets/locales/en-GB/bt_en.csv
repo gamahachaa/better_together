@@ -72,3 +72,6 @@ catTool_access;did not grant me access.
 
 search_many_agent_error_title;Error searching for peoples.
 search_many_agent_error_content;Could not find {0} agents : {1}.
+
+warn_several_cases_title;You are trying to report several cases/customers to several agents
+warn_several_cases_message;Note the this will create as many report entries as there are persons that you selected, but not as many report entries as there are cases or customers that you inputed. <br/>In other words each of the selected person will recieve one BetterTogether that will include all the cases/customer that you listed here.<br/>Should you whish to dispatch a batch of BetterTogether with different cases to different agents, then please laise with <a href="mailto:better_together@salt.ch">better_together@salt.ch</a> to get instructinoson a special procedure.<br/><br/>Do you wish to continue ?

@@ -10,12 +10,8 @@ TO;an
 BY;von
 OF;von
 HELLO;Hallo
-OVERALL_SCORE;Gesamtpunktzahl
-CRITICAL_MISTAKES;Kritische(r) Fehler
-NON_CRITICAL_MISTAKES;Nicht-Kritische(r) Fehler
-MORE_THAN_TWO_MISTAKES;Mehr als 2 Fehler
-TWO_MISTAKES_IN_A_DOMAIN;Zwei oder mehr Fehler in einer Kategorie (siehe unten)
-CRITICAL_ICON;"&#x02A3B;"
-LEGEND;"<span class=""critical"">&#x02A3B;</span> &#61; Kritisches Thema"
+CLOSING;Sincerely yours!
+SENDING;I am sending...
+SENDING_EMAIL;The mail 
 SUBMIT;ABSENDEN
 DISCLAIMER;Dies ist eine automatische E-Mail, die von der qook-Mailbox gesendet wird. Es ist nicht nötig, auf diese E-Mail zu antworten, da qook sie nicht bearbeiten wird. Wenn du jedoch einen Kommentar an den Bewerter richten möchtest, leite bitte stattdessen die E-Mail weiter.

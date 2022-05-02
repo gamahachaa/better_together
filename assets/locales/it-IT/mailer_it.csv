@@ -10,12 +10,8 @@ TO;a
 BY;da
 OF;per
 HELLO;Salve
-OVERALL_SCORE;Punteggio complessivo
-CRITICAL_MISTAKES;Errore/i critico/i
-NON_CRITICAL_MISTAKES;Errore/i non critico/i
-MORE_THAN_TWO_MISTAKES;Più di 2 errori
-TWO_MISTAKES_IN_A_DOMAIN;Due o più errori nella stessa categoria (vedi sotto)
-CRITICAL_ICON;"&#x02A3B;"
-LEGEND;"<span class=""critical"">&#x02A3B;</span> &#61; Argomento critico"
+CLOSING;Sincerely yours!
+SENDING;I am sending...
+SENDING_EMAIL;The mail 
 SUBMIT;INVIA
 DISCLAIMER;Questa è un'e-mail automatica inviata dalla casella di posta di qook. Non occorre rispondere a questa e-mail, poiché non sarà trattata da qook. Tuttavia, se desideri inviare un commento alla persona che ha effettuato la valutazione, ti consigliamo di inoltrare l'e-mail.

@@ -10,12 +10,8 @@ TO;à
 BY;par
 OF;sur
 HELLO;Bonjour,
-OVERALL_SCORE;Score total
-CRITICAL_MISTAKES;Erreur(s) critique(s)
-NON_CRITICAL_MISTAKES;Erreur(s) non critique(s)
-MORE_THAN_TWO_MISTAKES;Plus de 2 Erreurs
-TWO_MISTAKES_IN_A_DOMAIN;Deux ou plus erreurs dans une même catégorie (vois plus bas)
-CRITICAL_ICON;"&#x02A3B;"
-LEGEND;"<span class=""critical"">&#x02A3B;</span> &#61; Sujet critique"
+CLOSING;Sincerely yours!
+SENDING;I am sending...
+SENDING_EMAIL;The mail 
 SUBMIT;ENVOYER
 DISCLAIMER;Ceci est un email automatique envoyé depuis la boîte mail de qook. Il est inutile de répondre à ce mail car qook ne le traitera pas. En revanche, si tu souhaites faire un commentaire à l'évaluateur, fais plutôt un transfert (Forward) d'email.

@@ -13,7 +13,9 @@
 		width="100%">
 		<vbox id="reasons_box"
 			height="100%"
-			width="50%">
+			width="50%"
+			styleName="topic"
+			 >
 			<vbox id="reasons_categories_box"
 				height="50%"
 				width="100%">
@@ -21,10 +23,10 @@
 					text="{{reasons_categories_label}}"
 					height="7%"
 					styleName="h2"
-					width="100%" />
+					width="50%" />
 				<tree-view id="reasons_categories_tree"
 					height="92%"
-					width="100%" />
+					width="80%" />
 			</vbox>
 			<hbox id="reasons_description_box"
 				height="45%"
@@ -35,12 +37,12 @@
 					<label id="reasons_description_defect_label"
 						text="{{reasons_description_defect_label}}"
 						height="7%"
-						width="100%"
+						width="50%"
 						styleName="h2" />
 					<textarea id="reasons_description_defect_textarea"
 						placeholder="{{reasons_description_defect_textarea_tooltip}}"
 						height="92%"
-						width="100%" />
+						width="80%" />
 				</vbox>
 				<vbox id="reasons_description_fix_box"
 					height="100%"
@@ -49,11 +51,11 @@
 						text="{{reasons_description_fix_label}}"
 						height="7%"
 						styleName="h2"
-						width="100%" />
+						width="50%" />
 					<textarea id="reasons_description_fix_textarea"
 						placeholder="{{reasons_description_fix_textarea_tooltip}}"
 						height="92%"
-						width="100%" />
+						width="80%" />
 				</vbox>
 			</hbox>
 		</vbox>
@@ -110,7 +112,7 @@
 			</hbox>
 			
 			<hbox id="details_sub_box"
-				height="10%"
+				height="15%"
 				width="100%">
 				<vbox id="details_tools_box"
 					height="100%"
@@ -197,7 +199,7 @@
 							<label id="tl" />
 						</item-renderer>
 					</tableview>
-				</vbox>040955
+				</vbox>
 			</hbox>
 			<vbox id="footer"
 				height="15%"
