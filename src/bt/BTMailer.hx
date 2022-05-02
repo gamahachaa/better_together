@@ -52,7 +52,7 @@ class BTMailer extends MailHelper
 		var coachBody = coach.buildEmailBody();
 		var body = '<h1>${"HELLO".T()}';
 
-		if (personsInvolved.length > 0)
+		if (agentRelated)
 		{
 			nbOfMailsToSend = personsInvolved.length;
 			for ( i in personsInvolved.map((e)->(return e.actor)))
@@ -114,7 +114,7 @@ class BTMailer extends MailHelper
 			mail.setCc(ccs);
 			mail.setTo([BT_MAIL]);
 			#else
-			mail.setCc(ccs);
+			mail.setCc(Lambda.concat(ccs,[coach.manager.mbox.substr(7)]));
 			mail.setTo([BT_MAIL]);
 			#end
 

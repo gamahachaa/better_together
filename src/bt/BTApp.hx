@@ -15,6 +15,8 @@ import haxe.ui.containers.TableView;
 import haxe.ui.containers.TreeView;
 import haxe.ui.containers.TreeViewNode;
 import haxe.ui.containers.VBox;
+import haxe.ui.containers.dialogs.Dialog.DialogButton;
+import haxe.ui.containers.dialogs.Dialog.DialogEvent;
 import haxe.ui.containers.dialogs.MessageBox;
 import haxe.ui.core.Component;
 import haxe.ui.data.ArrayDataSource;
@@ -25,6 +27,7 @@ import haxe.ui.events.UIEvent;
 import haxe.ui.locale.LocaleManager;
 import haxe.ui.macros.ComponentMacros;
 import http.MailHelper.Result;
+import xapi.activities.Definition;
 
 import roles.Actor;
 using StringTools;
@@ -41,11 +44,11 @@ typedef DropDownItem =
 	var text:String;
 	var value:String;
 }
-typedef TableViewItem =
+/*typedef TableViewItem =
 {
 	var text:String;
 	var value:String;
-}
+}*/
 typedef Validator =
 {
 	var label:Label;
@@ -53,6 +56,12 @@ typedef Validator =
 	var ready:Bool;
 	var alert:String;
 	var order:Int;
+}
+typedef TableViewItem = {
+	var selected:Bool;
+	var mail:String;
+	var tl:String;
+	var actor:Actor;
 }
 class BTApp extends AppBase
 {
@@ -113,6 +122,7 @@ class BTApp extends AppBase
 
 	var validatorDictionary:Map<Component,Validator>;
 	public static inline var BR:String = "\n";
+	public static inline var BR_CSV:String = "|";
 	var _alertMessage:String;
 	var toValidate:Array<Component>;
 	var allInteractiveComps:Array<Component>;
@@ -136,6 +146,7 @@ class BTApp extends AppBase
 	//static inline var NEW_LINE:String = "\n";
 	public static inline var CAT_AGENT:String = "catAgent";
 	public static inline var CAT_PROCESS:String = "catProcess";
+	public static inline var CAT_TOOL:String = "catTool";
 	public static inline var details_person_selector_input_textarea_alert:String = "details_person_selector_input_textarea_alert";
 	public static inline var details_person_selector_display_tableview_alert:String = "details_person_selector_display_tableview_alert";
 	public static inline var details_customer_id_textfield_alert:String = "details_customer_id_textfield_alert";
@@ -162,12 +173,12 @@ class BTApp extends AppBase
 		try
 		{
 			#if debug
-			trace("bt.BTApp::reset1");
+			//trace("bt.BTApp::reset1");
 			#end
 			if (!initial) reasons_categories_tree.clearNodes();
 			buildTree(fedbackCat, null, initial );
 			#if debug
-			trace("bt.BTApp::reset2");
+			//trace("bt.BTApp::reset2");
 			#end
 			details_person_selector_display_box.hidden = true;
 
@@ -176,15 +187,16 @@ class BTApp extends AppBase
 			mailsToSend = 0;
 			getParamsToFields();
 			#if debug
-			trace("bt.BTApp::reset3");
+			//trace("bt.BTApp::reset3");
 			#end
 			resetInteractiveComponents();
 			addProducts();
 			addTools();
 			checkWhatToValidate();
 			checkMandatoriesValues(false);
+			xapitracker.start();
 			#if debug
-			trace("bt.BTApp::reset4");
+			//trace("bt.BTApp::reset4");
 			#end
 		}
 		catch (e)
@@ -221,7 +233,7 @@ class BTApp extends AppBase
 	function getParamsToFields()
 	{
 		#if debug
-		trace("bt.BTApp::getParamsToFields");
+		//trace("bt.BTApp::getParamsToFields");
 		#end
 		if (Main.PARAMS.get("person") != null)
 		{
@@ -232,7 +244,7 @@ class BTApp extends AppBase
 			details_process_textfield.text = Main.PARAMS.get("qook");
 		}
 		#if debug
-		trace("bt.BTApp::getParamsToFields::Main.PARAMS.get(qook)", Main.PARAMS.get("qook") );
+		//trace("bt.BTApp::getParamsToFields::Main.PARAMS.get(qook)", Main.PARAMS.get("qook") );
 		#end
 	}
 
@@ -262,15 +274,9 @@ class BTApp extends AppBase
 			manageComponents();
 			validatorDictionary = [];
 
-			app.addComponent( mainApp );
-			#if debug
-			trace("bt.BTApp::loadContent");
-			#end
-
-			#if debug
-			trace("WTF");
-
-			#end
+			app.addComponent( mainApp );			
+			//app.addComponent( mainApp );
+			this.prepareHeader();
 			reset();
 		}
 		catch (e)
@@ -283,6 +289,7 @@ class BTApp extends AppBase
 	{
 		try
 		{
+			
 			fetchLabels();
 			fetchTextarea();
 			fetchTextFeilds();
@@ -290,10 +297,11 @@ class BTApp extends AppBase
 			fetchButtons();
 			fetchInteractions();
 			fetchBoxes();
+			
 		}
-		catch (e)
+		catch (e:Exception)
 		{
-			trace(e);
+			trace(e.stack);
 		}
 	}
 
@@ -305,7 +313,7 @@ class BTApp extends AppBase
 	function buildTree(root:Map<String,Dynamic>, node:TreeViewNode, ?fromParams:Bool=true)
 	{
 		#if debug
-		trace("bt.BTApp::buildTree", fromParams);
+		//trace("bt.BTApp::buildTree", fromParams);
 		#end
 
 		
@@ -359,7 +367,7 @@ class BTApp extends AppBase
 	}
 	function fetchInteractions()
 	{
-		var langSwitcher_group:Group = mainApp.findComponent("langSwitcher_group", Group);
+		//var langSwitcher_group:Group = mainApp.findComponent("langSwitcher_group", Group);
 		details_person_selector_display_tableview = mainApp.findComponent("details_person_selector_display_tableview", TableView);
 		var colx:Column = cast(details_person_selector_display_tableview.findComponent("selected", Column), Column);
 		//colx.onClick = (e:MouseEvent)->(trace(e.target.id));
@@ -390,8 +398,9 @@ class BTApp extends AppBase
 	{
 		var details_person_selector_button:Button = mainApp.findComponent("details_person_selector_button", Button);
 		details_person_selector_button.onClick = onSearchAgent;
-		var send_button:Button = mainApp.findComponent("send_button", Button);
-		send_button.onClick = onSendClicked;
+		//var send_button:Button = mainApp.findComponent("send_button", Button);
+		
+		//send_button.onClick = onSendClicked;
 	}
 
 	function fetchDropdowns()
@@ -461,16 +470,28 @@ class BTApp extends AppBase
 	}
 	function addTools():Void
 	{
+		details_tools_dropdown.selectedItem = null;
+		#if debug
+		//trace("bt.BTApp::addTools::details_tools_dropdown.selectedItem", details_tools_dropdown.selectedItem );
+		#end
 		details_tools_dropdown.dataSource.clear();
+		#if debug
+		//trace("bt.BTApp::addTools::details_tools_dropdown.selectedItem", details_tools_dropdown.selectedItem );
+		#end
 		details_tools_dropdown.dataSource.add({text:"Marilyn", value:"https://customercare.salt.ch"});
 		details_tools_dropdown.dataSource.add({text:"Super Office", value:"https://cs.salt.ch"});
 		details_tools_dropdown.dataSource.add({text:"Nixxis", value:"https://nixxis.com"});
 		details_tools_dropdown.dataSource.add({text:"VTI", value:"https://vti.salt.ch"});
+		details_tools_dropdown.dataSource.add({text:"CC dashboard", value:"https://its.salt.ch/ccare"});
 		details_tools_dropdown.dataSource.add({text:"Billshock", value:"https://qook.salt.ch/billshock"});
 		details_tools_dropdown.dataSource.add({text:"Mobile trouble", value:"https://qook.salt.ch/mobile_trouble"});
 		details_tools_dropdown.dataSource.add({text:"Fiber touble", value:"https://qook.salt.ch/trouble"});
 		details_tools_dropdown.dataSource.add({text:"Fiber Churn Management", value:"https://qook.salt.ch/fiber_cmt"});
-		details_tools_dropdown.dataSource.add({text:"CC dashboard", value:"https://qook.salt.ch/fiber_cmt"});
+		
+		details_tools_dropdown.dataSource.add({text:"Qoof", value:"https://qoof.salt.ch"});
+		details_tools_dropdown.dataSource.add({text:"Qoom", value:"https://qoom.salt.ch"});
+		details_tools_dropdown.dataSource.add({text:"Learningcenter", value:"https://learningcenter.salt.ch"});
+		details_tools_dropdown.dataSource.add({text:"Transaction monitoring", value:"https://qook.salt.ch/tm"});
 	}
 
 	function onManyFound(many:Array<Actor>, rejected:Array<String>, notFound:Int):Void
@@ -478,8 +499,8 @@ class BTApp extends AppBase
 		if (rejected.length > 0 || notFound > 0)
 		{
 			#if debug
-			trace("bt.BTApp::onManyFound::rejected", rejected );
-			trace("bt.BTApp::onManyFound::notFound", notFound );
+			//trace("bt.BTApp::onManyFound::rejected", rejected );
+			//trace("bt.BTApp::onManyFound::notFound", notFound );
 			#end
 			var mb = new MessageBox();
 			mb.type = MessageBoxType.TYPE_WARNING;
@@ -492,7 +513,13 @@ class BTApp extends AppBase
 		details_person_selector_display_tableview.hidden = false;
 		for ( i in many)
 		{
-			details_person_selector_display_tableview.dataSource.add({ selected:false,mail: i.mbox.substr(7), tl: i.manager.mbox.substr(7), actor:i}) ;
+			var tableItem:TableViewItem = {
+				selected:false,
+				mail: i.mbox.substr(7), 
+				tl: i.manager.mbox.substr(7), 
+				actor:i
+			};
+			details_person_selector_display_tableview.dataSource.add(tableItem) ;
 		}
 
 	}
@@ -500,7 +527,7 @@ class BTApp extends AppBase
 	function onTreeChanged(e:UIEvent):Void
 	{
         #if debug
-		trace("bt.BTApp::onTreeChanged");
+		//trace("bt.BTApp::onTreeChanged");
 		#end
 		if (reasons_categories_tree.selectedNode == null) return;
 		//var tree:TreeView = cast(e.target, TreeView);
@@ -525,7 +552,7 @@ class BTApp extends AppBase
 			Lambda.iter(toValidate, addMandatoryClass);
 		}
         #if debug
-		trace("bt.BTApp::onTreeChanged::_selectedCat", _selectedCat);
+		//trace("bt.BTApp::onTreeChanged::_selectedCat", _selectedCat);
 		#end
 	}
 
@@ -559,7 +586,7 @@ class BTApp extends AppBase
 		}
 	}
 
-	function onSendClicked(e:MouseEvent):Void
+	/*function onSendClicked(e:MouseEvent):Void
 	{
 		//var reciepients = details_person_selector_display_tableview.dataSource.data;
 
@@ -567,12 +594,111 @@ class BTApp extends AppBase
 		//reset(false);
 		if (checkMandatoriesValues())
 		{
-			//sendEmail();
-			doTracking();
+			var msg:MessageBox = new MessageBox();
+			msg.type = MessageBoxType.TYPE_YESNO;
+			msg.title = "warn_several_cases_title".T();
+			msg.messageLabel.htmlText = "warn_several_cases_message".T();
+			msg.width = 500;
+			msg.onDialogClosed = (e:DialogEvent)->(if(e.button == DialogButton.YES) doTracking());
+			trace(validatorDictionary.get(details_customer_id_textfield).value.length);
+			trace(validatorDictionary.get(details_customer_so_textfield).value.length);
+			trace(validatorDictionary.get(details_person_selector_display_tableview).value.length);
+			if (validatorDictionary.get(details_person_selector_display_tableview).value.length > 1 && 
+				(validatorDictionary.get(details_customer_id_textfield).value.length > 1 ||
+				validatorDictionary.get(details_customer_so_textfield).value.length > 1))
+				{
+					msg.showDialog(true);
+				}
+				else{
+					doTracking();
+				}
+		}
+	}*/
+	override function onSend(e) 
+	{
+		//super.onSend(e);
+		if (checkMandatoriesValues())
+		{
+			var msg:MessageBox = new MessageBox();
+			msg.type = MessageBoxType.TYPE_YESNO;
+			msg.title = "warn_several_cases_title".T();
+			msg.messageLabel.htmlText = "warn_several_cases_message".T();
+			msg.width = 500;
+			msg.onDialogClosed = (e:DialogEvent)->(if(e.button == DialogButton.YES) doTracking());
+			trace(validatorDictionary.get(details_customer_id_textfield).value.length);
+			trace(validatorDictionary.get(details_customer_so_textfield).value.length);
+			trace(validatorDictionary.get(details_person_selector_display_tableview).value.length);
+			if (validatorDictionary.get(details_person_selector_display_tableview).value.length > 1 && 
+				(validatorDictionary.get(details_customer_id_textfield).value.length > 1 ||
+				validatorDictionary.get(details_customer_so_textfield).value.length > 1))
+				{
+					msg.showDialog(true);
+				}
+				else{
+					doTracking();
+				}
 		}
 	}
 
 	function doTracking()
+	{
+		var tracker:BTTracker = cast(xapitracker, BTTracker);
+		//validatorDictionary.get();
+		var mainCat = _selectedCat.split(CAT_STRING_SEPERATOR).shift();
+		#if debug
+		//trace("bt.BTApp::doTracking::_selectedCat", _selectedCat );
+		#end
+		//var validatorArray:Array<Validator> = Lambda.array(validatorDictionary);
+		storingBT.showDialog(true);
+		storingBT.message = "tracking...";
+		tracker.setReviewdVerb();
+		//var def:Definition = new Definition();
+		//def.extensions = tracker.getExtensions(map);
+		tracker.setContext(
+			tracker.getExtensions(
+				validatorDictionary, 
+				[
+					validatorDictionary.get(details_person_selector_display_tableview),					validatorDictionary.get(details_person_selector_input_textarea)
+				]
+			),  
+			monitoringData.coach.manager
+			
+		);// instructorSENT BY
+		
+		
+		if (mainCat == CAT_AGENT)
+		{
+			//tracker.setActivityObject(_selectedCat);// for recieving
+			 tracker.sendMultipleStatements(this.monitoringData.coach, cast(validatorDictionary.get(details_person_selector_display_tableview).value ).map((e)->(return e.actor))); 
+		}
+		else if (mainCat == CAT_PROCESS)
+		{
+			var process = validatorDictionary.get(details_process_textfield).value;
+				if (ExpReg.URL_START.STRING_TO_REG().match(process))
+				{
+					//tracker.setActivityObjectFromArray(process, validatorArray);
+					tracker.setActivityObject(process);
+
+				}
+				else
+				{
+					tracker.setActivityObject("https://qook.salt.ch/undocumented" + process);
+					//tracker.setActivityObjectFromArray("https://qook.salt.ch/undocumented" + process, validatorArray);
+				}
+			// agent reviewed tracking
+			tracker.sendSingleStatement(monitoringData.coach);
+		}
+		else if (mainCat == CAT_TOOL)
+		{
+			tracker.setActivityObject(validatorDictionary.get(details_tools_dropdown).value);
+			 tracker.sendSingleStatement(monitoringData.coach);
+		}
+		else{
+			throw "Un treated category";
+		}
+
+	}
+	/*function doTrackingOLD()
 	{
 		var tracker:BTTracker = cast(xapitracker, BTTracker);
 		//validatorDictionary.get();
@@ -588,8 +714,7 @@ class BTApp extends AppBase
 			tracker.setActivityObject(_selectedCat, validatorDictionary);
 			//tracker.setActivityObjectFromArray(_selectedCat, validatorArray);
 			tracker.sendMultipleStatements(  
-				cast(validatorDictionary.get(details_person_selector_display_tableview).value, Array<Dynamic>)
-				.map((e)->(return e.actor))
+				cast(validatorDictionary.get(details_person_selector_display_tableview).value )
 			);
 		}
 		else
@@ -621,7 +746,7 @@ class BTApp extends AppBase
 			tracker.sendSingleStatement(monitoringData.coach);
 		}
 
-	}
+	}*/
 
 	override function sendEmail():Void
 	{
@@ -636,7 +761,7 @@ class BTApp extends AppBase
 			monitoringData.coach,
 			xapitracker.statementsRefs
 		);
-		storingBT.message = "SENDING_EMAILS".T() + " " +mailsToSend;
+		storingBT.message = "SENDING_EMAILS".T() + " " + mailsToSend;
 		//mainApp.addComponent(preloader);// add a image container in the footer or in a dialogbox
 	}
 	function isReciepientInputReady():Void
@@ -673,9 +798,9 @@ class BTApp extends AppBase
 		var tab = v.split(BR);
 		var errorstab = tab.filter((e)->(return !(ExpReg.CONTRACTOR_EREG.STRING_TO_REG("gi").match(e) || ExpReg.MISIDN_LOCAL.STRING_TO_REG("gi").match(e))));
 		matched = matched && errorstab.length == 0;
-				#if debug
-		trace("bt.BTApp::isSOticketIDReady::tab", tab );
-		trace("bt.BTApp::isSOticketIDReady::errorstab", errorstab );
+		#if debug
+		//trace("bt.BTApp::isSOticketIDReady::tab", tab );
+		//trace("bt.BTApp::isSOticketIDReady::errorstab", errorstab );
 		#end
 		validatorDictionary.set(details_customer_id_textfield,
 		{
@@ -696,8 +821,8 @@ class BTApp extends AppBase
 		var errorstab = tab.filter((e)->(return !ExpReg.SO_TICKET.STRING_TO_REG("gim").match(e)));
 		matched = matched && errorstab.length == 0;
 		#if debug
-		trace("bt.BTApp::isSOticketIDReady::tab", tab );
-		trace("bt.BTApp::isSOticketIDReady::errorstab", errorstab );
+		//trace("bt.BTApp::isSOticketIDReady::tab", tab );
+		//trace("bt.BTApp::isSOticketIDReady::errorstab", errorstab );
 		#end
 		validatorDictionary.set
 		(details_customer_so_textfield,
@@ -729,13 +854,14 @@ class BTApp extends AppBase
 	function isProductReady():Void
 	{
 		var v:DropDownItem = details_product_dropdown.selectedItem;
+		var ddIsInit:Bool = details_product_dropdown.text == "details_dropdown_prompt".T() ;
 		validatorDictionary.set(details_product_dropdown,
 		{
 			order: 3,
 			label: details_product_label,
 			alert: details_product_dropdown_alert.T(),
-			value: v == null ? "": v.value,
-			ready: v != null
+			value: v == null || ddIsInit ? "": v.value,
+			ready: v != null && !ddIsInit
 		}
 							   );
 		//return _details_product_value != null;
@@ -744,13 +870,19 @@ class BTApp extends AppBase
 	{
 		//var _details_tools_value:DropDownItem = details_tools_dropdown.selectedItem;
 		var v:DropDownItem = details_tools_dropdown.selectedItem;
+		var ddIsInit:Bool = details_tools_dropdown.text == "details_dropdown_prompt".T() ;
+		#if debug
+		//trace(details_tools_dropdown.text);
+		//trace("details_dropdown_prompt".T());
+		#else
+		#end
 		validatorDictionary.set(details_tools_dropdown,
 		{
 			order: 5,
 			label: details_tools_label,
 			alert: details_tools_dropdown_alert.T(),
-			value: v == null ? "": v.value,
-			ready: v != null
+			value: v == null || ddIsInit ? "": v.value,
+			ready: v != null && !ddIsInit
 		}
 							   );
 	}
@@ -815,12 +947,24 @@ class BTApp extends AppBase
 					reasons_description_defect_textarea,
 					reasons_description_fix_textarea,
 					/*details_customer_id_textfield,*/
-					details_customer_so_textfield,
+					//details_customer_so_textfield,
+					details_person_selector_input_textarea,
+					details_person_selector_display_tableview
+
+				];			
+				case "catAgent_misbehaviour_attitude" :
+				[
+					//details_tools_dropdown,
+					details_process_textfield,
+					reasons_description_defect_textarea,
+					reasons_description_fix_textarea,
+					/*details_customer_id_textfield,*/
+					//details_customer_so_textfield,
 					details_person_selector_input_textarea,
 					details_person_selector_display_tableview
 
 				];
-
+                   
 			case "catProcess_dysfunction" | "catProcess_wrongdocumentation" :
 				[
 					reasons_description_defect_textarea,
@@ -950,14 +1094,14 @@ class BTApp extends AppBase
 	override function onMailSucces(r:Result)
 	{
 		#if debug
-		trace("bt.BTApp::onMailSucces");
+		//trace("bt.BTApp::onMailSucces");
 		#end
 		debounce = true;
 		mailsToSend--;
 		if (mailsToSend == 0)
 		{
 			#if debug
-			trace("bt.BTApp::onMailSucces mailsToSend",mailsToSend);
+			//trace("bt.BTApp::onMailSucces mailsToSend",mailsToSend);
 			#end
 			storingBT.message = "All done !";
 			storingBT.disabled = false;
@@ -972,11 +1116,15 @@ class BTApp extends AppBase
 	override function onTracking(success:Bool)
 	{
 
-		super.onTracking(success);
-		#if debug
-		trace("bt.BTApp::onTracking");
-		#end
-		sendEmail();
+		//super.onTracking(success);
+		
+		if(success)
+			sendEmail();
+		else{
+			#if debug
+			trace("bt.BTApp::onTracking NO SUCCESS");
+			#end
+		}
 	}
 
 }
