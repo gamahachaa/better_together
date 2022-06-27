@@ -6,7 +6,8 @@ OF;of
 you;you
 HELLO;Hello
 CLOSING;Sincerely yours!
-SENDING;I am sending...
-SENDING_EMAIL;The mail 
+SENDING;I am sending ...
+SENDING_EMAIL;the mail 
 SUBMIT;SUBMIT
 DISCLAIMER;This is an automatic email sent from the qook mailbox. You don’t need to reply to this email as qook will not process it. However, if you wish to make a comment to the evaluator, please forward the email instead.
+EMAIL_SENT_SUCCESSFULLY;All done!

@@ -14,8 +14,7 @@
 		<vbox id="reasons_box"
 			height="100%"
 			width="50%"
-			styleName="topic"
-			 >
+			styleName="topic">
 			<vbox id="reasons_categories_box"
 				height="50%"
 				width="100%">
@@ -26,7 +25,7 @@
 					width="50%" />
 				<tree-view id="reasons_categories_tree"
 					height="92%"
-					width="80%" />
+					width="65%" />
 			</vbox>
 			<hbox id="reasons_description_box"
 				height="45%"
@@ -37,7 +36,7 @@
 					<label id="reasons_description_defect_label"
 						text="{{reasons_description_defect_label}}"
 						height="7%"
-						width="50%"
+						width="80%"
 						styleName="h2" />
 					<textarea id="reasons_description_defect_textarea"
 						placeholder="{{reasons_description_defect_textarea_tooltip}}"
@@ -51,7 +50,7 @@
 						text="{{reasons_description_fix_label}}"
 						height="7%"
 						styleName="h2"
-						width="50%" />
+						width="80%" />
 					<textarea id="reasons_description_fix_textarea"
 						placeholder="{{reasons_description_fix_textarea_tooltip}}"
 						height="92%"
@@ -84,7 +83,7 @@
 				</vbox>
 				<vbox id="details_customer_so_box"
 					height="100%"
-					width="40%">
+					width="35%">
 					<label id="details_customer_so_label"
 						text="{{details_customer_so_label}}"
 						styleName="h2"
@@ -97,26 +96,38 @@
 				</vbox>
 				<vbox id="details_product_box"
 					height="100%"
-					width="20%">
+					width="25%">
 					<label id="details_product_label"
 						text="{{details_product_label}}"
 						styleName="h2"
 						height="10%"
 						width="100%" />
 					<dropdown id="details_product_dropdown"
-						width="100"
-						dropdownWidth="150"
-						dropdownHeight="250"
+						width="200"
+						dropdownWidth="200"
+						dropdownHeight="220"
 						text="{{details_product_dropdown}}" />
 				</vbox>
 			</hbox>
-			
 			<hbox id="details_sub_box"
 				height="15%"
 				width="100%">
+				<vbox id="details_process_box"
+					height="100%"
+					width="70%">
+					<label id="details_process_label"
+						text="{{details_process_label}}"
+						height="20%"
+						styleName="h2"
+						width="100%" />
+					<textfield id="details_process_textfield"
+						placeholder="{{details_process_textfield_tooltip}}"
+						height="40%"
+						width="90%" />
+				</vbox>
 				<vbox id="details_tools_box"
 					height="100%"
-					width="25%">
+					width="30%">
 					<label id="details_tools_label"
 						text="{{details_tools_label}}"
 						height="30%"
@@ -125,21 +136,9 @@
 					<dropdown id="details_tools_dropdown"
 						width="200"
 						dropdownWidth="200"
+						dropdownHeight="220"
 						text="{{details_tools_dropdown}}" />
 				</vbox>
-				<vbox id="details_process_box"
-				height="100%"
-				width="75%">
-				<label id="details_process_label"
-					text="{{details_process_label}}"
-					height="30%"
-					styleName="h2"
-					width="100%" />
-				<textfield id="details_process_textfield"
-					placeholder="{{details_process_textfield_tooltip}}"
-					height="40%"
-					width="100%" />
-			</vbox>
 			</hbox>
 			<hbox id="details_person_box"
 				height="35%"

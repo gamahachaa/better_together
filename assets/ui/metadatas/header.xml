@@ -4,28 +4,30 @@
 	<label id="app_label"
 		text="{{app_label}}"
 		height="5%"
-		width="75%" 
+		width="40%" 
 		styleName="h1"
 		/>
+	
 	<group id="langSwitcher_group"
 		layout="horizontal"
-		width="15%">
-		<optionbox value="en-GB"
-			text="en"
+		width="45%">
+		<optionbox userData="en-GB"
+			text="EN"
 			id="en"
 			selected="true" />
-		<optionbox value="fr-FR"
-			text="fr"
+		<optionbox userData="fr-FR"
+			text="FR"
 			id="fr" />
-		<optionbox value="de-DE"
-			text="de"
+		<optionbox userData="de-DE"
+			text="DE"
 			id="de" />
-		<optionbox value="it-IT"
-			text="it"
+		<optionbox userData="it-IT"
+			text="IT"
 			id="it" />
 	</group>
-	<label text="{{version_label}}"
-		textAlign="center"
+	<label text=""
+		textAlign="left"
 		id="version_label"
-		width="5%" />
+		width="15%" />
+	<button id="logoff_button" icon="images/logoff_button.png"/>
 </hbox>

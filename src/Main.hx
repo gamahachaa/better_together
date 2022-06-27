@@ -1,10 +1,12 @@
 package ;
 import bt.BTApp;
-import haxe.ui.Toolkit;
-import haxe.ui.components.DropDown.CalendarDropDownHandler;
+import bt.VoidApp;
+import xapi.Params;
+//import haxe.ui.Toolkit;
+//import haxe.ui.components.DropDown.CalendarDropDownHandler;
 import js.Browser;
 import js.html.URLSearchParams;
-import tests.XapiSendSerialized;
+//import tests.XapiSendSerialized;
 //import tm.TMApp;
 
 /**
@@ -20,13 +22,21 @@ class Main
 	
 	public static var _mainDebug:Bool;
 	public static var PARAMS:URLSearchParams;
+	static var m:AppBase;
+	//static inline var VOID_PARAM:String = "void";
 	public static function main()
 	{
-		CalendarDropDownHandler.DATE_FORMAT = "%d.%m.%Y";
-		PARAMS = new URLSearchParams(Browser.location.search);
-		//
-		//trace("wtf");
-		var main = new BTApp();
+		//CalendarDropDownHandler.DATE_FORMAT = "%d.%m.%Y";
+		var s = Browser.location.search;
+		PARAMS = new URLSearchParams(s);
+		
+		//trace(PARAMS.get("person"));
+		if (PARAMS.has(Params.VOID)){
+			m = new bt.VoidApp();
+		}
+		else{
+			m = new BTApp();
+		}
 		/**
 		 * KEEP for URL prefilling from Qook
 		 */
@@ -39,3 +49,21 @@ class Main
 		
 	}	
 }
+
+/*Action
+Coaching
+Group Training
+Warning
+Dismissal
+Leaver
+Disputed feedback
+	
+Status
+Agent absent
+Completed
+No action
+
+Reason (Disputed feedback)
+Wrong agent
+No mistake made
+  */

@@ -1,0 +1,39 @@
+<vbox id="main"
+	width="100%"
+	height="100%">
+	<style source="../css/main.css" />
+	<hbox id="header"
+		height="7%"
+		width="100%">
+		<import resource="assets/ui/metadatas/header.xml"
+			omitRoot="true" />
+	</hbox>
+	<vbox height="78%"
+		width="100%">
+		<label id="void_statement_id_label" styleName="h2" text="{{void_statement_id_label}}" />
+		<textfield id="void_statement_id_textfield"
+			placeholder="{{void_statement_id_tooltip}}"
+			width="15%" />
+		<label id="action_label" styleName="h2" text="{{action_label}}" />
+		<group id="void_action_group" layout="VerticalLayout">
+			<optionbox text="{{action_coaching}}" id="action_coaching" styleName="radio_btn" />
+			<optionbox text="{{action_grouptraining}}" id="action_grouptraining" styleName="radio_btn" />
+			<optionbox text="{{action_warning}}" id="action_warning" styleName="radio_btn" />
+			<optionbox text="{{action_dismissal}}" id="action_dismissal" styleName="radio_btn" />
+			<optionbox text="{{action_leaver}}" id="action_leaver" styleName="radio_btn" />
+			<optionbox text="{{action_wrongagent}}" id="action_wrongagent" styleName="radio_btn" />
+			<optionbox text="{{action_nomistake}}" id="action_nomistake" styleName="radio_btn" />
+		</group>
+		<label id="void_comment_label" styleName="h2" text="{{void_comment_label}}" />
+		<textarea id="void_comment_textarea"
+			placeholder="{{void_comment_tooltip}}"
+			height="30%"
+			width="90%" />
+	</vbox>
+	<vbox id="footer"
+		height="15%"
+		width="100%">
+		<import resource="assets/ui/metadatas/footer.xml"
+			omitRoot="true" />
+	</vbox>
+</vbox>

@@ -1,77 +1,107 @@
-LOGIN_USERNAME;Username
+LOGIN_USERNAME;Nome utente
 LOGIN_PASSWORD;Password
-SHOW_PWD;Show password
-wtf;What the Fudge !!!
-send_button;Send
-cctl_checkbox;cc to 
+SHOW_PWD;Mostrare la password
+wtf;Cos'è sta roba?
+send_button;Inviare
+cctl_checkbox;Cc a 
 app_label;Better Together
 version_label;v
 cctl_label;fabien.renard@salt.ch
-reasons_categories_label;I want to report that :
-reasons_categories_tree_alert;You must first select a reason !
-reasons_description_defect_label;What happened?
-reasons_description_defect_textarea_alert;You did not describe what happened !
-reasons_description_defect_textarea_tooltip;Describe here what you found that is wrong.
-reasons_description_fix_label;How should it be next ?
-reasons_description_fix_textarea_alert;You did not tell us how it should be !
-reasons_description_fix_textarea_tooltip;Describe here how it should be. If there is a documented process to support your claim, paste it in the -{{details_process_label}}- field.
-details_label;Details
-details_customer_id_label;Cutomer(s) ID (MSISDN or Contractor)
-details_customer_id_textfield_alert;Please identify the customer
-details_customer_id_textfield_tooltip;Expl: 078 777 77 77 or 31234567\nyou can add several but one per line. If you add also a matching SO ticket number, please add it on the same line
-details_customer_id_textfield_alert_badFormat;Wrongly formated customer IDs:
-details_customer_so_label;S.O ticket(s) N°
-details_customer_so_textfield_tooltip;12456789,\nyou can add several but one per line. If you add also a matching customer ID number, please add it on the same line
-details_customer_so_textfield_alert;Please give us a valid Super Office ticket number, you can add several but one per line. If you add also a matching customer ID number, please add it on the same line.
-details_customer_so_textfield_alert_badFormat
-details_customer_so_textfield_alert_badFormat;Wrongly formated ticket numbers:
-details_person_label;Who is involved?
-details_person_label_tooltip;NT, email, or first and last names as in Super Office's (One person per line). Then click on the eye magnifier to search the email in the company's active directory.
-details_person_selector_display_label;Verify that it is the correct, then select whom to send it to.
-details_person_selector_display_tooltip;Double check that it is the correct person.
-details_person_selector_display_tableview_alert;No one is selected !
-details_person_selector_input_textarea_alert;You must add at least one person !
-details_process_label;URL of the process documentation ?
-details_process_textfield_alert;You must input a valid process identifier.
+reasons_categories_label;Voglio segnalare che:
+reasons_categories_tree_alert;Devi prima selezionare un motivo!
+reasons_description_defect_label;Cos'è successo?
+reasons_description_defect_textarea_alert;Non hai descritto cos'è successo!
+reasons_description_defect_textarea_tooltip;Descrivi qui cosa ritieni che sia sbagliato.
+reasons_description_fix_label;Cosa dovrebbe essere diverso in futuro?
+reasons_description_fix_textarea_alert;Non ci hai detto cosa dovrebbe essere diverso!
+reasons_description_fix_textarea_tooltip;Descrivi qui cosa dovrebbe essere diverso. Se esiste una documentazione del processo a sostegno del tuo reclamo, incolla l'URL nel campo "Qual è l'URL della documentazione del processo?".
+details_label;Dettagli
+details_customer_id_label;ID cliente/i (MSISDN o Contractor n°)
+details_customer_id_textfield_alert;Per favore identifica il cliente
+details_customer_id_textfield_tooltip;Per es.:  078 777 77 77 o 31234567\nPuoi aggiungerne diversi ma devono essere uno per linea. Se aggiungi anche il numero di ticket SO corrispondente, scrivilo nella stessa linea
+details_customer_id_textfield_alert_badFormat;Il formato dell'ID cliente è errato:
+details_customer_so_label;Numero/i di ticket SO
+details_customer_so_textfield_tooltip;12456789,\\nPuoi aggiungerne diversi ma devono essere uno per linea. Se aggiungi anche il numero dell'ID cliente corrispondente, scrivilo nella stessa linea
+details_customer_so_textfield_alert;Per favore, indica un numero di ticket Super Office valido, puoi aggiungerne diversi ma devono essere uno per linea. Se aggiungi anche il numero dell'ID cliente corrispondente, scrivilo nella stessa linea.
+details_customer_so_textfield_alert_badFormat;Il formato del numero di ticket è errato:
+details_person_label;Chi è coinvolto?
+details_person_label_tooltip;NT, e-mail o nome e cognome così come appaiono su Super Office (una persona per linea). Poi clicca sulla lente d'ingrandimento per effettuare la ricerca nella directory dei dipendenti attivi dell'azienda.
+details_person_selector_display_label;Verifica che sia la persona giusta, poi seleziona a chi spedirla.
+details_person_selector_display_tooltip;Verifica di nuovo che si tratti della persona giusta.
+details_person_selector_display_tableview_alert;Non hai selezionato nessuno!
+details_person_selector_input_textarea_alert;Devi aggiungere almeno una persona.
+details_process_label;Qual è l'URL della documentazione del processo?
+details_process_textfield_alert;Devi inserire un link di processo valido.
 details_process_textfield_tooltip;https://qoom.salt.ch/customer-process/discover/salt_company_info/stores_adress_list
-details_tools_label;Which tool ?
-details_product_label;Product
-details_product_dropdown_alert;You haven't selected any product
+details_tools_label;Quale strumento?
+details_product_label;Prodotto
+details_product_dropdown_alert;Non hai selezionato nessun prodotto!
 details_product_dropdown;{{details_dropdown_prompt}}
 details_tools_dropdown;{{details_dropdown_prompt}}
-details_dropdown_prompt;Select...
-details_tools_dropdown_alert;You haven't selected any tool !
-LOGIN_BTN;Let’s do {{app_label}}
-details_person_selector_display_tableview_searching;Searching ...
-catAgent;some agent
-catAgent_ticket;did a ticket
-catAgent_ticket_stateoftheart;that was the state of the art !
-catAgent_ticket_unnecessary;that was unnecessary.
-catAgent_ticket_duplicate;that turns out to be a duplicate.
-catAgent_ticket_incomplete;with incomplete information.
-catAgent_ticket_wrongcat;but selected a wrong category.
-catAgent_ticket_wronglang;but selected a wrong language.
-catAgent_ticket_notool;but should have used the dedicated tool instead.
-catAgent_answering;answering customer's needs
-catAgent_answering_stateoftheart;did a fantastic job !
-catAgent_answering_wronginfo;provided wrong information.
-catAgent_answering_wrongoto;incorrectly filled in the OTO ID
-catAgent_answering_wrongpp;suggested a wrong price plan.
-catAgent_answering_wrongoption;suggested a wrong option/package.
-catAgent_answering_noret;instead of a retention did a new order.
-catAgent_misbehaviour;misbehaved by
-catAgent_misbehaviour_tool;incorrectly manipulating a tools.
-catAgent_misbehaviour_attitude;having an incorrect attitude.
-catProcess;some process
-catProcess_dysfunction;is not functioning.
-catProcess_wrongdocumentation;is wrongly documented.
-catProcess_nodocumentation;need a qook documentation.
-catTool;some tool
-catTool_missingfunk;is missing a functionality.
-catTool_access;did not grant me access.
+details_dropdown_prompt;Seleziona...
+details_tools_dropdown_alert;Non hai selezionato nessuno strumento!
+LOGIN_BTN;Procediamo {{app_label}}
+details_person_selector_display_tableview_searching;Ricerca in corso…
 
-search_many_agent_error_title;Error searching for peoples.
-search_many_agent_error_content;Could not find {0} agents : {1}.
+catAgent;un agente
+catAgent_ticket;ha fatto un ticket
+catAgent_ticket_stateoftheart;che era perfetto!
+catAgent_ticket_unnecessary;che non era necessario.
+catAgent_ticket_duplicate;che si è rivelato essere un doppione.
+catAgent_ticket_incomplete;con informazioni incomplete.
+catAgent_ticket_wrongcat;ma ha selezionato la categoria sbagliata.
+catAgent_ticket_wronglang;ma ha selezionato la lingua sbagliata.
+catAgent_ticket_notool;mentre invece avrebbe dovuto usare lo strumento appropriato.
 
-warn_several_cases_title;You are trying to report several cases/customers to several agents
-warn_several_cases_message;Note the this will create as many report entries as there are persons that you selected, but not as many report entries as there are cases or customers that you inputed. <br/>In other words each of the selected person will recieve one BetterTogether that will include all the cases/customer that you listed here.<br/>Should you whish to dispatch a batch of BetterTogether with different cases to different agents, then please laise with <a href="mailto:better_together@salt.ch">better_together@salt.ch</a> to get instructinoson a special procedure.<br/><br/>Do you wish to continue ?
+catAgent_answering;ha risposto alla richiesta del cliente
+catAgent_answering_stateoftheart;e ha fatto un lavoro fantastico! *
+catAgent_answering_wronginfo;ma ha dato informazioni errate. *
+catAgent_answering_wrongoto;ma non ha compilato correttamente l'OTO ID
+catAgent_answering_wrongpp;ma ha indicato il piano tariffario sbagliato. *
+catAgent_answering_wrongoption;ma ha indicato un'opzione/un pacchetto sbagliato. *
+catAgent_answering_noret;ma ha fatto un nuovo ordine invece di fare un rinnovo. *
+catAgent_answering_storeredirect;e lo ha erroneamente reindirizzato allo Store *
+catAgent_answering_insuficientlangskills;senza possedere sufficienti competenze linguistiche *
+
+catAgent_misbehaviour;ha agito male in quanto
+catAgent_misbehaviour_tool;non ha usato correttamente uno strumento *
+catAgent_misbehaviour_attitude;ha avuto un atteggiamento poco professionale. (irrispettoso) *
+catAgent_misbehaviour_noinfo;non ha risposto alla richiesta del cliente. *
+catAgent_misbehaviour_winback;non ha registrando una terminazione (Winback o Store) *
+catAgent_misbehaviour_equipementticket;non creando il biglietto di restituzione dell'attrezzatura *
+
+catProcess;un processo
+catProcess_dysfunction;non funziona. *
+catProcess_wrongdocumentation;contiene errori nella documentazione. *
+catProcess_nodocumentation;ha bisogno di una documentazione su qook. *
+catTool;uno strumento
+catTool_missingfunk;è privo di una funzionalità. *
+catTool_access;non mi fa accedere; *
+search_many_agent_error_title;Errore nella ricerca di persone.
+search_many_agent_error_content;{0} agente/i non trovato/i: {1}.;
+search_many_tl_error_content;{0} agente/i TL non trovato/i: {1}.;
+warn_several_cases_title;Stai cercando di segnalare diversi casi/clienti a diversi agenti.
+warn_several_cases_message;"Sappi che questo creerà lo stesso numero di entrate nel rapporto rispetto al numero di persone selezionate; invece, se hai inserito diversi numeri di ticket o diversi ID cliente, essi figureranno nella stessa entrata. <br/>In altre parole, ognuna delle persone selezionate riceverà un Better Together che includerà tutti i casi/clienti che hai elencato qui.<br/>Se desideri inviare un insieme di Better Together con diversi casi a diversi agenti, contatta <a href=""mailto:better_together@salt.ch"">better_together@salt.ch</a> per ottenere le istruzioni per una procedura speciale."
+SENDING_EMAILS;Invio l'e-mail
+EMAIL_SENT_SUCCESFULLY;e-mail inviate con successo
+
+void_comment_label;Details
+void_comment_tooltip;Descrivi qui le tue argomentazioni per aggiornare o invalidare questo migliore insieme.
+void_statement_id_label;ID da aggiornare
+void_statement_id_tooltip;ID QAST Better Together
+void_checking_the_record;Sto cercando nel database ...
+void_comment_needed;Devi spiegare perché vuoi aggiornare o invalidare questo Better Together!
+void_incorrect_id;Questo non è un ID QAST Better Togther!
+void_unknown_error;Questo ID è sconosciuto (forse è già stato cancellato)!
+void_type_of_query;Richiesta errata.
+void_not_allowed;Non puoi cancellare questo articolo Better Together!
+
+action_label;Main reason
+action_coaching;Coaching
+action_grouptraining;Group Training 
+action_warning;Warning 
+action_dismissal;Dismissal 
+action_leaver;Leaver 
+action_wrongagent;Wrong agent (invalidate)
+action_nomistake;No mistake made (invalidate)
+action_needed;Devi selezionare un motivo principale!

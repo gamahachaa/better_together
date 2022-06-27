@@ -19,7 +19,7 @@ using regex.ExpReg;
 class BTMailer extends MailHelper
 {
 	var sentence:String;
-	static inline var BT_MAIL:String = "Better-Together@salt.ch";
+	public static inline var BT_MAIL:String = "Better-Together@salt.ch";
 	static inline var QOOK_MAIL:String = "qook@salt.ch";
 
 	public function new(url:String)
@@ -41,7 +41,7 @@ class BTMailer extends MailHelper
 		var subject = '';
 		var personsInvolved = cast(map.get(listMapper).value, Array<Dynamic>);
 		#if !debug
-		var ccs = [coach.mbox.substr(7)];
+		var ccs = [coach.mbox.substr(7), coach.manager.mbox.substr(7)];
 		#else
 		//var ccs = [coach.mbox.substr(7)];
 		var ccs = [coach.mbox.substr(7)];
@@ -99,7 +99,7 @@ class BTMailer extends MailHelper
 			nbOfMailsToSend = 1;
 			body += ',</h1>';
 			body += mail.setBTFeedbackBody( stmtRefs[0], map, bodyFilter, coachBody);
-			subject = '[${Main._mainDebug?"TEST":""} ${"app_label".T()}] ${"FROM".T()} ${coach.sAMAccountName} "${mail.sentence}"';
+			subject = '[${Main._mainDebug?"TEST":""}${"app_label".T()}] ${"FROM".T()} ${coach.sAMAccountName} "${mail.sentence}"';
 			mail.setBody(body);
 			//#if debug
 			//trace("bt.BTMailer::BATCH_SEND::subject", subject );
@@ -188,7 +188,7 @@ class BTMailer extends MailHelper
 			}
 
 			body = body + "CLOSING".T() + coachBody;
-			body = body + '<br/><em>Qast-id: ${statmentRef.id}</em><br/>';
+			body = body + '<br/><em>Qast-id: <a href="${AppBase.APP_URL}?void=${statmentRef.id}">${statmentRef.id}</a></em><br/>';
 		}
 		catch (e)
 		{

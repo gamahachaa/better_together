@@ -1,17 +1,13 @@
 KEY;VALUE
-INBOUND;Inbound
-MAIL;E-Mail
-CASE;Case
-FAILED_ONLY;Sende nur {{DISAGREE}}
-ALL;Sende alle Themen
-CC_TM_TL;cc an 
 FROM;von
 TO;an
 BY;von
-OF;von
+OF;in Bezug auf
+you;du
 HELLO;Hallo
-CLOSING;Sincerely yours!
-SENDING;I am sending...
-SENDING_EMAIL;The mail 
+CLOSING;Freundliche Grüsse
+SENDING;Ich versende ...
+SENDING_EMAIL;die E-Mail 
 SUBMIT;ABSENDEN
-DISCLAIMER;Dies ist eine automatische E-Mail, die von der qook-Mailbox gesendet wird. Es ist nicht nötig, auf diese E-Mail zu antworten, da qook sie nicht bearbeiten wird. Wenn du jedoch einen Kommentar an den Bewerter richten möchtest, leite bitte stattdessen die E-Mail weiter.
+DISCLAIMER;Diese E-Mail wurde automatisch vom Qook-E-Mail-Postfach versendet. Bitte antworte nicht auf diese E-Mail, da Qook diese Antworten nicht bearbeiten wird. Wenn du der Bewerter:in jedoch einen Kommentar schicken möchtest, leite stattdessen die E-Mail an ihn:sie weiter.
+EMAIL_SENT_SUCCESSFULLY;Erfolgreich versendet!

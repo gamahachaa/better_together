@@ -1,17 +1,13 @@
 KEY;VALUE
-INBOUND;Inbound
-MAIL;E-mail
-CASE;Case
-FAILED_ONLY;Invia solo {{DISAGREE}}
-ALL;Invia tutti gli argomenti
-CC_TM_TL;cc al 
 FROM;da
 TO;a
 BY;da
-OF;per
+OF;su
+you;tu
 HELLO;Salve
-CLOSING;Sincerely yours!
-SENDING;I am sending...
-SENDING_EMAIL;The mail 
-SUBMIT;INVIA
-DISCLAIMER;Questa è un'e-mail automatica inviata dalla casella di posta di qook. Non occorre rispondere a questa e-mail, poiché non sarà trattata da qook. Tuttavia, se desideri inviare un commento alla persona che ha effettuato la valutazione, ti consigliamo di inoltrare l'e-mail.
+CLOSING;Cordiali saluti,
+SENDING;Invio…
+SENDING_EMAIL;l'e-mail
+SUBMIT;INVIARE
+DISCLAIMER;Questa è un'e-mail automatica inviata dalla casella postale di qook. Si prega di non rispondere in quanto non verrà  trattata da qook. Tuttavia, se desideri inviare un commento al valutatore, inoltra l'e-mail.
+EMAIL_SENT_SUCCESSFULLY;E-mail inviata con successo!

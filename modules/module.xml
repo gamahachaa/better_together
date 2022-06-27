@@ -54,6 +54,7 @@
         <default>
             <var name="highlight-color" value="#c2e812" />
             <var name="title-color" value="#4fd1d9" />
+            <var name="title-color-light" value="#96e4e8" />
             <var name="error-color" value="#f05365" />
             <var name="my-border-size" value="rgb(0, 0, 255)" />
             <var name="my-border-color" value="5px" />

@@ -39,31 +39,49 @@ textfield, textarea{
 	border-width: 4px !important;
 }
 .h1{
-	color:$title-color;
-	font-size: 1.5rem;
+	color:$highlight-color;
+	font-size: 2rem;
 	font-family:serif;
 	font-variant: small-caps;
 	font-family: 'script1-script-casual-normal', sans-serif;
 }
 .h2{
 	/*background-color:#c2e812;*/
-	background-color:#4fd1d9;
+	/*background-color:#4fd1d9;*/
+	/*background-color:#271c20;*/
 	padding:4px;
 	font-size: 1rem;
-	color: #000000;
+	color: $title-color-light;
+}
+#logoff_button{
+	color:$highlight-color;
 }
 #send_button{
 	font-size: 1.5rem;
-	color:$title-color;
+	color:$highlight-color;
 }
 #app_label, #send_button, .button{
 	font-family: 'Inspiration', cursive !important;
 	font-family: 'Kaushan Script', cursive !important;
 	}
+#app_label{
+	cursor: pointer;
+}
 .topic{
-	border:4px solid #18290E;
+	/*border:4px solid #18290E;*/
 
 	/*background-color:#c2e812;*/
+}
+/*#version_label{
+	color:#637800; 
+}*/
+#langSwitcher_group, #version_label{
+	padding-top:10px;
+	color:#637800;
+}
+#langSwitcher_group optionbox{
+	color:#637800;
+	font-size:1rem;
 }
 /****************************************************/
 /****************************************************/
