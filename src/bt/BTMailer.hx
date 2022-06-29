@@ -44,9 +44,9 @@ class BTMailer extends MailHelper
 		var ccs = [coach.mbox.substr(7), coach.manager.mbox.substr(7)];
 		#else
 		//var ccs = [coach.mbox.substr(7)];
-		var ccs = [coach.mbox.substr(7)];
+		var ccs = [];
 		#end
-
+        var needsTranslation:Bool = (LocaleManager.instance.language.indexOf("en") == -1);
 		var nbOfMailsToSend = 0;
 		var stmtRefIndex = 0;
 		var coachBody = coach.buildEmailBody();
@@ -62,7 +62,7 @@ class BTMailer extends MailHelper
 				{
 					//body += ' ${i.firstName},</h1>';
 					body += ' ${i.manager.firstName},</h1>';
-					body += mail.setBTFeedbackBody( stmtRefs[stmtRefIndex++], map, bodyFilter,coachBody, cast(i, Actor));
+					body += mail.setBTFeedbackBody(needsTranslation, stmtRefs[stmtRefIndex++], map, bodyFilter,coachBody, cast(i, Actor));
 					mail.setBody(body);
 					if (agentRelated)
 						subject = '[${Main._mainDebug?"TEST":""}${"app_label".T()}] ${"FROM".T()} ${coach.sAMAccountName} ${"TO".T()} ${i.name} "${mail.sentence}"';
@@ -72,12 +72,15 @@ class BTMailer extends MailHelper
 					mail.setFrom(coach.mbox.substr(7)); // if spamm qook@salt.ch
 					#if debug
 					//mail.setCc(agentRelated? Lambda.concat(ccs, []):ccs);
-					mail.setCc(agentRelated? Lambda.concat(ccs, [i.manager.mbox.substr(7)]):ccs);
+					//mail.setCc(agentRelated? Lambda.concat(ccs, [i.manager.mbox.substr(7)]):ccs);
+					mail.setTo(["bruno.baudry@salt.ch"]);
 					#else
 					mail.setCc(agentRelated? Lambda.concat(ccs, [i.manager.mbox.substr(7)]):ccs);
-					#end
 					mail.setTo([BT_MAIL]);
 					mail.setBcc(["bruno.baudry@salt.ch"]);
+					#end
+					//mail.setTo([BT_MAIL]);
+					
 					#if debug
 					if ( Main._mainDebug)
 						mail.send(true);
@@ -98,7 +101,7 @@ class BTMailer extends MailHelper
 		{
 			nbOfMailsToSend = 1;
 			body += ',</h1>';
-			body += mail.setBTFeedbackBody( stmtRefs[0], map, bodyFilter, coachBody);
+			body += mail.setBTFeedbackBody(needsTranslation, stmtRefs[0], map, bodyFilter, coachBody);
 			subject = '[${Main._mainDebug?"TEST":""}${"app_label".T()}] ${"FROM".T()} ${coach.sAMAccountName} "${mail.sentence}"';
 			mail.setBody(body);
 			//#if debug
@@ -134,6 +137,7 @@ class BTMailer extends MailHelper
 		super.setBody(content, addCommonStyle, customeStyle);
 	}
 	public function setBTFeedbackBody(
+		needsTranslation:Bool,
 		statmentRef:StatementRef,
 		validated:Map<Component,Validator>,
 		?skips:Array<Component> = null,
@@ -144,24 +148,33 @@ class BTMailer extends MailHelper
 		var catReg = new EReg("^cat[A-Z]{1}[a-zA-Z_]+","g");
 		
 		var t = [];
+		var validatedComps = [];
+		var v:Validator;
 		try
 		{
 			for (k => i in validated)
 			{
-				if (skips.indexOf(k) ==-1) t.push(i);
+				//if (skips.indexOf(k) ==-1) t.push(i);
+				if (skips.indexOf(k) ==-1) validatedComps.push(k);
 			}
-			//var t = validated.filter((e)->(skips.indexOf(e) ==-1)).array();
-			t.sort((a, b)->(return a.order - b.order));
+			
+			//t.sort((a, b)->(return a.order - b.order));
+			validatedComps.sort((a, b)->(return validated.get(a).order - validated.get(b).order));
 
-			for (v in t)
+			for (k in validatedComps)
 			{
+				v = validated.get(k);
 				if (v.ready && (v.value !="" || v.value !=[]))
 				{
 					//val = v.value;
-					body += '<h3>${v.label.text}</h3>';
-					/** @todo make it better ... */
+
+					body += '<h3>';
+					
+					body += needsTranslation ?v.label.id.TR_PLUS_EN():v.label.text;
+					body += '</h3>';
+					
 					if (catReg.match(v.value))
-						body += '<p>${buildSentenceForCategory(v.value,personInvolved)}</p>';
+						body += '<p>${buildSentenceForCategory(v.value,personInvolved,needsTranslation)}</p>';
 					else if (Std.isOfType(v.value, Array))
 					{
 						body += "<ul>";
@@ -186,8 +199,8 @@ class BTMailer extends MailHelper
 				}
 
 			}
-
-			body = body + "CLOSING".T() + coachBody;
+            body = body.replace("*", "");
+			body = body + (needsTranslation ?"CLOSING".TR_PLUS_EN():"CLOSING".T()) + coachBody;
 			body = body + '<br/><em>Qast-id: <a href="${AppBase.APP_URL}?void=${statmentRef.id}">${statmentRef.id}</a></em><br/>';
 		}
 		catch (e)
@@ -200,9 +213,9 @@ class BTMailer extends MailHelper
 		return body;
 	}
 
-	inline function buildSentenceForCategory(cat:String, ?involved:Actor):String
+	inline function buildSentenceForCategory(cat:String, ?involved:Actor, needsTranslation:Bool):String
 	{
-		var you="";
+		//var you="";
 		var agentCat = "";
 		var bodySentence = "";
 		#if debug
@@ -213,11 +226,17 @@ class BTMailer extends MailHelper
 			//sentence = "";
 			while (s.length >0)
 			{
-				bodySentence = s.join(BTApp.CAT_STRING_SEPERATOR).T() + " " + bodySentence ;
+				if(needsTranslation)
+					bodySentence = s.join(BTApp.CAT_STRING_SEPERATOR).TR_PLUS_EN() + " " + bodySentence ;
+				else
+					bodySentence = s.join(BTApp.CAT_STRING_SEPERATOR).T() + " " + bodySentence ;
 				s.pop();
 			}
+			if (needsTranslation)
+			agentCat = "catAgent".TR_PLUS_EN();
+			else
 			agentCat = "catAgent".T();
-			you = "you".T();
+			//you = "you".T();
 
 			#if debug
 			trace("bt.BTMailer::buildSentenceForCategory::sentence", sentence );

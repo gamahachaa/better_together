@@ -267,7 +267,7 @@ class BTApp extends AppBase
 
 	function loadContent()
 	{
-
+		tests();
 		try
 		{
 
@@ -282,7 +282,7 @@ class BTApp extends AppBase
 				msg.title = "Error !!!";
 				msg.message = 'Hello ${monitoringData.coach.firstName}, it seems that you manager was not found in the Active Directory. In order to function properly, this app need it... Please escalate to your manager to fix this.';
 
-				debugMail.setSubject("[Better together Error] TL not found on logon for " + monitoringData.coach.name );				
+				debugMail.setSubject("[Better together Error] TL not found on logon for " + monitoringData.coach.name );
 				debugMail.setBody("TL not found for <a href='"+ monitoringData.coach.getSimpleEmail()+"'>" + monitoringData.coach.name + "</a> (" +monitoringData.coach.description + ")");
 				debugMail.send(true);
 			}
@@ -331,6 +331,7 @@ class BTApp extends AppBase
 				cast(mainApp.findComponent(l, OptionBox),OptionBox).selected = true;
 				#if debug
 				trace("bt.BTApp::loadContent");
+
 				#end
 			}
 
@@ -339,6 +340,46 @@ class BTApp extends AppBase
 		{
 			trace(e);
 		}
+	}
+
+	function tests()
+	{
+		var map:Map<String,Int> = [];
+		map.set("2deux", 2);
+		map.set("3trois", 3);
+		map.set("1un", 1);
+		trace(map);
+		trace(LocaleManager.instance.language);
+		var m = Lambda.filter( map, e -> e != 1 );
+
+		//var m = map.remove("trois");
+		var k = map.keys();
+		var m:Array<String> = [for (i in k) i ];
+		trace( m);
+		m.sort(function (a, b)
+		{
+			
+			return
+			if (a == b)
+			{
+				trace("equal");
+				0;
+			}
+			else if (a > b)
+			{
+				trace("superior");
+				1;
+			}
+			else
+			{
+				trace("inferiror");
+				-1;
+			}
+		}
+			  );
+
+		//trace(map, m, k);
+		trace( m);
 	}
 
 	function manageComponents()
@@ -592,7 +633,7 @@ class BTApp extends AppBase
 		{
 			if (i.manager == null || i.manager.mbox == "")
 			{
-				if(i.getSimpleEmail() !="") noTL.push(i.getSimpleEmail() + " (" + i.description+")");
+				if (i.getSimpleEmail() !="") noTL.push(i.getSimpleEmail() + " (" + i.description+")");
 			}
 			else
 			{
@@ -1195,6 +1236,9 @@ class BTApp extends AppBase
 		//{
 		super.onLangChanged(e);
 		initCatTree(true);
+		#if debug
+		trace("CLOSING".TR_PLUS_EN());
+		#end
 		/*if (justLoaded)
 		{
 			justLoaded = false;

@@ -68,10 +68,10 @@ catAgent_misbehaviour_noinfo;indem er die Anfrage des Kunden nicht beantwortet h
 catAgent_misbehaviour_winback;indem er eine Kündigung (Winback oder Store) nicht eingegeben hat *
 catAgent_misbehaviour_equipementticket;indem er kein Ticket für die Geräterückgabe erstellt hat *
 
-catProcess;ein Prozess
-catProcess_dysfunction;funktioniert nicht.
-catProcess_wrongdocumentation;ist falsch dokumentiert.
-catProcess_nodocumentation;benötigt eine Qook-Dokumentation.
+catProcess;ein Prozess 
+catProcess_dysfunction;,in Qoom/Qoof, funktioniert nicht.
+catProcess_wrongdocumentation;,in Qoom/Qoof, ist falsch dokumentiert oder nicht verständlich.
+catProcess_nodocumentation;benötigt eine Qoom:Qoof-Dokumentation.
 catTool;ein Tool
 catTool_missingfunk;verfügt nicht über eine bestimmte Funktion.
 catTool_access;verweigert mir die Anmeldung.;
@@ -95,10 +95,11 @@ void_type_of_query;Schlechter Antrag.
 void_not_allowed;Du bist nicht berechtigt, dieses Better Together zu stornieren!
 
 action_label;Main reason
+action_bt_wrongly_filed_in;BT falsch eingegeben
 action_coaching;Coaching
 action_grouptraining;Group Training 
-action_warning;Warning 
-action_dismissal;Dismissal 
+action_warning;Warning given to agent
+action_dismissal;Dismissal  
 action_leaver;Leaver 
 action_wrongagent;Wrong agent (invalidate)
 action_nomistake;No mistake made (invalidate)

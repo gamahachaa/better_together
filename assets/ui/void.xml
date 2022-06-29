@@ -18,6 +18,7 @@
 		<group id="void_action_group" layout="VerticalLayout">
 			<optionbox text="{{action_coaching}}" id="action_coaching" styleName="radio_btn" />
 			<optionbox text="{{action_grouptraining}}" id="action_grouptraining" styleName="radio_btn" />
+			<optionbox text="{{action_bt_wrongly_filed_in}}" id="action_warning" styleName="radio_btn" />
 			<optionbox text="{{action_warning}}" id="action_warning" styleName="radio_btn" />
 			<optionbox text="{{action_dismissal}}" id="action_dismissal" styleName="radio_btn" />
 			<optionbox text="{{action_leaver}}" id="action_leaver" styleName="radio_btn" />

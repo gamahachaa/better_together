@@ -75,10 +75,10 @@ catAgent_misbehaviour_noinfo;not answering the customer's query. *
 catAgent_misbehaviour_winback;not entering a termination (Winback or Store) *
 catAgent_misbehaviour_equipementticket;not creating Equipment Return ticket *
 
-catProcess;a process
-catProcess_dysfunction;is not working. *
-catProcess_wrongdocumentation;is wrongly documented. *
-catProcess_nodocumentation;needs a qook documentation. *
+catProcess;a process 
+catProcess_dysfunction;, in Qoom/Qoof, is not working. *
+catProcess_wrongdocumentation;, in Qoom/Qoof, is wrongly documented or not understandable. *
+catProcess_nodocumentation;needs a Qoom/Qoof documentation. *
 
 catTool;a tool
 catTool_missingfunk;is missing a functionality. *
@@ -104,6 +104,7 @@ void_type_of_query;Wrong request.
 void_not_allowed;You are not allowed to cancel this Better Together!
 
 action_label;Main reason
+action_bt_wrongly_filed_in;BT wrongly filled in
 action_coaching;Coaching
 action_grouptraining;Group Training 
 action_warning;Warning 

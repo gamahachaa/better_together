@@ -70,9 +70,9 @@ catAgent_misbehaviour_noinfo;non ha risposto alla richiesta del cliente. *
 catAgent_misbehaviour_winback;non ha registrando una terminazione (Winback o Store) *
 catAgent_misbehaviour_equipementticket;non creando il biglietto di restituzione dell'attrezzatura *
 
-catProcess;un processo
+catProcess;un processo (Qoom / Qoof)
 catProcess_dysfunction;non funziona. *
-catProcess_wrongdocumentation;contiene errori nella documentazione. *
+catProcess_wrongdocumentation;contiene errori nella documentazione o non comprensibile. *
 catProcess_nodocumentation;ha bisogno di una documentazione su qook. *
 catTool;uno strumento
 catTool_missingfunk;è privo di una funzionalità. *
@@ -97,6 +97,7 @@ void_type_of_query;Richiesta errata.
 void_not_allowed;Non puoi cancellare questo articolo Better Together!
 
 action_label;Main reason
+action_bt_wrongly_filed_in;BT sbagliata
 action_coaching;Coaching
 action_grouptraining;Group Training 
 action_warning;Warning 

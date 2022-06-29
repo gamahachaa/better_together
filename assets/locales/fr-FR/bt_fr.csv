@@ -78,9 +78,9 @@ catAgent_misbehaviour_equipementticket;n'a pas créé de ticket de retour d'équ
 
 catProcess;un processus
 
-catProcess_dysfunction;ne fonctionne pas. *
-catProcess_wrongdocumentation;est mal documenté. *
-catProcess_nodocumentation;a besoin d'une documentation sur qook. *
+catProcess_dysfunction;, de Qoom ou Qoof, ne fonctionne pas. *
+catProcess_wrongdocumentation;, de Qoom ou Qoof, est mal documenté ou pas comprehensible. *
+catProcess_nodocumentation;a besoin d'une documentation sur Qoom ou Qoof. *
 
 catTool;un outil
 
@@ -107,6 +107,7 @@ void_type_of_query;Mauvaise requête.
 void_not_allowed;Tu n'est pas autorisé à corriger ce Better Together !
 
 action_label;Main reason
+action_bt_wrongly_filed_in;BT mal rempli
 action_coaching;Coaching
 action_grouptraining;Group Training 
 action_warning;Warning 
