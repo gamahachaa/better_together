@@ -32,6 +32,7 @@ class VoidApp extends AppBase
 	var reviewer:Agent;
 	var instructor:Agent;
 	var reviewdAgentTl:String;
+	var reviewdAgentTl_mbox:String;
 	var void_action_group:Group;
 	var action:String;
 
@@ -40,6 +41,8 @@ class VoidApp extends AppBase
 		Toolkit.theme = "dark";
 		super(VoidMailer, BTTracker, "better_together");
 		action = "";
+		reviewdAgentTl = "";
+		reviewdAgentTl_mbox = "";
 		gotStoredStatement = false;
 		this.whenAppReady = loadContent;
 		init();
@@ -63,8 +66,10 @@ class VoidApp extends AppBase
 			{
 				//var voidId = xapitracker.statementsRefs[0];
 				cast(mailHelper, VoidMailer).buildBody( void_statement_id, xapitracker.statementsRefs[0].id, monitoringData.coach, void_comment, action);
-
-				mailHelper.setCc([instructor.getSimpleEmail(), monitoringData.coach.getSimpleEmail()]);
+				if (reviewdAgentTl_mbox != "")
+					mailHelper.setCc([instructor.getSimpleEmail(), monitoringData.coach.getSimpleEmail(), reviewdAgentTl_mbox]);
+				else
+					mailHelper.setCc([instructor.getSimpleEmail(), monitoringData.coach.getSimpleEmail()]);
 
 				//mailHelper.setBody(body);
 				sendEmail();
@@ -82,6 +87,7 @@ class VoidApp extends AppBase
 					reviewer = Agent.FROM_JSON( Reflect.field(xapitracker.statementJson, "actor"));
 					instructor = Agent.FROM_JSON( Reflect.field(Reflect.field(xapitracker.statementJson, "context"), "instructor"));
 					reviewdAgentTl = Reflect.field(Reflect.field(Reflect.field(xapitracker.statementJson, "context"), "extensions"), "https://ad.salt.ch/agent/manager/");
+					reviewdAgentTl_mbox = Reflect.field(Reflect.field(Reflect.field(xapitracker.statementJson, "context"), "extensions"), "https://ad.salt.ch/agent/manager_mbox/");
 					if (isCoachAllowed([reviewer.name, instructor.name, reviewdAgentTl, "dgrzeski"]))
 					{
 						#if debug
@@ -98,7 +104,7 @@ class VoidApp extends AppBase
 						storingBT.message = "{{void_not_allowed}}";
 						//storingBT.disabled = false;
 						storingBT.showDialog(true);
-						
+
 					}
 
 				}
@@ -112,7 +118,7 @@ class VoidApp extends AppBase
 					storingBT.message = "{{void_type_of_query}}";
 					//storingBT.disabled = false;
 					storingBT.showDialog(true);
-					
+
 				}
 			}
 		}
@@ -125,7 +131,7 @@ class VoidApp extends AppBase
 			storingBT.message = "{{void_unknown_error}}";
 			//storingBT.disabled = false;
 			storingBT.showDialog(true);
-			
+
 		}
 	}
 
@@ -147,7 +153,7 @@ class VoidApp extends AppBase
 			void_statement_id_textfield = mainApp.findComponent("void_statement_id_textfield", TextField);
 			void_comment_textarea = mainApp.findComponent("void_comment_textarea", TextArea);
 			void_action_group = mainApp.findComponent("void_action_group", Group);
-			void_action_group.onChange = function (e){action = e.target.id ; };
+			void_action_group.onChange = function (e) {action = e.target.id ; };
 			void_statement_id_textfield.text = Main.PARAMS.get(Params.VOID);
 			this.prepareHeader();
 			app.addComponent( mainApp );
@@ -158,7 +164,6 @@ class VoidApp extends AppBase
 			//storingBT.backgroundImage = preloader.resource;
 			storingBT.destroyOnClose = false;
 			storingBT.draggable = false;
-			
 
 		}
 		catch (e)
@@ -168,10 +173,17 @@ class VoidApp extends AppBase
 	}
 	function reset(?initial:Bool = true)
 	{
-		 void_statement_id = void_statement_id_textfield.text ="";
-		 void_comment = void_comment_textarea.text = "";
-		 mainApp.removeComponent(preloader);
-		 storingBT.disabled = false;
+		void_statement_id = void_statement_id_textfield.text ="";
+		void_comment = void_comment_textarea.text = "";
+		mainApp.removeComponent(preloader);
+		storingBT.disabled = false;
+		gotStoredStatement = false;
+		reviewdAgentTl = "";
+		reviewdAgentTl_mbox = "";
+		reviewdAgentTl = "";
+		reviewer = null;
+		instructor = null;
+
 	}
 	override function onSend(e)
 	{
@@ -180,7 +192,7 @@ class VoidApp extends AppBase
 		storingBT.title = "Warning !";
 		storingBT.message = "";
 		var error = false;
-		
+
 		if (void_statement_id == "" || !ExpReg.UUID.STRING_TO_REG("gi").match( void_statement_id ))
 		{
 			//show error dialog
@@ -193,7 +205,7 @@ class VoidApp extends AppBase
 			storingBT.message += "void_incorrect_id".T();
 			storingBT.message += "\n\n";
 			error = true;
-	
+
 		}
 		if (action == "")
 		{
@@ -223,8 +235,8 @@ class VoidApp extends AppBase
 			error = true;
 			//storingBT.showDialog(true);
 		}
-		
-		if(error == false)
+
+		if (error == false)
 		{
 			//get statement
 			this.xapitracker.getStatementById( void_statement_id );
@@ -236,7 +248,7 @@ class VoidApp extends AppBase
 			trace("bt.VoidApp::onSend getStatementById");
 			#end
 		}
-		
+
 		storingBT.showDialog(true);
 	}
 	/*override function onTracking(success:Bool)
@@ -260,14 +272,15 @@ class VoidApp extends AppBase
 	{
 		//var tracker:BTTracker = cast(xapitracker, BTTracker);
 		var ext =  [
-		"https://qook.salt.ch/better_together/reasons_description_defect" => void_comment,
-		"https://qook.salt.ch/better_together/action_taken" => action
-		];
-		switch (action){
+					   "https://qook.salt.ch/better_together/reasons_description_defect" => void_comment,
+					   "https://qook.salt.ch/better_together/action_taken" => action
+				   ];
+		switch (action)
+		{
 			case "action_nomistake" : this.xapitracker.voidStatement( void_statement_id, new Agent(monitoringData.coach.mbox, monitoringData.coach.sAMAccountName), ext);
 			case "action_wrongagent" : this.xapitracker.voidStatement( void_statement_id, new Agent(monitoringData.coach.mbox, monitoringData.coach.sAMAccountName), ext);
 			case _ :
-		this.xapitracker.updateStatement( void_statement_id, new Agent(monitoringData.coach.mbox, monitoringData.coach.sAMAccountName), ext);
+				this.xapitracker.updateStatement( void_statement_id, new Agent(monitoringData.coach.mbox, monitoringData.coach.sAMAccountName), ext);
 		}
 	}
 }

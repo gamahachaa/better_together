@@ -28,7 +28,8 @@ class BTAgregator extends Agregator
 		super(new LLAccess(ll));
 
 	}
-	/*public function getBasicTMThisMonth(nt:String)
+	
+	/*public function getBasicBTThisMonth(nt:String)
 	{
 		#if debug
 		trace("http.Agregator::getBasicTMThisMonth::nt", nt );
@@ -39,7 +40,7 @@ class BTAgregator extends Agregator
 			if (tmsMentored == null)
 			{
 				
-				tmsMentored = new TMMentored(nt);
+				tmsMentored = new BTReviewd(nt);
 			}
 			else
 			{
@@ -53,8 +54,9 @@ class BTAgregator extends Agregator
 			trace(e);
 		}
 
-	}
-	public function getDirectReportsTMThisMonth(list:Array<roles.Actor>)
+	}*/
+	
+	/*public function getDirectReportsTMThisMonth(list:Array<roles.Actor>)
 	{
 		#if debug
 		trace("http.Agregator::getBasicTMThisMonth::list", list );

@@ -69,6 +69,7 @@ class BTTracker extends XapiHelper
 			//ext = context.extensions.copy();
 			//exTemp.set("https://ad.salt.ch/agent/manager/", manager);
 			ctxt.extensions.set("https://ad.salt.ch/agent/manager/", i.manager.name);
+			ctxt.extensions.set("https://ad.salt.ch/agent/manager_mbox/", i.manager.getSimpleEmail());
 			//object = new Agent(i.mbox, i.sAMAccountName);
 			stmts.push( new Statement(who, verb, new Agent(i.mbox, i.sAMAccountName), null, ctxt));
 		}

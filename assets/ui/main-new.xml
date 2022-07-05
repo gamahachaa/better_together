@@ -25,7 +25,7 @@
 					width="50%" />
 				<tree-view id="reasons_categories_tree"
 					height="92%"
-					width="60%" />
+					width="65%" />
 			</vbox>
 			<hbox id="reasons_description_box"
 				height="45%"
@@ -94,7 +94,9 @@
 						height="80%"
 						width="50%" />
 				</vbox>
-				<vbox id="details_product_box"
+				<vbox width="25%"
+					height="100%">
+					<vbox id="details_product_box"
 						height="50%"
 						width="100%">
 						<label id="details_product_label"
@@ -107,6 +109,44 @@
 							dropdownWidth="200"
 							dropdownHeight="220"
 							text="{{details_product_dropdown}}" />
+					</vbox>
+					<vbox id="details_datetime_box"
+						height="50%"
+						width="100%">
+						<label id="details_datetime_label"
+							text="{{details_datetime_label}}"
+							styleName="h2"
+							height="20%"
+							width="100%" />
+						<dropdown id="details_datetime_dropdown"
+							type="date"
+							width="200"
+							dropdownWidth="200"
+							dropdownHeight="220"
+							text="{{details_product_dropdown}}" />
+						<hbox width="100%" height="20%">
+							<label text=" "
+								styleName="h4" />
+							<number-stepper pos="00"
+								step="1"
+								min="00"
+								max="23"
+								width="55px"
+								id="TRANSACTIONWHENHOURS"
+								allowFocus="true" />
+							<label text="H"
+								styleName="h4" />
+							<number-stepper pos="00"
+								step="5"
+								min="00"
+								max="55"
+								width="55px"
+								id="TRANSACTION_WHEN_MINUTES"
+								allowFocus="true" />
+							<label text="S"
+								styleName="h4" />
+						</hbox>
+					</vbox>
 				</vbox>
 			</hbox>
 			<hbox id="details_sub_box"
