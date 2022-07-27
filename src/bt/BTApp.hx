@@ -549,6 +549,8 @@ class BTApp extends AppBase
 		reasons_categories_label = mainApp.findComponent("reasons_categories_label", Label);
 		reasons_description_defect_label = mainApp.findComponent("reasons_description_defect_label", Label);
 		reasons_description_fix_label = mainApp.findComponent("reasons_description_fix_label", Label);
+		reasons_description_defect_label.onClick = (e)->(markdownHelper.showDialog(true));
+		reasons_description_fix_label.onClick = (e)->(markdownHelper.showDialog(true));
 		details_label = mainApp.findComponent("details_label", Label);
 		details_customer_id_label = mainApp.findComponent("details_customer_id_label", Label);
 		details_customer_so_label = mainApp.findComponent("details_customer_so_label", Label);
@@ -1004,7 +1006,8 @@ class BTApp extends AppBase
 			order: 6,
 			label: reasons_description_defect_label,
 			alert: reasons_description_defect_textarea_alert.T(),
-			value: '"$v"'.lineFeedToHTMLbr(),
+			//value: '"$v"'.lineFeedToHTMLbr(),
+			value: Markdown.markdownToHtml(v),
 			ready: v != ""
 		}
 							   );
@@ -1017,7 +1020,8 @@ class BTApp extends AppBase
 			order: 7,
 			label: reasons_description_fix_label,
 			alert: reasons_description_fix_textarea_alert.T(),
-			value: '"$v"'.lineFeedToHTMLbr(),
+			//value: '"$v"'.lineFeedToHTMLbr(),
+			value: Markdown.markdownToHtml(v),
 			ready: v != ""
 		}
 							   );

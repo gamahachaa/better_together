@@ -2,6 +2,7 @@ package bt;
 import bt.BTMailer;
 import bt.BTTracker;
 import haxe.ui.Toolkit;
+import haxe.ui.components.Label;
 import haxe.ui.components.OptionBox;
 import haxe.ui.components.TextArea;
 import haxe.ui.components.TextField;
@@ -88,7 +89,7 @@ class VoidApp extends AppBase
 					instructor = Agent.FROM_JSON( Reflect.field(Reflect.field(xapitracker.statementJson, "context"), "instructor"));
 					reviewdAgentTl = Reflect.field(Reflect.field(Reflect.field(xapitracker.statementJson, "context"), "extensions"), "https://ad.salt.ch/agent/manager/");
 					reviewdAgentTl_mbox = Reflect.field(Reflect.field(Reflect.field(xapitracker.statementJson, "context"), "extensions"), "https://ad.salt.ch/agent/manager_mbox/");
-					if (isCoachAllowed([reviewer.name, instructor.name, reviewdAgentTl, "dgrzeski"]))
+					if (isCoachAllowed([reviewer.name, instructor.name, reviewdAgentTl, "dgrzeski","yschwab","dgonzale","erichter"]))
 					{
 						#if debug
 						trace("bt.VoidApp::onXapi can void");
@@ -151,6 +152,8 @@ class VoidApp extends AppBase
 			if (loginApp != null) app.removeComponent(loginApp);
 			this.mainApp = ComponentMacros.buildComponent("assets/ui/void.xml");
 			void_statement_id_textfield = mainApp.findComponent("void_statement_id_textfield", TextField);
+			var void_comment_label = mainApp.findComponent("void_comment_label", Label);
+			void_comment_label.onClick = (e)->markdownHelper.showDialog(true);
 			void_comment_textarea = mainApp.findComponent("void_comment_textarea", TextArea);
 			void_action_group = mainApp.findComponent("void_action_group", Group);
 			void_action_group.onChange = function (e) {action = e.target.id ; };

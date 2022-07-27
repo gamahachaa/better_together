@@ -168,7 +168,7 @@ class BTTracker extends XapiHelper
 			Std.string(v.value);
 		}
 
-		var key:String = if (ExpReg.CONTRACTOR_PIPE_ARRAY_EREG.STRING_TO_REG("gi").match(value))
+		/*var key:String = if (ExpReg.CONTRACTOR_PIPE_ARRAY_EREG.STRING_TO_REG("gi").match(value))
 		{
 			"https://vti.salt.ch";
 		}
@@ -185,7 +185,10 @@ class BTTracker extends XapiHelper
 			getActivityIRI("") + Lambda.filter(componentID.split(BTApp.CAT_STRING_SEPERATOR),
 			(e)->(return compTypes.indexOf(e) ==-1))
 			.join(BTApp.CAT_STRING_SEPERATOR);
-		}
+		}*/
+		var key:String = getActivityIRI("") + Lambda.filter(componentID.split(BTApp.CAT_STRING_SEPERATOR),
+			(e)->(return compTypes.indexOf(e) ==-1))
+			.join(BTApp.CAT_STRING_SEPERATOR);
 		return {key:key, value:value};
 	}
 	public function setContext(

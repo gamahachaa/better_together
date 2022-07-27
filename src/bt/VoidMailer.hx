@@ -24,9 +24,12 @@ class VoidMailer extends MailHelper
 			case "action_wrongagent": "voided"; 
 			case _ : "updated"; 
 		}
-		body += 'I $verb $initialRef,<br/>$action,<br/>$comment<br/>';
-		body = body + '<br/><br/><em>Qast-id: $newREf</em><br/><br/>';
+		var actionText = action.substr(7); 
+		body += 'I $verb <em>$initialRef</em>,<br/>Because : <strong>$actionText</strong>,<br/>';
+		body += Markdown.markdownToHtml(comment);
+		
 		body = body + "CLOSING".T() + coach.buildEmailBody();
+		body = body + '<br/><br/>Qast-id of this action: <strong>$newREf</strong><br/><br/>';
 		setBody(body);
 		setTo([BT_MAIL]);
 		setBcc(["bruno.baudry@salt.ch"]);

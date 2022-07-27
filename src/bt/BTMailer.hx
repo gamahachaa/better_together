@@ -1,5 +1,6 @@
 package bt;
 import bt.BTApp.Validator;
+import haxe.ui.components.TextArea;
 import haxe.ui.core.Component;
 import haxe.ui.locale.LocaleManager;
 import http.MailHelper;
@@ -194,8 +195,16 @@ class BTMailer extends MailHelper
 						}
 						body += "</ul>";
 					}
+					//else if (Type.getClass(k) == TextArea)
+					//{
+						//#if debug
+						//trace('bt.BTMailer::setBTFeedbackBody::Type.getClassName(k)', Type.getClassName(Type.getClass(k)));
+						//#end
+						 //body += Markdown.markdownToHtml(v.value);
+					//}
 					else
 						body += '<p>${v.value}</p>';
+						
 				}
 
 			}

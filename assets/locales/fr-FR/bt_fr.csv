@@ -112,7 +112,7 @@ action_coaching;Coaching
 action_grouptraining;Group Training 
 action_warning;Warning 
 action_dismissal;Dismissal 
-action_leaver;Leaver 
+action_leaver;Leaver (SST seulement)
 action_wrongagent;Wrong agent (invalidate)
 action_nomistake;No mistake made (invalidate)
 action_needed;Tu dois sélectionner une raison principale !

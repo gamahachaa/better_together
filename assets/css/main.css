@@ -26,7 +26,10 @@ EFFBB8 grayish pink2
    drop-shadow(DISTANCE, ANGLE, COLOR, ALPHA, blurX, blurY, strength, quality, inner);
    drop-shadow(1, 45, #000000, 1, 4, 2, 1, 3, false);
 */
-
+#reasons_description_defect_label, #reasons_description_fix_label, #void_comment_label
+{
+	cursor:help;
+}
 #main{
 	background-color: #000000;
 	padding-left:8px;

@@ -1,3 +1,4 @@
+#reasons_description_defect_label,#reasons_description_fix_label,#void_comment_label{cursor:help;}
 #main{background-color:#000000;padding-left:8px;padding-right:8px;}
 .alert{border-color:$highlight-color;}
 textfield,textarea{border-width:4px!important;}
