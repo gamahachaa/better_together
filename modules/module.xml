@@ -6,6 +6,9 @@
 		<resource path="/assets/locales"
 				  prefix="locale"
 				  />
+		<resource path="/assets/data"
+				  prefix="data"
+				  />
 	</resources>
 	<locales path="locale/">
 		<locale id="en">

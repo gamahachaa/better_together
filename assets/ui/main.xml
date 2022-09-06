@@ -178,7 +178,7 @@
 						contentWidth="100%">
 						<header width="100%">
 							<column id="selected"
-								text="X"
+								text="☑"
 								width="5%"
 								style="text-align:center;" />
 							<column id="mail"

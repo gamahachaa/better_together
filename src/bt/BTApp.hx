@@ -1,4 +1,6 @@
 package bt;
+import format.csv.Data.Record;
+import format.csv.Reader;
 import haxe.Exception;
 import haxe.ds.StringMap;
 import haxe.ui.Toolkit;
@@ -86,9 +88,11 @@ class BTApp extends AppBase
 				"catAgent_answering" => [
 					'catAgent_answering_stateoftheart',
 					'catAgent_answering_wronginfo',
+					'catAgent_answering_wronginfocontract',
 					'catAgent_answering_wrongoto',
 					'catAgent_answering_wrongpp',
 					'catAgent_answering_wrongoption',
+					'catAgent_answering_wrongcaraactivation',
 					'catAgent_answering_noret',
 					'catAgent_answering_storeredirect',
 					'catAgent_answering_insuficientlangskills'
@@ -155,6 +159,7 @@ class BTApp extends AppBase
 	var allSelected:Bool;
 	var justLoaded:Bool;
 	var debugMail:http.MailHelper;
+	var external_dealers:Array<Record>;
 	//static inline var NEW_LINE:String = "\n";
 	public static inline var CAT_AGENT:String = "catAgent";
 	public static inline var CAT_PROCESS:String = "catProcess";
@@ -173,13 +178,24 @@ class BTApp extends AppBase
 	public function new( )
 	{
 		Toolkit.theme = "dark";
+
 		super(BTMailer, BTTracker, "better_together");
 		allSelected = false;
 		this.whenAppReady = loadContent;
 		init();
 		justLoaded = true;
 		//app.ready(onAppReady);
+		//Toolkit.assets.getText("data/dealers.csv");
 
+		external_dealers = Reader.parseCsv(Toolkit.assets.getText("data/dealers.csv"),";");
+		//trace(Lambda.find(external_dealers, (e:Record)->(e[0] == "100291")));
+		//trace(Lambda.find(external_dealers, (e:Record)->(e[0] == "115633")));
+		//trace(Lambda.find(external_dealers, (e:Record)->(e[0] == "999999")));
+		//for (i in external_dealers)
+		//{
+		//trace(i, i[0],i[1]);
+		//
+		//}
 	}
 	function reset(?initial:Bool=true)
 	{
@@ -358,9 +374,9 @@ class BTApp extends AppBase
 		trace( m);
 		m.sort(function (a, b)
 		{
-			
+
 			return
-			if (a == b)
+				if (a == b)
 			{
 				trace("equal");
 				0;
@@ -599,13 +615,19 @@ class BTApp extends AppBase
 		details_tools_dropdown.dataSource.add({text:"Transaction monitoring", value:"https://qook.salt.ch/tm"});
 	}
 
-	function onManyFound(many:Array<Actor>, rejected:Array<String>, notFound:Int):Void
+	//function onManyFound(many:Array<Actor>, rejected:Array<String>, notFound:Int):Void
+	function onManyFound(many:Array<Actor>, rejected:Array<String>, leavers:Array<Actor>):Void
 	{
 		//if (rejected.length > 0 || notFound > 0)
 		var noTL = [];
+		var leaversNts = Lambda.map(leavers,(e)->(e.sAMAccountName));
 		if (rejected.length > 0 )
 		{
 			var stores = Lambda.filter(rejected, (e:String)->(return e.toLowerCase().indexOf("sst_") == 0));
+			var indirects = Lambda.filter(rejected, (e:String)->(return ExpReg.SAP_DEALER_CODE.STRING_TO_REG().match(e) && Lambda.exists(external_dealers,(r)->(r[0]==e))));
+			//trace(indirects);
+			//trace(Lambda.exists(external_dealers,(r)->(r[0]=="100291")));
+			//var indirect = Lambda.filter(rejected, (e:String)->(return Lambda.filter(external_dealers, (d:Record)->(d[0]) e.STRING_TO_REG(SAP_DEALER_CODE) == 0));
 
 			if (stores.length > 0)
 			{
@@ -613,20 +635,30 @@ class BTApp extends AppBase
 
 				many = Lambda.concat(many, Lambda.map(stores, mapStoresEmailToActor));
 			}
-			#if debug
-			trace("bt.BTApp::onManyFound::many", many );
-			#end
-			#if debug
-			trace("bt.BTApp::onManyFound::rejected", rejected );
-			trace("bt.BTApp::onManyFound::notFound", notFound );
-			#end
-			if (rejected.length > 0 ) showErrorDialog(rejected);
+			if (indirects.length > 0)
+			{
+				rejected =  Lambda.filter(rejected,
+										  (e:String)->( return !(ExpReg.SAP_DEALER_CODE.STRING_TO_REG().match(e) && Lambda.exists(external_dealers, (r)->(r[0] == e))))
+										 );
+				many = Lambda.concat(many, Lambda.map(indirects, mapIndirect));
+			}
+
 			//var mb = new MessageBox();
 			//mb.type = MessageBoxType.TYPE_WARNING;
 			//mb.title = "search_many_agent_error_title".T();
 			//mb.message = "search_many_agent_error_content".T(rejected.length, rejected.join("\n"));
 			//mb.showDialog(true);
 		}
+		#if debug
+		trace("bt.BTApp::onManyFound::many", many );
+		#end
+		#if debug
+		trace("bt.BTApp::onManyFound::rejected", rejected );
+		//trace("bt.BTApp::onManyFound::notFound", notFound );
+		#end
+		if (rejected.length > 0 || leaversNts.length > 0 ) showErrorDialog( rejected, leaversNts );
+		
+		
 		details_person_selector_display_tableview.dataSource.clear();
 		details_person_selector_display_label.text = "details_person_selector_display_label".T();
 		details_person_selector_display_tableview.hidden = false;
@@ -657,7 +689,7 @@ class BTApp extends AppBase
 			var body = "Hi Master,<br/>";
 			body += monitoringData.coach.name + " searched, but I could not help and got missing infos for : <br/>" ;
 
-			showErrorDialog(noTL,true);
+			showErrorDialog(noTL,[],true);
 			body += "Missing TL for : " + noTL.join("; ");
 
 			body += "<br/>sorry for the disapointment, I am just a piece of code<br/>BT app";
@@ -666,6 +698,30 @@ class BTApp extends AppBase
 
 		}
 
+	}
+
+	function mapIndirect(s:String)
+	{
+		var name = s;
+		var indi = Lambda.find(external_dealers, (e:Record)->(e[0] == s));
+		var mail = indi[1];
+		var mailName = indi[1].split("@")[0].split(".");
+		var bossFirst = mailName[0];
+		var bossLast = mailName[1];
+		return new Actor(
+		{
+			mail:indi[0]+"@" + indi[2] + ".ch",
+			samaccountname:indi[2] + "(" + indi[0] +")",
+			givenname: indi.join(" "),
+			sn:indi[2],
+
+			boss:{
+				mail:indi[1],
+				samaccountname: bossFirst.substr(0,1) + bossLast.substr(0, 7),
+				givenname:bossFirst + " " + bossLast,
+				sn:bossFirst
+			}
+		});
 	}
 	function mapStoresEmailToActor(s:String)
 	{
@@ -688,15 +744,23 @@ class BTApp extends AppBase
 		});
 		//return a;
 	}
-	function showErrorDialog(rejected:Array<String>, ?tl:Bool=false)
+	function showErrorDialog(rejected:Array<String>, leavers:Array<String>, ?tl:Bool=false)
 	{
 		var mb = new MessageBox();
 		mb.type = MessageBoxType.TYPE_WARNING;
 		mb.title = "search_many_agent_error_title".T();
+		mb.message = "";
 		if (tl)
-			mb.message = "search_many_agent_error_content".T(rejected.length, rejected.join("\n"));
-		else
 			mb.message = "search_many_tl_error_content".T(rejected.length, rejected.join("\n"));
+		else
+		{
+			if (rejected.length > 0)
+				mb.message += "search_many_agent_error_content".T(rejected.length, rejected.join("\n"));
+			if (rejected.length > 0 && leavers.length > 0)   mb.message += "\n\n";
+			
+			if (leavers.length > 0)
+				mb.message += "search_many_agent_leaver_content".T(leavers.length, leavers.join("\n"));
+		}
 		mb.showDialog(true);
 	}
 	function onTreeChanged(e:UIEvent):Void
@@ -1099,9 +1163,11 @@ class BTApp extends AppBase
 					'catAgent_misbehaviour_equipementticket'|
 					'catAgent_answering_stateoftheart'|
 					'catAgent_answering_wronginfo'|
+					'catAgent_answering_wronginfocontract'|
 					'catAgent_answering_wrongoto'|
 					'catAgent_answering_wrongpp'|
 					'catAgent_answering_wrongoption'|
+					'catAgent_answering_wrongcaraactivation'|
 					'catAgent_answering_noret' |
 					"catAgent_misbehaviour_noinfo"
 					: [

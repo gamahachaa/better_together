@@ -56,9 +56,11 @@ catAgent_ticket_notool;mentre invece avrebbe dovuto usare lo strumento appropria
 catAgent_answering;ha risposto alla richiesta del cliente
 catAgent_answering_stateoftheart;e ha fatto un lavoro fantastico! *
 catAgent_answering_wronginfo;ma ha dato informazioni errate. *
+catAgent_answering_wronginfocontract;ma ha fornito informazioni false sul contratto (accessori/surf). *
 catAgent_answering_wrongoto;ma non ha compilato correttamente l'OTO ID
 catAgent_answering_wrongpp;ma ha indicato il piano tariffario sbagliato. *
 catAgent_answering_wrongoption;ma ha indicato un'opzione/un pacchetto sbagliato. *
+catAgent_answering_wrongcaraactivation;ma ha attivato l'opzione Cura a sua insaputa. *
 catAgent_answering_noret;ma ha fatto un nuovo ordine invece di fare un rinnovo. *
 catAgent_answering_storeredirect;e lo ha erroneamente reindirizzato allo Store *
 catAgent_answering_insuficientlangskills;senza possedere sufficienti competenze linguistiche *
@@ -78,7 +80,8 @@ catTool;uno strumento
 catTool_missingfunk;è privo di una funzionalità. *
 catTool_access;non mi fa accedere; *
 search_many_agent_error_title;Errore nella ricerca di persone.
-search_many_agent_error_content;{0} agente/i non trovato/i: {1}.;
+search_many_agent_error_content;{0} agente/i non trovato/i: {1}.
+search_many_agent_leaver_content;{0} gli agente/i non lavorano più con noi: {1}.
 search_many_tl_error_content;{0} agente/i TL non trovato/i: {1}.;
 warn_several_cases_title;Stai cercando di segnalare diversi casi/clienti a diversi agenti.
 warn_several_cases_message;"Sappi che questo creerà lo stesso numero di entrate nel rapporto rispetto al numero di persone selezionate; invece, se hai inserito diversi numeri di ticket o diversi ID cliente, essi figureranno nella stessa entrata. <br/>In altre parole, ognuna delle persone selezionate riceverà un Better Together che includerà tutti i casi/clienti che hai elencato qui.<br/>Se desideri inviare un insieme di Better Together con diversi casi a diversi agenti, contatta <a href=""mailto:better_together@salt.ch"">better_together@salt.ch</a> per ottenere le istruzioni per una procedura speciale."

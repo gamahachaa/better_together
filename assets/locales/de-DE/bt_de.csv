@@ -54,9 +54,12 @@ catAgent_ticket_notool;hätte stattdessen aber das dedizierte Tool verwenden sol
 catAgent_answering;hat die Kundenanfrage beantwortet und
 catAgent_answering_stateoftheart;tolle Arbeit geleistet! *
 catAgent_answering_wronginfo;die falschen Informationen mitgeteilt. *
+catAgent_answering_wronginfocontract;aber er hat falsche Informationen über den Vertrag (Zubehör/Surf) gegeben. 
+catAgent_answering_wrongcaraactivation;aber er hat die Option Pflege ohne seine Zustimmung aktiviert. *
 catAgent_answering_wrongoto;bei Angabe der OTO ID einen Fehler gemacht.
 catAgent_answering_wrongpp;einen falschen Preisplan vorgeschlagen. *
 catAgent_answering_wrongoption;die falsche Option/das falsche Paket vorgeschlagen. *
+catAgent_answering_wrongcaraactivation;but he activated the Care option without his consent. *
 catAgent_answering_noret;einen Neuvertrag statt einer Vertragsverlängerung abgeschlossen. *
 catAgent_answering_storeredirect;hat die Kund:in fälschlicherweise zum Store geschickt *
 catAgent_answering_insuficientlangskills;verfügte nicht über ausreichende Sprachkenntnisse *
@@ -76,7 +79,8 @@ catTool;ein Tool
 catTool_missingfunk;verfügt nicht über eine bestimmte Funktion.
 catTool_access;verweigert mir die Anmeldung.;
 search_many_agent_error_title;Fehler bei der Suche nach einer Person.
-search_many_agent_error_content;{0} Agent(en) konnten nicht gefunden werden: {1}.;
+search_many_agent_error_content;{0} Agent(en) konnten nicht gefunden werden: {1}.
+search_many_agent_leaver_content;{0} Agent(en) arbeitet(en) nicht mehr mit uns zusammen: {1}.
 search_many_tl_error_content;{0} Agent(en) TL konnten nicht gefunden werden: {1}.;
 warn_several_cases_title;Du versuchst, mehreren Agenten von mehreren Fällen/Kund:innen zu berichten.
 warn_several_cases_message;"Beachte, dass dies so viele Berichte generiert wie die Anzahl der ausgewählten Personen. Wenn du jedoch mehrere Ticketnummern oder mehrere Kunden-IDs eingegeben hast, werden sie im selben Eintrag angezeigt. <br/>Mit anderen Worten erhält jede der ausgewählten Personen ein Better Together Formular mit allen Fällen/Kund:innen, die du hier aufgelistet hast.<br/>Wenn du eine Reihe von Better Together Formularen mit unterschiedlichen Fällen an verschiedene Agenten übermitteln möchtest, wende dich bitte an <a href=""mailto:better_together@salt.ch"">better_together@salt.ch</a>, um zu erfahren, wie dieses Sonderverfahren funktioniert.<br/><br/>Möchtest du fortfahren?"

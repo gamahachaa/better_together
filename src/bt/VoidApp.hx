@@ -66,12 +66,11 @@ class VoidApp extends AppBase
 			if (gotStoredStatement)
 			{
 				//var voidId = xapitracker.statementsRefs[0];
+				var ccs = [instructor.getSimpleEmail(), monitoringData.coach.getSimpleEmail()];
 				cast(mailHelper, VoidMailer).buildBody( void_statement_id, xapitracker.statementsRefs[0].id, monitoringData.coach, void_comment, action);
-				if (reviewdAgentTl_mbox != "")
-					mailHelper.setCc([instructor.getSimpleEmail(), monitoringData.coach.getSimpleEmail(), reviewdAgentTl_mbox]);
-				else
-					mailHelper.setCc([instructor.getSimpleEmail(), monitoringData.coach.getSimpleEmail()]);
-
+				if (reviewdAgentTl_mbox != "") ccs.push(reviewdAgentTl_mbox);
+				if (isActionVoid()) ccs.push(reviewer.getSimpleEmail());
+                mailHelper.setCc(ccs);
 				//mailHelper.setBody(body);
 				sendEmail();
 			}
@@ -89,7 +88,7 @@ class VoidApp extends AppBase
 					instructor = Agent.FROM_JSON( Reflect.field(Reflect.field(xapitracker.statementJson, "context"), "instructor"));
 					reviewdAgentTl = Reflect.field(Reflect.field(Reflect.field(xapitracker.statementJson, "context"), "extensions"), "https://ad.salt.ch/agent/manager/");
 					reviewdAgentTl_mbox = Reflect.field(Reflect.field(Reflect.field(xapitracker.statementJson, "context"), "extensions"), "https://ad.salt.ch/agent/manager_mbox/");
-					if (isCoachAllowed([reviewer.name, instructor.name, reviewdAgentTl, "dgrzeski","yschwab","dgonzale","erichter"]))
+					if (isCoachAllowed([reviewer.name, instructor.name, reviewdAgentTl, "dgrzeski","yschwab","dgonzale","erichter","sp_spaepke","sp_spaiva","sp_aaiai","nmayombo"]))
 					{
 						#if debug
 						trace("bt.VoidApp::onXapi can void");
@@ -278,12 +277,22 @@ class VoidApp extends AppBase
 					   "https://qook.salt.ch/better_together/reasons_description_defect" => void_comment,
 					   "https://qook.salt.ch/better_together/action_taken" => action
 				   ];
-		switch (action)
+		/*switch (action)
 		{
 			case "action_nomistake" : this.xapitracker.voidStatement( void_statement_id, new Agent(monitoringData.coach.mbox, monitoringData.coach.sAMAccountName), ext);
 			case "action_wrongagent" : this.xapitracker.voidStatement( void_statement_id, new Agent(monitoringData.coach.mbox, monitoringData.coach.sAMAccountName), ext);
 			case _ :
 				this.xapitracker.updateStatement( void_statement_id, new Agent(monitoringData.coach.mbox, monitoringData.coach.sAMAccountName), ext);
+		}*/
+		if (isActionVoid())
+		{
+			this.xapitracker.voidStatement( void_statement_id, new Agent(monitoringData.coach.mbox, monitoringData.coach.sAMAccountName), ext);
+		}else{
+			 this.xapitracker.updateStatement( void_statement_id, new Agent(monitoringData.coach.mbox, monitoringData.coach.sAMAccountName), ext);
 		}
+	}
+	inline function isActionVoid()
+	{
+		return action == "action_nomistake" || action == "action_wrongagent";
 	}
 }

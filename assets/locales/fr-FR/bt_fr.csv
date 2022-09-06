@@ -60,9 +60,11 @@ catAgent_answering;a répondu à la demande du client
 
 catAgent_answering_stateoftheart;et il a fait un travail fantastique ! *
 catAgent_answering_wronginfo;mais il a fourni des informations erronées. *
+catAgent_answering_wronginfocontract;mais il a fourni de fausses informations sur le contrat (accessoires/surf). *
 catAgent_answering_wrongoto;mais il a saisi le mauvais OTO ID
 catAgent_answering_wrongpp;mais il a indiqué le mauvais plan tarifaire. *
 catAgent_answering_wrongoption;mais il a indiqué la mauvaise option/le mauvais paquet. *
+catAgent_answering_wrongcaraactivation;mais il a activé l'option Care a son insu. *
 catAgent_answering_noret;mais il a fait un nouvel ordre au lieu d'un renouvellement. *
 catAgent_answering_storeredirect;mais a incorrectement redirigé le client vers un magasin *
 catAgent_answering_insuficientlangskills;mais n'avait pas de compétences linguistiques suffisantes *
@@ -89,6 +91,7 @@ catTool_access;ne m'a pas accordé l'accès. *
 
 search_many_agent_error_title;Erreur dans la recherche de personnes.
 search_many_agent_error_content;Impossible de trouver {0} agent(s) : {1}.
+search_many_agent_leaver_content;{0} agent(s) ne travaille(nt) plus chez nous : {1}.
 search_many_tl_error_content;Impossible de trouver {0} TL d'agent(s) : {1}.
 warn_several_cases_title;Tu es en train de signaler plusieurs cas/clients à plusieurs agents.
 warn_several_cases_message;"Sache que cela va créer le même nombre d'entrées de rapport que le nombre de personnes sélectionnées ; par contre, si tu as saisi plusieurs numéros de tickets ou plusieurs ID client, ils seront affichés dans la même entrée. <br/>En d'autres termes, chaque personne sélectionnée recevra un Better Together qui inclura tous les cas/clients que tu as listé ici.<br/>Si tu souhaites envoyer un ensemble de Better Together avec différents cas à différents agents, contacte <a href=""mailto:better_together@salt.ch"">better_together@salt.ch</a> pour obtenir les instructions pour une procédure spéciale.<br/><br/>Veux-tu continuer ?"

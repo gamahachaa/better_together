@@ -12,6 +12,7 @@
 -lib markdown
 -lib utils
 -lib quality
+-lib csv
 -cp src
 -cp modules
 -cp C:/HaxeToolkit/haxe/lib/haxeui-core/git

@@ -22,6 +22,7 @@ class BTMailer extends MailHelper
 	var sentence:String;
 	public static inline var BT_MAIL:String = "Better-Together@salt.ch";
 	static inline var QOOK_MAIL:String = "qook@salt.ch";
+	static inline var CUSTOM_STYLE:String = "table, td, th {border: 3px solid gray;}";
 
 	public function new(url:String)
 	{
@@ -74,7 +75,9 @@ class BTMailer extends MailHelper
 					#if debug
 					//mail.setCc(agentRelated? Lambda.concat(ccs, []):ccs);
 					//mail.setCc(agentRelated? Lambda.concat(ccs, [i.manager.mbox.substr(7)]):ccs);
-					mail.setTo(["bruno.baudry@salt.ch"]);
+					//mail.setTo(["bruno.baudry@salt.ch"]);
+					mail.setTo([BT_MAIL]);
+					
 					#else
 					mail.setCc(agentRelated? Lambda.concat(ccs, [i.manager.mbox.substr(7)]):ccs);
 					mail.setTo([BT_MAIL]);
