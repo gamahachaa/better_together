@@ -182,7 +182,14 @@ class BTMailer extends MailHelper
 					else if (Std.isOfType(v.value, Array))
 					{
 						body += "<ul>";
-						if (ExpReg.SO_TICKET.STRING_TO_REG().match(v.value[0]))
+						/*if (ExpReg.SO_TICKET.STRING_TO_REG().match(v.value[0]))
+						{
+							for ( i in cast(v.value,Array<Dynamic>))
+							{
+								body += "<li>"+cast(i, String).buildSOLink() +"</li>";
+							}
+						}
+						else if (ExpReg.MISIDN_LOCAL.STRING_TO_REG().match(v.value[0]))
 						{
 							for ( i in cast(v.value,Array<Dynamic>))
 							{
@@ -195,6 +202,14 @@ class BTMailer extends MailHelper
 							{
 								body += "<li>"+i+"</li>";
 							}
+						}*/
+						for ( i in cast(v.value,Array<Dynamic>))
+						{
+							if (ExpReg.SO_TICKET.STRING_TO_REG().match(i))
+								body += "<li>" + cast(i, String).buildSOLink() +"</li>";
+							else if (ExpReg.MISIDN_MOBILE.STRING_TO_REG().match(i))
+								body += "<li>" + cast(i, String).buildMarilynLink() +"</li>";
+							else body += "<li>"+i+"</li>";
 						}
 						body += "</ul>";
 					}

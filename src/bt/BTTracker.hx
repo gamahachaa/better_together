@@ -12,7 +12,7 @@ import xapi.Context;
 import xapi.Statement;
 import roles.Actor;
 import xapi.Verb;
-import xapi.activities.Definition;
+//import xapi.activities.Definition;
 using regex.ExpReg;
 import string.StringUtils;
 

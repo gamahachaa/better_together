@@ -144,8 +144,9 @@ class VoidApp extends AppBase
 		return false;
 	}
 
-	function loadContent()
+	override function loadContent()
 	{
+		
 		try
 		{
 			if (loginApp != null) app.removeComponent(loginApp);
@@ -166,6 +167,7 @@ class VoidApp extends AppBase
 			//storingBT.backgroundImage = preloader.resource;
 			storingBT.destroyOnClose = false;
 			storingBT.draggable = false;
+			super.loadContent();
 
 		}
 		catch (e)

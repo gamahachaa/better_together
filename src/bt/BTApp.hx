@@ -281,9 +281,10 @@ class BTApp extends AppBase
 
 	}
 
-	function loadContent()
+	override function loadContent()
 	{
-		tests();
+		//tests();
+		
 		try
 		{
 
@@ -349,6 +350,7 @@ class BTApp extends AppBase
 				trace("bt.BTApp::loadContent");
 
 				#end
+				super.loadContent();
 			}
 
 		}
@@ -515,9 +517,9 @@ class BTApp extends AppBase
 	{
 		var details_person_selector_button:Button = mainApp.findComponent("details_person_selector_button", Button);
 		details_person_selector_button.onClick = onSearchAgent;
-		var logoff_button = mainApp.findComponent("logoff_button", Button);
-		logoff_button.text = this.monitoringData.coach.sAMAccountName;
-		logoff_button.onClick = function (e) {this.cookie.clearCockie(); Browser.location.reload() ; };
+		//var logoff_button = mainApp.findComponent("logoff_button", Button);
+		//logoff_button.text = this.monitoringData.coach.sAMAccountName;
+		//logoff_button.onClick = function (e) {this.cookie.clearCockie(); Browser.location.reload() ; };
 		//var send_button:Button = mainApp.findComponent("send_button", Button);
 
 		//send_button.onClick = onSendClicked;
@@ -1297,6 +1299,7 @@ class BTApp extends AppBase
 		{
 			#if debug
 			trace("bt.BTApp::onTracking NO SUCCESS");
+			sendEmail();
 			#end
 		}
 	}
