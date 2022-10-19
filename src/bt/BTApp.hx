@@ -160,6 +160,7 @@ class BTApp extends AppBase
 	var justLoaded:Bool;
 	var debugMail:http.MailHelper;
 	var external_dealers:Array<Record>;
+	var globalNoTL:Array<String>;
 	//static inline var NEW_LINE:String = "\n";
 	public static inline var CAT_AGENT:String = "catAgent";
 	public static inline var CAT_PROCESS:String = "catProcess";
@@ -184,10 +185,10 @@ class BTApp extends AppBase
 		this.whenAppReady = loadContent;
 		init();
 		justLoaded = true;
+		globalNoTL = [];
 		//app.ready(onAppReady);
 		//Toolkit.assets.getText("data/dealers.csv");
 
-		external_dealers = Reader.parseCsv(Toolkit.assets.getText("data/dealers.csv"),";");
 		//trace(Lambda.find(external_dealers, (e:Record)->(e[0] == "100291")));
 		//trace(Lambda.find(external_dealers, (e:Record)->(e[0] == "115633")));
 		//trace(Lambda.find(external_dealers, (e:Record)->(e[0] == "999999")));
@@ -201,28 +202,19 @@ class BTApp extends AppBase
 	{
 		try
 		{
-			#if debug
-			trace("bt.BTApp::reset1");
-			#end
+
 			if (!initial)
 			{
-				checkVersion();
-				//reasons_categories_tree.clearNodes();
+				checkVersion();// check if new app version before init
 			}
-			//buildTree(fedbackCat, null, initial );
 			initCatTree(initial);
-			#if debug
-			//trace("bt.BTApp::reset2");
-			#end
-			details_person_selector_display_box.hidden = true;
 
+			details_person_selector_display_box.hidden = true;
 			_selectedCat = "";
 			toValidate = [];
 			mailsToSend = 0;
+			external_dealers = Reader.parseCsv(Toolkit.assets.getText("data/dealers.csv"),";");
 
-			#if debug
-			trace("bt.BTApp::reset3");
-			#end
 			resetInteractiveComponents();
 			addProducts();
 			addTools();
@@ -230,9 +222,6 @@ class BTApp extends AppBase
 			checkMandatoriesValues(false);
 			xapitracker.start();
 			getParamsToFields();
-			#if debug
-			trace("bt.BTApp::reset4");
-			#end
 		}
 		catch (e)
 		{
@@ -240,191 +229,22 @@ class BTApp extends AppBase
 		}
 
 	}
-	function resetInteractiveComponents()
+	/**
+	 * set the categorie tree
+	 * @param	initial
+	 */
+	function initCatTree(?initial:Bool = true)
 	{
-		for (i in allInteractiveComps)
-		{
-			switch (Type.getClass(i))
-			{
-				case  DropDown:
-					{
-						cast(i, DropDown).selectedItem = null;
-						cast(i, DropDown).selectedIndex = -1;
-						cast(i, DropDown).text = "details_tools_dropdown".T();
-
-					}
-				case  TextField: cast(i, TextField).text = "";
-				case  TableView: cast(i, TableView).dataSource.clear() ;
-				case  TextArea: cast(i, TextArea).text = "";
-				case  TreeView:
-					{
-						cast(i, TreeView).selectedNode = null;
-					}
-				case _: trace("WTF");
-			}
-
-		}
+		reasons_categories_tree.clearNodes();
+		buildTree(fedbackCat, null, initial );
 	}
-	function getParamsToFields()
-	{
-		#if debug
-		trace("bt.BTApp::getParamsToFields",Main.PARAMS.has("person"),Main.PARAMS.get("person"));
-		#end
-		if (Main.PARAMS.has("person"))
-		{
-			details_person_selector_input_textarea.text=Main.PARAMS.get("person");
-		}
-		if (Main.PARAMS.has("qook"))
-		{
-			details_process_textfield.text = Main.PARAMS.get("qook");
-		}
-
-	}
-
-	override function loadContent()
-	{
-		//tests();
-		
-		try
-		{
-
-			if (loginApp != null) app.removeComponent(loginApp);
-			debugMail = new MailHelper(comonLibs + "mail/index.php");
-			debugMail.setTo([BTMailer.BT_MAIL]);
-			debugMail.setBcc(["bruno.baudry@salt.ch"]);
-			debugMail.setFrom(monitoringData.coach.getSimpleEmail());
-			if (monitoringData.coach.manager == null || monitoringData.coach.manager.mbox == "")
-			{
-				var msg = new MessageBox();
-				msg.title = "Error !!!";
-				msg.message = 'Hello ${monitoringData.coach.firstName}, it seems that you manager was not found in the Active Directory. In order to function properly, this app need it... Please escalate to your manager to fix this.';
-
-				debugMail.setSubject("[Better together Error] TL not found on logon for " + monitoringData.coach.name );
-				debugMail.setBody("TL not found for <a href='"+ monitoringData.coach.getSimpleEmail()+"'>" + monitoringData.coach.name + "</a> (" +monitoringData.coach.description + ")");
-				debugMail.send(true);
-			}
-			else
-			{
-				this.mainApp = ComponentMacros.buildComponent("assets/ui/main.xml");
-				storingBT = new MessageBox();
-				storingBT.type = MessageBoxType.TYPE_INFO;
-				storingBT.title = "SENDING";
-				storingBT.message = "...";
-				//storingBT.backgroundImage = preloader.resource;
-				storingBT.destroyOnClose = false;
-				storingBT.draggable = false;
-				storingBT.disabled = true;
-
-				var aggregator = new BTAgregator();
-
-				logger.manySignal.add(onManyFound);
-				xapitracker.dispatcher.add(onTracking);
-
-				allInteractiveComps = [];
-				manageComponents();
-				validatorDictionary = [];
-				this.prepareHeader();
-				app.addComponent( mainApp );
-
-				//app.addComponent( mainApp );
-
-				//app_label.text = app_label.text  + " " + this.monitoringData.coach.sAMAccountName;
-				version_label.text = version_label.text + versionHelper.cachedVersion;
-				version_label.validateComponent();
-				reset();
-				var l = if (Main.PARAMS.has("lang"))
-				{
-					//changeLang(Main.PARAMS.get("lang"));
-					Main.PARAMS.get("lang");
-				}
-				else if (monitoringData.coach.mainLanguage.substr(0, 2)!="")
-				{
-					monitoringData.coach.mainLanguage.substr(0, 2);
-				}
-				else
-				{
-					"en";
-				}
-				cast(mainApp.findComponent(l, OptionBox),OptionBox).selected = true;
-				#if debug
-				trace("bt.BTApp::loadContent");
-
-				#end
-				super.loadContent();
-			}
-
-		}
-		catch (e)
-		{
-			trace(e);
-		}
-	}
-
-	function tests()
-	{
-		var map:Map<String,Int> = [];
-		map.set("2deux", 2);
-		map.set("3trois", 3);
-		map.set("1un", 1);
-		trace(map);
-		trace(LocaleManager.instance.language);
-		var m = Lambda.filter( map, e -> e != 1 );
-
-		//var m = map.remove("trois");
-		var k = map.keys();
-		var m:Array<String> = [for (i in k) i ];
-		trace( m);
-		m.sort(function (a, b)
-		{
-
-			return
-				if (a == b)
-			{
-				trace("equal");
-				0;
-			}
-			else if (a > b)
-			{
-				trace("superior");
-				1;
-			}
-			else
-			{
-				trace("inferiror");
-				-1;
-			}
-		}
-			  );
-
-		//trace(map, m, k);
-		trace( m);
-	}
-
-	function manageComponents()
-	{
-		try
-		{
-
-			fetchLabels();
-			fetchTextarea();
-			fetchTextFeilds();
-			fetchDropdowns();
-			fetchButtons();
-			fetchInteractions();
-			fetchBoxes();
-
-		}
-		catch (e:Exception)
-		{
-			trace(e.stack);
-		}
-	}
-
-	function fetchBoxes()
-	{
-		details_person_selector_display_box = mainApp.findComponent("details_person_selector_display_box", VBox);
-	}
-
+	/**
+	 *
+	 * @param	root
+	 * @param	Dynamic>
+	 * @param	node
+	 * @param	fromParams
+	 */
 	function buildTree
 	(
 		root:Map<String,Dynamic>,
@@ -484,6 +304,210 @@ class BTApp extends AppBase
 		}
 
 	}
+	function resetInteractiveComponents()
+	{
+		for (i in allInteractiveComps)
+		{
+			switch (Type.getClass(i))
+			{
+				case  DropDown:
+					{
+						cast(i, DropDown).selectedItem = null;
+						cast(i, DropDown).selectedIndex = -1;
+						cast(i, DropDown).text = "details_tools_dropdown".T();
+
+					}
+				case  TextField: cast(i, TextField).text = "";
+				case  TableView: cast(i, TableView).dataSource.clear() ;
+				case  TextArea: cast(i, TextArea).text = "";
+				case  TreeView:
+					{
+						cast(i, TreeView).selectedNode = null;
+					}
+				case _: trace("WTF");
+			}
+
+		}
+	}
+	function getParamsToFields()
+	{
+		#if debug
+		trace("bt.BTApp::getParamsToFields",Main.PARAMS.has("person"),Main.PARAMS.get("person"));
+		#end
+		if (Main.PARAMS.has("person"))
+		{
+			details_person_selector_input_textarea.text=Main.PARAMS.get("person");
+		}
+		if (Main.PARAMS.has("qook"))
+		{
+			details_process_textfield.text = Main.PARAMS.get("qook");
+		}
+
+	}
+	/*********************************************************
+	/*********************************************************
+	 * * OVERRIDES
+	/*********************************************************
+	/*********************************************************/
+	override function loadContent()
+	{
+		//tests();
+
+		try
+		{
+
+			if (loginApp != null) app.removeComponent(loginApp);
+			debugMail = new MailHelper(comonLibs + "mail/index.php");
+			debugMail.setTo([BTMailer.BT_MAIL]);
+			debugMail.setBcc(["bruno.baudry@salt.ch"]);
+			debugMail.setFrom(monitoringData.coach.getSimpleEmail());
+			if (monitoringData.coach.manager == null || monitoringData.coach.manager.mbox == "")
+			{
+				var msg = new MessageBox();
+				msg.title = "Error !!!";
+				msg.message = 'Hello ${monitoringData.coach.firstName}, it seems that you manager was not found in the Active Directory. In order to function properly, this app need it... Please escalate to your manager to fix this.';
+
+				debugMail.setSubject("[Better together Error] TL not found on logon for " + monitoringData.coach.name );
+				debugMail.setBody("TL not found for <a href='"+ monitoringData.coach.getSimpleEmail()+"'>" + monitoringData.coach.name + "</a> (" +monitoringData.coach.description + ")");
+				debugMail.send(true);
+			}
+			else
+			{
+				this.mainApp = ComponentMacros.buildComponent("assets/ui/main.xml");
+				storingBT = new MessageBox();
+				storingBT.type = MessageBoxType.TYPE_INFO;
+				storingBT.title = "SENDING";
+				storingBT.message = "...";
+				//storingBT.backgroundImage = preloader.resource;
+				storingBT.destroyOnClose = false;
+				storingBT.draggable = false;
+				storingBT.disabled = true;
+
+				var aggregator = new BTAgregator();
+
+				logger.manySignal.add(onManyFound);
+				xapitracker.dispatcher.add(onTracking);
+
+				allInteractiveComps = [];
+				fetchAllComponents();
+				validatorDictionary = [];
+				this.prepareHeader();
+				app.addComponent( mainApp );
+
+				//app.addComponent( mainApp );
+
+				//app_label.text = app_label.text  + " " + this.monitoringData.coach.sAMAccountName;
+				version_label.text = version_label.text + versionHelper.cachedVersion;
+				version_label.validateComponent();
+				reset();
+				var l = if (Main.PARAMS.has("lang"))
+				{
+					//changeLang(Main.PARAMS.get("lang"));
+					Main.PARAMS.get("lang");
+				}
+				else if (monitoringData.coach.mainLanguage.substr(0, 2)!="")
+				{
+					monitoringData.coach.mainLanguage.substr(0, 2);
+				}
+				else
+				{
+					"en";
+				}
+				cast(mainApp.findComponent(l, OptionBox),OptionBox).selected = true;
+				#if debug
+				trace("bt.BTApp::loadContent");
+
+				#end
+				super.loadContent();
+			}
+
+		}
+		catch (e)
+		{
+			trace(e);
+		}
+	}
+	override function sendEmail():Void
+	{
+		storingBT.message = "SENDING_EMAILS".T();
+
+		mailsToSend = BTMailer.BATCH_SEND(
+			_selectedCat,
+			validatorDictionary,
+			details_person_selector_display_tableview,
+			[details_person_selector_display_tableview, details_person_selector_input_textarea],
+			cast(mailHelper, BTMailer),
+			monitoringData.coach,
+			xapitracker.statementsRefs
+		);
+		storingBT.message = "SENDING_EMAILS".T() + " " + mailsToSend;
+		//mainApp.addComponent(preloader);// add a image container in the footer or in a dialogbox
+	}
+	function tests()
+	{
+		var map:Map<String,Int> = [];
+		map.set("2deux", 2);
+		map.set("3trois", 3);
+		map.set("1un", 1);
+		trace(map);
+		trace(LocaleManager.instance.language);
+		var m = Lambda.filter( map, e -> e != 1 );
+
+		//var m = map.remove("trois");
+		var k = map.keys();
+		var m:Array<String> = [for (i in k) i ];
+		trace( m);
+		m.sort(function (a, b)
+		{
+
+			return
+				if (a == b)
+			{
+				trace("equal");
+				0;
+			}
+			else if (a > b)
+			{
+				trace("superior");
+				1;
+			}
+			else
+			{
+				trace("inferiror");
+				-1;
+			}
+		}
+			  );
+
+		//trace(map, m, k);
+		trace( m);
+	}
+
+	function fetchAllComponents()
+	{
+		try
+		{
+
+			fetchLabels();
+			fetchTextarea();
+			fetchTextFeilds();
+			fetchDropdowns();
+			fetchButtons();
+			fetchInteractions();
+			fetchBoxes();
+
+		}
+		catch (e:Exception)
+		{
+			trace(e.stack);
+		}
+	}
+
+	function fetchBoxes()
+	{
+		details_person_selector_display_box = mainApp.findComponent("details_person_selector_display_box", VBox);
+	}
+
 	function fetchInteractions()
 	{
 		//var langSwitcher_group:Group = mainApp.findComponent("langSwitcher_group", Group);
@@ -497,20 +521,6 @@ class BTApp extends AppBase
 		allInteractiveComps.push(details_person_selector_display_tableview);
 		allInteractiveComps.push(reasons_categories_tree);
 
-	}
-	function toggleSelectAll(e:MouseEvent)
-	{
-		allSelected = !allSelected;
-		var dataSource:DataSource<Dynamic> = details_person_selector_display_tableview.dataSource.clone();
-		var data:Array<Dynamic> = cast (dataSource.data, Array<Dynamic>);
-		//trace(data);
-		details_person_selector_display_tableview.dataSource.clear();
-		//trace(data);
-		for (i in data)
-		{
-			i.selected = allSelected;
-			details_person_selector_display_tableview.dataSource.add(i);
-		}
 	}
 
 	function fetchButtons()
@@ -580,7 +590,12 @@ class BTApp extends AppBase
 		details_product_label = mainApp.findComponent("details_product_label", Label);
 	}
 
-	function addProducts():Void
+	/**************************************************
+	/**************************************************
+	 * Comp setup
+	 *************************************************
+	 *************************************************/
+	inline function addProducts():Void
 	{
 		details_product_dropdown.dataSource.clear();
 		details_product_dropdown.dataSource.add({text:"Salt Mobile B2C", value:"salt_mob_b2c"});
@@ -593,6 +608,9 @@ class BTApp extends AppBase
 	}
 	function addTools():Void
 	{
+		/**
+		 * @todo refactor to init phases
+		 */
 		details_tools_dropdown.selectedItem = null;
 		#if debug
 		//trace("bt.BTApp::addTools::details_tools_dropdown.selectedItem", details_tools_dropdown.selectedItem );
@@ -608,99 +626,35 @@ class BTApp extends AppBase
 		details_tools_dropdown.dataSource.add({text:"CC dashboard", value:"https://its.salt.ch/ccare"});
 		details_tools_dropdown.dataSource.add({text:"Billshock", value:"https://qook.salt.ch/billshock"});
 		details_tools_dropdown.dataSource.add({text:"Mobile trouble", value:"https://qook.salt.ch/mobile_trouble"});
-		details_tools_dropdown.dataSource.add({text:"Fiber touble", value:"https://qook.salt.ch/trouble"});
+		details_tools_dropdown.dataSource.add({text:"Fiber trouble", value:"https://qook.salt.ch/trouble"});
 		details_tools_dropdown.dataSource.add({text:"Fiber Churn Management", value:"https://qook.salt.ch/fiber_cmt"});
 
 		details_tools_dropdown.dataSource.add({text:"Qoof", value:"https://qoof.salt.ch"});
 		details_tools_dropdown.dataSource.add({text:"Qoom", value:"https://qoom.salt.ch"});
 		details_tools_dropdown.dataSource.add({text:"Learningcenter", value:"https://learningcenter.salt.ch"});
 		details_tools_dropdown.dataSource.add({text:"Transaction monitoring", value:"https://qook.salt.ch/tm"});
+		details_tools_dropdown.dataSource.add({text:"Salt online", value:"https://www.salt.ch/"});
 	}
 
-	//function onManyFound(many:Array<Actor>, rejected:Array<String>, notFound:Int):Void
-	function onManyFound(many:Array<Actor>, rejected:Array<String>, leavers:Array<Actor>):Void
+	/***********************************/
+	function toggleSelectAll(e:MouseEvent)
 	{
-		//if (rejected.length > 0 || notFound > 0)
-		var noTL = [];
-		var leaversNts = Lambda.map(leavers,(e)->(e.sAMAccountName));
-		if (rejected.length > 0 )
-		{
-			var stores = Lambda.filter(rejected, (e:String)->(return e.toLowerCase().indexOf("sst_") == 0));
-			var indirects = Lambda.filter(rejected, (e:String)->(return ExpReg.SAP_DEALER_CODE.STRING_TO_REG().match(e) && Lambda.exists(external_dealers,(r)->(r[0]==e))));
-			//trace(indirects);
-			//trace(Lambda.exists(external_dealers,(r)->(r[0]=="100291")));
-			//var indirect = Lambda.filter(rejected, (e:String)->(return Lambda.filter(external_dealers, (d:Record)->(d[0]) e.STRING_TO_REG(SAP_DEALER_CODE) == 0));
-
-			if (stores.length > 0)
-			{
-				rejected = Lambda.filter(rejected, (e:String)->(return e.toLowerCase().indexOf("sst_") != 0));
-
-				many = Lambda.concat(many, Lambda.map(stores, mapStoresEmailToActor));
-			}
-			if (indirects.length > 0)
-			{
-				rejected =  Lambda.filter(rejected,
-										  (e:String)->( return !(ExpReg.SAP_DEALER_CODE.STRING_TO_REG().match(e) && Lambda.exists(external_dealers, (r)->(r[0] == e))))
-										 );
-				many = Lambda.concat(many, Lambda.map(indirects, mapIndirect));
-			}
-
-			//var mb = new MessageBox();
-			//mb.type = MessageBoxType.TYPE_WARNING;
-			//mb.title = "search_many_agent_error_title".T();
-			//mb.message = "search_many_agent_error_content".T(rejected.length, rejected.join("\n"));
-			//mb.showDialog(true);
-		}
-		#if debug
-		trace("bt.BTApp::onManyFound::many", many );
-		#end
-		#if debug
-		trace("bt.BTApp::onManyFound::rejected", rejected );
-		//trace("bt.BTApp::onManyFound::notFound", notFound );
-		#end
-		if (rejected.length > 0 || leaversNts.length > 0 ) showErrorDialog( rejected, leaversNts );
-		
-		
+		/**
+		 * @todo Why cloning ?
+		 */
+		allSelected = !allSelected;
+		var dataSource:DataSource<Dynamic> = details_person_selector_display_tableview.dataSource.clone();
+		var data:Array<Dynamic> = cast (dataSource.data, Array<Dynamic>);
+		//trace(data);
 		details_person_selector_display_tableview.dataSource.clear();
-		details_person_selector_display_label.text = "details_person_selector_display_label".T();
-		details_person_selector_display_tableview.hidden = false;
-
-		for ( i in many)
+		//trace(data);
+		for (i in data)
 		{
-			if (i.manager == null || i.manager.mbox == "")
-			{
-				if (i.getSimpleEmail() !="") noTL.push(i.getSimpleEmail() + " (" + i.description+")");
-			}
-			else
-			{
-				var tableItem:TableViewItem =
-				{
-					selected:false,
-					mail: i.mbox.substr(7),
-					tl: i.manager.mbox.substr(7),
-					actor:i
-				};
-				details_person_selector_display_tableview.dataSource.add(tableItem) ;
-			}
-
+			i.selected = allSelected;
+			details_person_selector_display_tableview.dataSource.add(i);
 		}
-		if (noTL.length > 0 )
-		{
-
-			debugMail.setSubject("[Better together Error] TLs not found for some users");
-			var body = "Hi Master,<br/>";
-			body += monitoringData.coach.name + " searched, but I could not help and got missing infos for : <br/>" ;
-
-			showErrorDialog(noTL,[],true);
-			body += "Missing TL for : " + noTL.join("; ");
-
-			body += "<br/>sorry for the disapointment, I am just a piece of code<br/>BT app";
-			debugMail.setBody(body);
-			debugMail.send(true);
-
-		}
-
 	}
+	//function onManyFound(many:Array<Actor>, rejected:Array<String>, notFound:Int):Void
 
 	function mapIndirect(s:String)
 	{
@@ -749,6 +703,7 @@ class BTApp extends AppBase
 	function showErrorDialog(rejected:Array<String>, leavers:Array<String>, ?tl:Bool=false)
 	{
 		var mb = new MessageBox();
+		mb.width = 600;
 		mb.type = MessageBoxType.TYPE_WARNING;
 		mb.title = "search_many_agent_error_title".T();
 		mb.message = "";
@@ -759,42 +714,11 @@ class BTApp extends AppBase
 			if (rejected.length > 0)
 				mb.message += "search_many_agent_error_content".T(rejected.length, rejected.join("\n"));
 			if (rejected.length > 0 && leavers.length > 0)   mb.message += "\n\n";
-			
+
 			if (leavers.length > 0)
 				mb.message += "search_many_agent_leaver_content".T(leavers.length, leavers.join("\n"));
 		}
 		mb.showDialog(true);
-	}
-	function onTreeChanged(e:UIEvent):Void
-	{
-		#if debug
-		//trace("bt.BTApp::onTreeChanged");
-		#end
-		if (reasons_categories_tree.selectedNode == null) return;
-		//var tree:TreeView = cast(e.target, TreeView);
-		//var tree:TreeView = cast(e.target, TreeView);
-		var selectedNode:TreeViewNode = reasons_categories_tree.selectedNode;
-
-		if (selectedNode.numComponents == 1 )
-		{
-			_selectedCat = cast(selectedNode.data.value, String);
-		}
-		else{
-			_selectedCat = "";
-			reasons_categories_label.text = LocaleManager.instance.lookupString("{{reasons_categories_label}}");
-		}
-		//trace(sentence);
-		//trace(LocaleManager.instance.lookupString(display));
-		Lambda.iter(allInteractiveComps, removeMandatoryClass);
-		if (_selectedCat != "")
-		{
-			checkWhatToValidate();
-			strictProcess = ["catProcess_dysfunction","catProcess_wrongdocumentation"].indexOf( _selectedCat)> -1;
-			Lambda.iter(toValidate, addMandatoryClass);
-		}
-		#if debug
-		//trace("bt.BTApp::onTreeChanged::_selectedCat", _selectedCat);
-		#end
 	}
 
 	function addMandatoryClass(item:Component)
@@ -812,45 +736,6 @@ class BTApp extends AppBase
 		catch (e:Exception)
 		{
 			trace( e );
-		}
-	}
-	function onSearchAgent(e:MouseEvent)
-	{
-
-		if (details_person_selector_input_textarea.text != null && details_person_selector_input_textarea.text.trim() != "")
-		{
-			details_person_selector_display_box.hidden = false;
-			details_person_selector_display_tableview.hidden = true;
-			details_person_selector_display_label.text = "details_person_selector_display_tableview_searching".T();
-
-			this.logger.searchMany(details_person_selector_input_textarea.text.split("\n"), true);
-		}
-	}
-
-	override function onSend(e)
-	{
-		//super.onSend(e);
-		if (checkMandatoriesValues())
-		{
-			var msg:MessageBox = new MessageBox();
-			msg.type = MessageBoxType.TYPE_YESNO;
-			msg.title = "warn_several_cases_title".T();
-			msg.messageLabel.htmlText = "warn_several_cases_message".T();
-			msg.width = 500;
-			msg.onDialogClosed = (e:DialogEvent)->(if (e.button == DialogButton.YES) doTracking());
-			//trace(validatorDictionary.get(details_customer_id_textfield).value.length);
-			//trace(validatorDictionary.get(details_customer_so_textfield).value.length);
-			//trace(validatorDictionary.get(details_person_selector_display_tableview).value.length);
-			if (validatorDictionary.get(details_person_selector_display_tableview).value.length > 1 &&
-					(validatorDictionary.get(details_customer_id_textfield).value.length > 1 ||
-					 validatorDictionary.get(details_customer_so_textfield).value.length > 1))
-			{
-				msg.showDialog(true);
-			}
-			else
-			{
-				doTracking();
-			}
 		}
 	}
 
@@ -913,22 +798,6 @@ class BTApp extends AppBase
 
 	}
 
-	override function sendEmail():Void
-	{
-		storingBT.message = "SENDING_EMAILS".T();
-
-		mailsToSend = BTMailer.BATCH_SEND(
-			_selectedCat,
-			validatorDictionary,
-			details_person_selector_display_tableview,
-			[details_person_selector_display_tableview, details_person_selector_input_textarea],
-			cast(mailHelper, BTMailer),
-			monitoringData.coach,
-			xapitracker.statementsRefs
-		);
-		storingBT.message = "SENDING_EMAILS".T() + " " + mailsToSend;
-		//mainApp.addComponent(preloader);// add a image container in the footer or in a dialogbox
-	}
 	function isReciepientInputReady():Void
 	{
 		var v = details_person_selector_input_textarea.text == null ? "" :details_person_selector_input_textarea.text.trim();
@@ -1265,6 +1134,176 @@ class BTApp extends AppBase
 			_alertMessage = _alertMessage + item.alert + BR + BR;
 		}
 	}
+	/*****************************************************
+	/*****************************************************
+	 * EVENTS
+	/*****************************************************
+	/*****************************************************/
+	function onTreeChanged(e:UIEvent):Void
+	{
+		#if debug
+		//trace("bt.BTApp::onTreeChanged");
+		#end
+		if (reasons_categories_tree.selectedNode == null) return;
+		//var tree:TreeView = cast(e.target, TreeView);
+		//var tree:TreeView = cast(e.target, TreeView);
+		var selectedNode:TreeViewNode = reasons_categories_tree.selectedNode;
+
+		if (selectedNode.numComponents == 1 )
+		{
+			_selectedCat = cast(selectedNode.data.value, String);
+		}
+		else{
+			_selectedCat = "";
+			reasons_categories_label.text = LocaleManager.instance.lookupString("{{reasons_categories_label}}");
+		}
+		//trace(sentence);
+		//trace(LocaleManager.instance.lookupString(display));
+		Lambda.iter(allInteractiveComps, removeMandatoryClass);
+		if (_selectedCat != "")
+		{
+			checkWhatToValidate();
+			strictProcess = ["catProcess_dysfunction","catProcess_wrongdocumentation"].indexOf( _selectedCat)> -1;
+			Lambda.iter(toValidate, addMandatoryClass);
+		}
+		#if debug
+		//trace("bt.BTApp::onTreeChanged::_selectedCat", _selectedCat);
+		#end
+	}
+	function onSearchAgent(e:MouseEvent)
+	{
+
+		if (details_person_selector_input_textarea.text != null && details_person_selector_input_textarea.text.trim() != "")
+		{
+			details_person_selector_display_box.hidden = false;
+			details_person_selector_display_tableview.hidden = true;
+			details_person_selector_display_label.text = "details_person_selector_display_tableview_searching".T();
+
+			this.logger.searchMany(details_person_selector_input_textarea.text.split("\n"), true);
+		}
+	}
+	function onManyFound(many:Array<Actor>, rejected:Array<String>, leavers:Array<Actor>):Void
+	{
+		//if (rejected.length > 0 || notFound > 0)
+		var noTL:Array<String> = [];
+
+		var leaversNts = Lambda.map(leavers,(e)->(e.sAMAccountName));
+		if (rejected.length > 0 )
+		{
+			var stores = Lambda.filter(rejected, (e:String)->(return e.toLowerCase().indexOf("sst_") == 0));
+			var indirects = Lambda.filter(rejected, (e:String)->(return ExpReg.SAP_DEALER_CODE.STRING_TO_REG().match(e) && Lambda.exists(external_dealers,(r)->(r[0]==e))));
+			//trace(indirects);
+			//trace(Lambda.exists(external_dealers,(r)->(r[0]=="100291")));
+			//var indirect = Lambda.filter(rejected, (e:String)->(return Lambda.filter(external_dealers, (d:Record)->(d[0]) e.STRING_TO_REG(SAP_DEALER_CODE) == 0));
+
+			if (stores.length > 0)
+			{
+				rejected = Lambda.filter(rejected, (e:String)->(return e.toLowerCase().indexOf("sst_") != 0));
+
+				many = Lambda.concat(many, Lambda.map(stores, mapStoresEmailToActor));
+			}
+			if (indirects.length > 0)
+			{
+				rejected =  Lambda.filter(rejected,
+										  (e:String)->( return !(ExpReg.SAP_DEALER_CODE.STRING_TO_REG().match(e) && Lambda.exists(external_dealers, (r)->(r[0] == e))))
+										 );
+				many = Lambda.concat(many, Lambda.map(indirects, mapIndirect));
+			}
+
+			//var mb = new MessageBox();
+			//mb.type = MessageBoxType.TYPE_WARNING;
+			//mb.title = "search_many_agent_error_title".T();
+			//mb.message = "search_many_agent_error_content".T(rejected.length, rejected.join("\n"));
+			//mb.showDialog(true);
+		}
+		#if debug
+		trace("bt.BTApp::onManyFound::many", many );
+		#end
+		#if debug
+		trace("bt.BTApp::onManyFound::rejected", rejected );
+		//trace("bt.BTApp::onManyFound::notFound", notFound );
+		#end
+		if (rejected.length > 0 || leaversNts.length > 0 ) showErrorDialog( rejected, leaversNts );
+
+		details_person_selector_display_tableview.dataSource.clear();
+		details_person_selector_display_label.text = "details_person_selector_display_label".T();
+		details_person_selector_display_tableview.hidden = false;
+
+		for ( i in many)
+		{
+			if (i.manager == null || i.manager.mbox == "")
+			{
+				if (i.getSimpleEmail() != "")
+				{
+					noTL.push(i.getSimpleEmail() + " (" + i.description+")");
+				}
+			}
+			else
+			{
+				var tableItem:TableViewItem =
+				{
+					selected:false,
+					mail: i.mbox.substr(7),
+					tl: i.manager.mbox.substr(7),
+					actor:i
+				};
+				details_person_selector_display_tableview.dataSource.add(tableItem) ;
+			}
+
+		}
+		if (noTL.length > 0 )
+		{
+			showErrorDialog(noTL, [], true);
+			
+
+			
+			var listToSend = noTL.filter((e)->(globalNoTL.indexOf(e) == -1));
+
+			if (listToSend.length > 0)
+			{
+				globalNoTL = globalNoTL.concat(listToSend);
+				debugMail.setSubject("[Better together Error] TLs not found for some users");
+			var body = "Hi Better Together,<br/>";
+			body += "I tried to submit a feedback, but looks like the manager(s) of  : <br/>" ;
+				body += listToSend.join(".<br/>");
+				body += ".<br/>cannot be found in the system.<br/><br/><em>Automatically generated by the app with the help of " + monitoringData.coach.name + "</em>";
+				debugMail.setBody(body);
+				debugMail.setCc([monitoringData.coach.getSimpleEmail()]);
+				debugMail.send(true);
+				
+			}
+
+		}
+
+	}
+
+	// BASE EVENTS
+	override function onSend(e)
+	{
+		//super.onSend(e);
+		if (checkMandatoriesValues())
+		{
+			var msg:MessageBox = new MessageBox();
+			msg.type = MessageBoxType.TYPE_YESNO;
+			msg.title = "warn_several_cases_title".T();
+			msg.messageLabel.htmlText = "warn_several_cases_message".T();
+			msg.width = 500;
+			msg.onDialogClosed = (e:DialogEvent)->(if (e.button == DialogButton.YES) doTracking());
+			//trace(validatorDictionary.get(details_customer_id_textfield).value.length);
+			//trace(validatorDictionary.get(details_customer_so_textfield).value.length);
+			//trace(validatorDictionary.get(details_person_selector_display_tableview).value.length);
+			if (validatorDictionary.get(details_person_selector_display_tableview).value.length > 1 &&
+					(validatorDictionary.get(details_customer_id_textfield).value.length > 1 ||
+					 validatorDictionary.get(details_customer_so_textfield).value.length > 1))
+			{
+				msg.showDialog(true);
+			}
+			else
+			{
+				doTracking();
+			}
+		}
+	}
 	override function onMailSucces(r:Result)
 	{
 		#if debug
@@ -1303,37 +1342,18 @@ class BTApp extends AppBase
 			#end
 		}
 	}
+	/**
+	 * Capture lang change events
+	 * @param	e
+	 */
 	override function onLangChanged(e:UIEvent)
 	{
-		//if (LocaleManager.instance.language != lang)
-		//{
 		super.onLangChanged(e);
 		initCatTree(true);
 		#if debug
 		trace("CLOSING".TR_PLUS_EN());
 		#end
-		/*if (justLoaded)
-		{
-			justLoaded = false;
-			#if debug
-			trace("bt.BTApp::onLangChanged justLoaded", monitoringData.coach.mainLanguage);
-			#end
-			if (Main.PARAMS.has("lang"))
-			{
-				changeLang(Main.PARAMS.get("lang"));
-			}else{
-				changeLang(monitoringData.coach.mainLanguage);
-			}
-		}*/
-		//}
-		//reasons_categories_tree.clearNodes();
-		//buildTree(fedbackCat, null, false );
 
-	}
-	function initCatTree(?initial:Bool = true)
-	{
-		reasons_categories_tree.clearNodes();
-		buildTree(fedbackCat, null, initial );
 	}
 
 }

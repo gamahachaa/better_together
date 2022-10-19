@@ -82,7 +82,7 @@ catTool_access;non mi fa accedere; *
 search_many_agent_error_title;Errore nella ricerca di persone.
 search_many_agent_error_content;{0} agente/i non trovato/i: {1}.
 search_many_agent_leaver_content;{0} gli agente/i non lavorano più con noi: {1}.
-search_many_tl_error_content;{0} agente/i TL non trovato/i: {1}.;
+search_many_tl_error_content;{0} agente/i TL non trovato/i: \n{1}. \n\nSiamo consapevoli del problema. Aggiorneremo le informazioni su questa TL il prima possibile. Attendi a inviare nuovamente il tuo commento, ti contatteremo quando il problema sarà risolto.
 warn_several_cases_title;Stai cercando di segnalare diversi casi/clienti a diversi agenti.
 warn_several_cases_message;"Sappi che questo creerà lo stesso numero di entrate nel rapporto rispetto al numero di persone selezionate; invece, se hai inserito diversi numeri di ticket o diversi ID cliente, essi figureranno nella stessa entrata. <br/>In altre parole, ognuna delle persone selezionate riceverà un Better Together che includerà tutti i casi/clienti che hai elencato qui.<br/>Se desideri inviare un insieme di Better Together con diversi casi a diversi agenti, contatta <a href=""mailto:better_together@salt.ch"">better_together@salt.ch</a> per ottenere le istruzioni per una procedura speciale."
 SENDING_EMAILS;Invio l'e-mail

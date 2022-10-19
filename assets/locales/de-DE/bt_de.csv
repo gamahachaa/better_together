@@ -81,7 +81,7 @@ catTool_access;verweigert mir die Anmeldung.;
 search_many_agent_error_title;Fehler bei der Suche nach einer Person.
 search_many_agent_error_content;{0} Agent(en) konnten nicht gefunden werden: {1}.
 search_many_agent_leaver_content;{0} Agent(en) arbeitet(en) nicht mehr mit uns zusammen: {1}.
-search_many_tl_error_content;{0} Agent(en) TL konnten nicht gefunden werden: {1}.;
+search_many_tl_error_content;{0} Agent(en) TL konnten nicht gefunden werden: \n{1}. \n\nWir sind uns des Problems bewusst. Wir werden die Informationen zu diesem TL so schnell wie möglich aktualisieren. Warte mit dem erneuten Einreichen deines Kommentars, wir melden uns bei dir, wenn es gelöst ist.
 warn_several_cases_title;Du versuchst, mehreren Agenten von mehreren Fällen/Kund:innen zu berichten.
 warn_several_cases_message;"Beachte, dass dies so viele Berichte generiert wie die Anzahl der ausgewählten Personen. Wenn du jedoch mehrere Ticketnummern oder mehrere Kunden-IDs eingegeben hast, werden sie im selben Eintrag angezeigt. <br/>Mit anderen Worten erhält jede der ausgewählten Personen ein Better Together Formular mit allen Fällen/Kund:innen, die du hier aufgelistet hast.<br/>Wenn du eine Reihe von Better Together Formularen mit unterschiedlichen Fällen an verschiedene Agenten übermitteln möchtest, wende dich bitte an <a href=""mailto:better_together@salt.ch"">better_together@salt.ch</a>, um zu erfahren, wie dieses Sonderverfahren funktioniert.<br/><br/>Möchtest du fortfahren?"
 SENDING_EMAILS;Versenden der E-Mail(s)
