@@ -12,9 +12,9 @@ textfield,textarea{border-width:4px!important;}
 #langSwitcher_group optionbox{color:#637800;font-size:1rem;}
 #reasons_description_defect_label,#reasons_description_fix_label,#void_comment_label{cursor:help;}
 #reasons_description_box,#details_customer_box{background-color:#111;padding:4px;}
-#logger{background-image:url("last_phone_booth.jpeg");height:100%;background-position:center;background-repeat:no-repeat;}
-#credentials{padding:16px;}
-#credentials .h2meta{font-family:"Consolas",monospace;padding:4px;}
+#logger{background-image:url("last_phone_booth.jpeg");height:100%;background-position:center;background-repeat:no-repeat;background-size:cover;}
+#credentials{padding:16px}
+#credentials .h2meta{font-family:"Consolas",monospace;padding:4px}
 #login{border-radius:16px;}
 #login,#feedback{margin-left:3rem;}
 #feedback{color:#000;background-color:$error-color;padding-left:4px;padding-right:4px;padding-top:2px;padding-bottom:2px;}

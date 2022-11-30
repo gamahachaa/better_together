@@ -55,11 +55,10 @@ catAgent_answering;hat die Kundenanfrage beantwortet und
 catAgent_answering_stateoftheart;tolle Arbeit geleistet! *
 catAgent_answering_wronginfo;die falschen Informationen mitgeteilt. *
 catAgent_answering_wronginfocontract;aber er hat falsche Informationen über den Vertrag (Zubehör/Surf) gegeben. 
-catAgent_answering_wrongcaraactivation;aber er hat die Option Pflege ohne seine Zustimmung aktiviert. *
+catAgent_answering_wrongcaraactivation;hat ohne das wissen der Kund:in die Care-Option aktiviert. *
 catAgent_answering_wrongoto;bei Angabe der OTO ID einen Fehler gemacht.
 catAgent_answering_wrongpp;einen falschen Preisplan vorgeschlagen. *
 catAgent_answering_wrongoption;die falsche Option/das falsche Paket vorgeschlagen. *
-catAgent_answering_wrongcaraactivation;but he activated the Care option without his consent. *
 catAgent_answering_noret;einen Neuvertrag statt einer Vertragsverlängerung abgeschlossen. *
 catAgent_answering_storeredirect;hat die Kund:in fälschlicherweise zum Store geschickt *
 catAgent_answering_insuficientlangskills;verfügte nicht über ausreichende Sprachkenntnisse *
