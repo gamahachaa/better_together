@@ -355,24 +355,27 @@ class BTApp extends AppBase
 
 		try
 		{
-
-			if (loginApp != null) app.removeComponent(loginApp);
 			debugMail = new MailHelper(comonLibs + "mail/index.php");
 			debugMail.setTo([BTMailer.BT_MAIL]);
 			debugMail.setBcc(["bruno.baudry@salt.ch"]);
 			debugMail.setFrom(monitoringData.coach.getSimpleEmail());
 			if (monitoringData.coach.manager == null || monitoringData.coach.manager.mbox == "")
 			{
+				
 				var msg = new MessageBox();
 				msg.title = "Error !!!";
 				msg.message = 'Hello ${monitoringData.coach.firstName}, it seems that you manager was not found in the Active Directory. In order to function properly, this app need it... Please escalate to your manager to fix this.';
-
+				msg.showDialog(true);
+                 loginApp.feedErrorBack( msg.title );
 				debugMail.setSubject("[Better together Error] TL not found on logon for " + monitoringData.coach.name );
-				debugMail.setBody("TL not found for <a href='"+ monitoringData.coach.getSimpleEmail()+"'>" + monitoringData.coach.name + "</a> (" +monitoringData.coach.description + ")");
+				debugMail.setBody("TL not found for <a href='"+ monitoringData.coach.getSimpleEmail()+"'>" + monitoringData.coach.name + "</a> (" +monitoringData.coach.description + ") " + Std.string(monitoringData.coach));
 				debugMail.send(true);
+				msg.showDialog(true);
 			}
 			else
 			{
+				if (loginApp != null) app.removeComponent(loginApp);
+				
 				this.mainApp = ComponentMacros.buildComponent("assets/ui/main.xml");
 				storingBT = new MessageBox();
 				storingBT.type = MessageBoxType.TYPE_INFO;

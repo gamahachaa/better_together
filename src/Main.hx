@@ -30,7 +30,7 @@ class Main
 		var s = Browser.location.search;
 		PARAMS = new URLSearchParams(s);
 		
-		//trace(PARAMS.get("person"));
+		//trace("WTF");
 		if (PARAMS.has(Params.VOID)){
 			m = new bt.VoidApp();
 		}

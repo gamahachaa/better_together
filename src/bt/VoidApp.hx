@@ -50,123 +50,19 @@ class VoidApp extends AppBase
 		this.xapitracker.dispatcher.add( onXapi );
 
 	}
-	override function onMailSucces(r:Result)
-	{
-		storingBT.message = "EMAIL_SENT_SUCCESFULLY".T();
-		storingBT.disabled = false;
-		reset(false);
-	}
-	function onXapi(success:Bool)
-	{
-		#if debug
-		trace("bt.VoidApp::onXapi", xapitracker.statementJson);
-		#end
-		if (success)
-		{
-			if (gotStoredStatement)
-			{
-				//var voidId = xapitracker.statementsRefs[0];
-				var ccs = [instructor.getSimpleEmail(), monitoringData.coach.getSimpleEmail()];
-				cast(mailHelper, VoidMailer).buildBody( void_statement_id, xapitracker.statementsRefs[0].id, monitoringData.coach, void_comment, action);
-				if (reviewdAgentTl_mbox != "") ccs.push(reviewdAgentTl_mbox);
-				if (isActionVoid()) ccs.push(reviewer.getSimpleEmail());
-                mailHelper.setCc(ccs);
-				//mailHelper.setBody(body);
-				sendEmail();
-			}
-			else
-			{
-				if ( xapitracker.statementJson != null)
-				{
-					gotStoredStatement = true;
-					//var reviewer:Agent = new Agent( Reflect.field(Reflect.field(apitracker.statementJson, "actor"), "mbox"), Reflect.field(Reflect.field(apitracker.statementJson, "actor"), "name"));
-					/*var instructor:Agent = if (Reflect.hasField){
-						new Agent( Reflect.field(Reflect.field(apitracker.statementJson, "actor"), "mbox"), Reflect.field(Reflect.field(apitracker.statementJson, "actor"), "name"));
-					}else{null};
-					*/
-					reviewer = Agent.FROM_JSON( Reflect.field(xapitracker.statementJson, "actor"));
-					instructor = Agent.FROM_JSON( Reflect.field(Reflect.field(xapitracker.statementJson, "context"), "instructor"));
-					reviewdAgentTl = Reflect.field(Reflect.field(Reflect.field(xapitracker.statementJson, "context"), "extensions"), "https://ad.salt.ch/agent/manager/");
-					reviewdAgentTl_mbox = Reflect.field(Reflect.field(Reflect.field(xapitracker.statementJson, "context"), "extensions"), "https://ad.salt.ch/agent/manager_mbox/");
-					if (isCoachAllowed([reviewer.name, instructor.name, reviewdAgentTl, "dgrzeski","yschwab","dgonzale","erichter","sp_spaepke","sp_spaiva","sp_aaiai","nmayombo"]))
-					{
-						#if debug
-						trace("bt.VoidApp::onXapi can void");
-						#end
-						doTracking();
-					}
-					else
-					{
-						#if debug
-						trace("bt.VoidApp::onXapi NOT ALLOWED");
-						#end
-						storingBT.title = "Error";
-						storingBT.message = "{{void_not_allowed}}";
-						//storingBT.disabled = false;
-						storingBT.showDialog(true);
-
-					}
-
-				}
-				else
-				{
-					//error
-					#if debug
-					trace("bt.VoidApp::onXapi ");
-					#end
-					storingBT.title = "Error";
-					storingBT.message = "{{void_type_of_query}}";
-					//storingBT.disabled = false;
-					storingBT.showDialog(true);
-
-				}
-			}
-		}
-		else
-		{
-			#if debug
-			trace("Statememt not found");
-			#end
-			storingBT.title = "Error XAPI";
-			storingBT.message = "{{void_unknown_error}}";
-			//storingBT.disabled = false;
-			storingBT.showDialog(true);
-
-		}
-	}
-
-	function isCoachAllowed(array:Array<String>)
-	{
-		for (i in array)
-		{
-			if (this.monitoringData.coach.name == i) return true;
-		}
-		return false;
-	}
-
 	override function loadContent()
 	{
-		
+
 		try
 		{
 			if (loginApp != null) app.removeComponent(loginApp);
 			this.mainApp = ComponentMacros.buildComponent("assets/ui/void.xml");
-			void_statement_id_textfield = mainApp.findComponent("void_statement_id_textfield", TextField);
-			var void_comment_label = mainApp.findComponent("void_comment_label", Label);
-			void_comment_label.onClick = (e)->markdownHelper.showDialog(true);
-			void_comment_textarea = mainApp.findComponent("void_comment_textarea", TextArea);
-			void_action_group = mainApp.findComponent("void_action_group", Group);
-			void_action_group.onChange = function (e) {action = e.target.id ; };
-			void_statement_id_textfield.text = Main.PARAMS.get(Params.VOID);
+			prepareUI();
+            prepareMEssageBox();
 			this.prepareHeader();
 			app.addComponent( mainApp );
-			storingBT = new MessageBox();
-			storingBT.type = MessageBoxType.TYPE_INFO;
-			storingBT.title = "SENDING";
-			storingBT.message = "...";
-			//storingBT.backgroundImage = preloader.resource;
-			storingBT.destroyOnClose = false;
-			storingBT.draggable = false;
+			
+
 			super.loadContent();
 
 		}
@@ -175,19 +71,33 @@ class VoidApp extends AppBase
 			trace(e);
 		}
 	}
-	function reset(?initial:Bool = true)
-	{
-		void_statement_id = void_statement_id_textfield.text ="";
-		void_comment = void_comment_textarea.text = "";
-		mainApp.removeComponent(preloader);
-		storingBT.disabled = false;
-		gotStoredStatement = false;
-		reviewdAgentTl = "";
-		reviewdAgentTl_mbox = "";
-		reviewdAgentTl = "";
-		reviewer = null;
-		instructor = null;
 
+	function prepareUI()
+	{
+		void_statement_id_textfield = mainApp.findComponent("void_statement_id_textfield", TextField);
+		var void_comment_label = mainApp.findComponent("void_comment_label", Label);
+		void_comment_label.onClick = (e)->markdownHelper.showDialog(true);
+		void_comment_textarea = mainApp.findComponent("void_comment_textarea", TextArea);
+		void_action_group = mainApp.findComponent("void_action_group", Group);
+		void_action_group.onChange = function (e) {action = e.target.id ; };
+		void_statement_id_textfield.text = Main.PARAMS.get(Params.VOID);
+	}
+
+	function prepareMEssageBox()
+	{
+		storingBT = new MessageBox();
+		storingBT.type = MessageBoxType.TYPE_INFO;
+		storingBT.title = "SENDING";
+		storingBT.message = "...";
+		//storingBT.backgroundImage = preloader.resource;
+		storingBT.destroyOnClose = false;
+		storingBT.draggable = false;
+	}
+	override function onMailSucces(r:Result)
+	{
+		storingBT.message = "EMAIL_SENT_SUCCESFULLY".T();
+		storingBT.disabled = false;
+		reset(false);
 	}
 	override function onSend(e)
 	{
@@ -255,23 +165,104 @@ class VoidApp extends AppBase
 
 		storingBT.showDialog(true);
 	}
-	/*override function onTracking(success:Bool)
+	function onXapi(success:Bool)
 	{
-
-		//super.onTracking(success);
-
+		#if debug
+		trace("bt.VoidApp::onXapi", xapitracker.statementJson);
+		#end
 		if (success)
-			sendEmail();
+		{
+			if (gotStoredStatement)
+			{
+				//var voidId = xapitracker.statementsRefs[0];
+				var ccs = [instructor.getSimpleEmail(), monitoringData.coach.getSimpleEmail()];
+				cast(mailHelper, VoidMailer).buildBody( void_statement_id, xapitracker.statementsRefs[0].id, monitoringData.coach, void_comment, action);
+				if (reviewdAgentTl_mbox != "") ccs.push(reviewdAgentTl_mbox);
+				if (isActionVoid()) ccs.push(reviewer.getSimpleEmail());
+				mailHelper.setCc(ccs);
+				//mailHelper.setBody(body);
+				sendEmail();
+			}
+			else
+			{
+				if ( xapitracker.statementJson != null)
+				{
+					gotStoredStatement = true;
+					reviewer = Agent.FROM_JSON( Reflect.field(xapitracker.statementJson, "actor"));
+					instructor = Agent.FROM_JSON( Reflect.field(Reflect.field(xapitracker.statementJson, "context"), "instructor"));
+					reviewdAgentTl = Reflect.field(Reflect.field(Reflect.field(xapitracker.statementJson, "context"), "extensions"), "https://ad.salt.ch/agent/manager/");
+					reviewdAgentTl_mbox = Reflect.field(Reflect.field(Reflect.field(xapitracker.statementJson, "context"), "extensions"), "https://ad.salt.ch/agent/manager_mbox/");
+					if (isCoachAllowed([reviewer.name, instructor.name, reviewdAgentTl, "dgrzeski","yschwab","dgonzale","erichter","sp_spaepke","sp_spaiva","sp_aaiai","nmayombo"]))
+					{
+						#if debug
+						trace("bt.VoidApp::onXapi can void");
+						#end
+						doTracking();
+					}
+					else
+					{
+						#if debug
+						trace("bt.VoidApp::onXapi NOT ALLOWED");
+						#end
+						storingBT.title = "Error";
+						storingBT.message = "{{void_not_allowed}}";
+						//storingBT.disabled = false;
+						storingBT.showDialog(true);
+
+					}
+
+				}
+				else
+				{
+					//error
+					#if debug
+					trace("bt.VoidApp::onXapi ");
+					#end
+					storingBT.title = "Error";
+					storingBT.message = "{{void_type_of_query}}";
+					//storingBT.disabled = false;
+					storingBT.showDialog(true);
+
+				}
+			}
+		}
 		else
 		{
 			#if debug
-			trace("bt.BTApp::onTracking NO SUCCESS");
+			trace("Statememt not found");
 			#end
-			storingBT.title = "Error";
-			storingBT.message = "{{void_failed_to_void}}";
+			storingBT.title = "Error XAPI";
+			storingBT.message = "{{void_unknown_error}}";
+			//storingBT.disabled = false;
 			storingBT.showDialog(true);
+
 		}
-	}*/
+	}
+
+	function isCoachAllowed(array:Array<String>)
+	{
+		for (i in array)
+		{
+			if (this.monitoringData.coach.name == i) return true;
+		}
+		return false;
+	}
+
+	function reset(?initial:Bool = true)
+	{
+		void_statement_id = void_statement_id_textfield.text ="";
+		void_comment = void_comment_textarea.text = "";
+		mainApp.removeComponent(preloader);
+		storingBT.disabled = false;
+		gotStoredStatement = false;
+		reviewdAgentTl = "";
+		reviewdAgentTl_mbox = "";
+		reviewdAgentTl = "";
+		reviewer = null;
+		instructor = null;
+
+	}
+
 	function doTracking()
 	{
 		//var tracker:BTTracker = cast(xapitracker, BTTracker);
@@ -279,22 +270,18 @@ class VoidApp extends AppBase
 					   "https://qook.salt.ch/better_together/reasons_description_defect" => void_comment,
 					   "https://qook.salt.ch/better_together/action_taken" => action
 				   ];
-		/*switch (action)
-		{
-			case "action_nomistake" : this.xapitracker.voidStatement( void_statement_id, new Agent(monitoringData.coach.mbox, monitoringData.coach.sAMAccountName), ext);
-			case "action_wrongagent" : this.xapitracker.voidStatement( void_statement_id, new Agent(monitoringData.coach.mbox, monitoringData.coach.sAMAccountName), ext);
-			case _ :
-				this.xapitracker.updateStatement( void_statement_id, new Agent(monitoringData.coach.mbox, monitoringData.coach.sAMAccountName), ext);
-		}*/
 		if (isActionVoid())
 		{
 			this.xapitracker.voidStatement( void_statement_id, new Agent(monitoringData.coach.mbox, monitoringData.coach.sAMAccountName), ext);
-		}else{
-			 this.xapitracker.updateStatement( void_statement_id, new Agent(monitoringData.coach.mbox, monitoringData.coach.sAMAccountName), ext);
+		}
+		else
+		{
+			this.xapitracker.updateStatement( void_statement_id, new Agent(monitoringData.coach.mbox, monitoringData.coach.sAMAccountName), ext);
 		}
 	}
 	inline function isActionVoid()
 	{
-		return action == "action_nomistake" || action == "action_wrongagent";
+		//return action == "action_nomistake" || action == "action_wrongagent";
+		return action != "action_warning" && action != "action_dismissal";
 	}
 }

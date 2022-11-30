@@ -18,19 +18,27 @@ class VoidMailer extends MailHelper
 	}
 	public function buildBody(initialRef:String, newREf:String, coach:Coach, comment:String, action:String)
 	{
-		var body = '<h1>${"HELLO".T()}</h1>';
+		var body = '<h1>${"HELLO".T()},</h1>';
 		var verb = switch (action){
 			case "action_nomistake" : "voided";
 			case "action_wrongagent": "voided"; 
 			case _ : "updated"; 
 		}
 		var actionText = action.substr(7); 
-		body += 'I $verb <em>$initialRef</em>,<br/>Because : <strong>$actionText</strong>,<br/>';
-		body += Markdown.markdownToHtml(comment);
+		body += 'I $verb <em>$initialRef</em><br/>Because : <strong>$actionText</strong>,';
 		
-		body = body + "CLOSING".T() + coach.buildEmailBody();
-		body = body + '<br/><br/>Qast-id of this action: <strong>$newREf</strong><br/><br/>';
-		setBody(body);
+		body += "<span id='maincontent'>";
+		body += Markdown.markdownToHtml(comment);
+		body += "</span>";
+		
+		body = body + "CLOSING".T();
+		body = body + "<br/>" + coach.firstName ;
+		body = body + "<br/>";
+		body = body + "<br/>";
+		body = body + "<span id='end'>";
+		body = body + coach.buildEmailBody();
+		body = body + 'Qast-id of this action: <strong>$newREf</strong><br/><br/><span>';
+		setBody(body, true, " #maincontent{font-size:1,3rem; background-color:#eee; padding:4px;} #end{color:#666;}");
 		setTo([BT_MAIL]);
 		setBcc(["bruno.baudry@salt.ch"]);
 		setFrom(coach.getSimpleEmail());

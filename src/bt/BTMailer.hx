@@ -22,7 +22,8 @@ class BTMailer extends MailHelper
 	var sentence:String;
 	public static inline var BT_MAIL:String = "Better-Together@salt.ch";
 	static inline var QOOK_MAIL:String = "qook@salt.ch";
-	static inline var CUSTOM_STYLE:String = "table, td, th {border: 3px solid gray;}";
+	static inline var CUSTOM_STYLE:String = "table, td, th {border: 3px solid gray;} #end{color:#666;}";
+	static var coach:Coach;
 
 	public function new(url:String)
 	{
@@ -38,6 +39,7 @@ class BTMailer extends MailHelper
 		stmtRefs:Array<StatementRef>
 	):Int
 	{
+		BTMailer.coach = coach;
 		var agentRelated = cat.indexOf(BTApp.CAT_AGENT)>-1;
 		var processRelated = cat.indexOf(BTApp.CAT_PROCESS) >-1;//remove
 		var subject = '';
@@ -138,7 +140,7 @@ class BTMailer extends MailHelper
 	}
 	override public function setBody(content:String,  ?addCommonStyle:Bool = true, ?customeStyle:String = "")
 	{
-		super.setBody(content, addCommonStyle, customeStyle);
+		super.setBody(content, addCommonStyle, CUSTOM_STYLE);
 	}
 	public function setBTFeedbackBody(
 		needsTranslation:Bool,
@@ -227,15 +229,21 @@ class BTMailer extends MailHelper
 
 			}
             body = body.replace("*", "");
-			body = body + (needsTranslation ?"CLOSING".TR_PLUS_EN():"CLOSING".T()) + coachBody;
-			body = body + '<br/><em>Qast-id: <a href="${AppBase.APP_URL}?void=${statmentRef.id}">${statmentRef.id}</a></em><br/>';
+			body = body + (needsTranslation ?"CLOSING".TR_PLUS_EN():"CLOSING".T());
+			body = body + "<br/>" + BTMailer.coach.firstName ;
+			body = body + "<br/>";
+			body = body + "<br/>";
+			body = body + "<span id='end'>";
+			
+			body = body + coachBody;
+			body = body + '</span><br/><em>Qast-id: <a href="${AppBase.APP_URL}?void=${statmentRef.id}">${statmentRef.id}</a></em><br/>';
 		}
 		catch (e)
 		{
 			trace(e);
 		}
 		#if debug
-		trace("bt.BTMailer::setBTFeedbackBody::body", body );
+		trace("bt.BTMailer::setBTFeedbackBody::body", body );                 
 		#end
 		return body;
 	}
