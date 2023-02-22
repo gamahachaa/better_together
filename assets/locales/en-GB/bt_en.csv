@@ -100,9 +100,11 @@ void_comment_tooltip;Describe here your arguments to update or invalidate this b
 void_statement_id_label;ID to update
 void_statement_id_tooltip;Better Together QAST ID
 void_checking_the_record;I search in the database ...
+
+void_already_voided;This BT was cancelled \non {1} \n(by {0}).
 void_comment_needed;You have to explain why you update or invalide this BetterTogether!
 void_incorrect_id;This is not a QAST Better Togther ID!
-void_unknown_error;This ID is unknown (perhaps it has already been cancelled)!
+void_unknown_error;This ID is unknown!
 void_type_of_query;Wrong request.
 void_not_allowed;You are not allowed to cancel this Better Together!
 

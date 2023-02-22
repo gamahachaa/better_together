@@ -46,6 +46,7 @@
     <library name="utils" />
     <library name="quality" />
     <library name="csv" />
+    <library name="openfl" />
   </haxelib>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>

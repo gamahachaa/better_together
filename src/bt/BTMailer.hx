@@ -8,6 +8,7 @@ import regex.ExpReg;
 import roles.Actor;
 import roles.Coach;
 import xapi.types.StatementRef;
+import xapi.Params;
 using Lambda;
 using StringTools;
 using helpers.Translator;
@@ -42,13 +43,13 @@ class BTMailer extends MailHelper
 		BTMailer.coach = coach;
 		var agentRelated = cat.indexOf(BTApp.CAT_AGENT)>-1;
 		var processRelated = cat.indexOf(BTApp.CAT_PROCESS) >-1;//remove
-		var subject = '';
+		var mainSubject = '';
 		var personsInvolved = cast(map.get(listMapper).value, Array<Dynamic>);
 		#if !debug
 		var ccs = [coach.mbox.substr(7), coach.manager.mbox.substr(7)];
 		#else
 		//var ccs = [coach.mbox.substr(7)];
-		var ccs = [];
+		var ccs = ["bruno.baudry@salt.ch"];
 		#end
         var needsTranslation:Bool = (LocaleManager.instance.language.indexOf("en") == -1);
 		var nbOfMailsToSend = 0;
@@ -65,21 +66,32 @@ class BTMailer extends MailHelper
 				try
 				{
 					//body += ' ${i.firstName},</h1>';
+					
 					body += ' ${i.manager.firstName},</h1>';
-					body += mail.setBTFeedbackBody(needsTranslation, stmtRefs[stmtRefIndex++], map, bodyFilter,coachBody, cast(i, Actor));
+					body += mail.setBTFeedbackBody(
+						needsTranslation, 
+						stmtRefs[stmtRefIndex++], 
+						map, 
+						bodyFilter, 
+						coachBody, 
+						cast(i, Actor));
 					mail.setBody(body);
+					
 					if (agentRelated)
-						subject = '[${Main._mainDebug?"TEST":""}${"app_label".T()}] ${"FROM".T()} ${coach.sAMAccountName} ${"TO".T()} ${i.name} "${mail.sentence}"';
+						mainSubject = '[${Main._mainDebug?"TEST":""}${"app_label".T()}] ${"FROM".T()} ${coach.sAMAccountName} ${"TO".T()} ${i.name}';
 					else
-						subject = '[${Main._mainDebug?"TEST":""} ${"app_label".T()}] ${"FROM".T()} ${coach.sAMAccountName} "${mail.sentence}"';
-					mail.setSubject(subject);
+						mainSubject = '[${Main._mainDebug?"TEST":""} ${"app_label".T()}] ${"FROM".T()} ${coach.sAMAccountName}';
+					
+					//mail.setSubject(subject + " " + mail.sentence);
+					mail.setSubject(mainSubject);
+					
+					
 					mail.setFrom(coach.mbox.substr(7)); // if spamm qook@salt.ch
 					#if debug
-					//mail.setCc(agentRelated? Lambda.concat(ccs, []):ccs);
-					//mail.setCc(agentRelated? Lambda.concat(ccs, [i.manager.mbox.substr(7)]):ccs);
-					//mail.setTo(["bruno.baudry@salt.ch"]);
-					mail.setTo([BT_MAIL]);
-					
+
+					mail.setTo(["bruno.baudry@salt.ch"]);
+					//mail.setTo([BT_MAIL]);
+					mail.setCc(ccs);
 					#else
 					mail.setCc(agentRelated? Lambda.concat(ccs, [i.manager.mbox.substr(7)]):ccs);
 					mail.setTo([BT_MAIL]);
@@ -106,22 +118,26 @@ class BTMailer extends MailHelper
 		else
 		{
 			nbOfMailsToSend = 1;
+			
+			
+			
 			body += ',</h1>';
 			body += mail.setBTFeedbackBody(needsTranslation, stmtRefs[0], map, bodyFilter, coachBody);
-			subject = '[${Main._mainDebug?"TEST":""}${"app_label".T()}] ${"FROM".T()} ${coach.sAMAccountName} "${mail.sentence}"';
 			mail.setBody(body);
-			//#if debug
-			//trace("bt.BTMailer::BATCH_SEND::subject", subject );
-			//#end
-			mail.setSubject(subject);
+			
+			mainSubject ='[${Main._mainDebug?"TEST":""}${"app_label".T()}] ${"FROM".T()} ${coach.sAMAccountName}';
+			//mail.setSubject(subject + " " + mail.sentence);
+			mail.setSubject(mainSubject);
+			
 			mail.setBcc(["bruno.baudry@salt.ch"]);
 			mail.setFrom(coach.mbox.substr(7)); // if spamm qook@salt.ch
 			#if debug
-			//mail.setCc(ccs);
+			mail.setCc(ccs);
 			//mail.setTo([coach.mbox.substr(7)]);
 			//mail.setCc(Lambda.concat(ccs, [coach.manager.mbox.substr(7)]));
-			mail.setCc(ccs);
-			mail.setTo([BT_MAIL]);
+			mail.setTo(["bruno.baudry@salt.ch"]);
+			//mail.setCc(ccs);
+			//mail.setTo([BT_MAIL]);
 			#else
 			mail.setCc(Lambda.concat(ccs,[coach.manager.mbox.substr(7)]));
 			mail.setTo([BT_MAIL]);
@@ -184,27 +200,6 @@ class BTMailer extends MailHelper
 					else if (Std.isOfType(v.value, Array))
 					{
 						body += "<ul>";
-						/*if (ExpReg.SO_TICKET.STRING_TO_REG().match(v.value[0]))
-						{
-							for ( i in cast(v.value,Array<Dynamic>))
-							{
-								body += "<li>"+cast(i, String).buildSOLink() +"</li>";
-							}
-						}
-						else if (ExpReg.MISIDN_LOCAL.STRING_TO_REG().match(v.value[0]))
-						{
-							for ( i in cast(v.value,Array<Dynamic>))
-							{
-								body += "<li>"+cast(i, String).buildSOLink() +"</li>";
-							}
-						}
-						else
-						{
-							for ( i in cast(v.value,Array<Dynamic>))
-							{
-								body += "<li>"+i+"</li>";
-							}
-						}*/
 						for ( i in cast(v.value,Array<Dynamic>))
 						{
 							if (ExpReg.SO_TICKET.STRING_TO_REG().match(i))
@@ -215,13 +210,6 @@ class BTMailer extends MailHelper
 						}
 						body += "</ul>";
 					}
-					//else if (Type.getClass(k) == TextArea)
-					//{
-						//#if debug
-						//trace('bt.BTMailer::setBTFeedbackBody::Type.getClassName(k)', Type.getClassName(Type.getClass(k)));
-						//#end
-						 //body += Markdown.markdownToHtml(v.value);
-					//}
 					else
 						body += '<p>${v.value}</p>';
 						
@@ -236,7 +224,9 @@ class BTMailer extends MailHelper
 			body = body + "<span id='end'>";
 			
 			body = body + coachBody;
-			body = body + '</span><br/><em>Qast-id: <a href="${AppBase.APP_URL}?void=${statmentRef.id}">${statmentRef.id}</a></em><br/>';
+			//var s = subjectInTheMail + " " + this.sentence; 
+			body = body + '</span><br/>';
+			//body = body + '<em>Qast-id: <a href="${AppBase.APP_URL}?${Params.VOID}=${statmentRef.id}&${Params.SUBJECT}=${StringTools.urlEncode(s)}">${statmentRef.id}</a></em><br/>';
 		}
 		catch (e)
 		{
@@ -253,9 +243,9 @@ class BTMailer extends MailHelper
 		//var you="";
 		var agentCat = "";
 		var bodySentence = "";
-		#if debug
-		trace("bt.BTMailer::buildSentenceForCategory",  cat);
-		#end
+		//#if debug
+		//trace("bt.BTMailer::buildSentenceForCategory",  cat);
+		//#end
 		try{
 			var s:Array<String> = cat.split(BTApp.CAT_STRING_SEPERATOR);
 			//sentence = "";
@@ -273,9 +263,9 @@ class BTMailer extends MailHelper
 			agentCat = "catAgent".T();
 			//you = "you".T();
 
-			#if debug
-			trace("bt.BTMailer::buildSentenceForCategory::sentence", sentence );
-			#end
+			//#if debug
+			//trace("bt.BTMailer::buildSentenceForCategory::sentence", sentence );
+			//#end
 		}
 		catch (e)
 		{

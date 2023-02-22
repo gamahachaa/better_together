@@ -1,3 +1,4 @@
+#thumbnail{border-radius:32px;width:32px;height:32px;}
 #main{background-color:#000000;padding-left:8px;padding-right:8px;}
 .alert{border-color:$highlight-color;}
 textfield,textarea{border-width:4px!important;}
@@ -18,4 +19,5 @@ textfield,textarea{border-width:4px!important;}
 #login{border-radius:16px;}
 #login,#feedback{margin-left:3rem;}
 #feedback{color:#000;background-color:$error-color;padding-left:4px;padding-right:4px;padding-top:2px;padding-bottom:2px;}
+#void_box,#void_statement_id_textfield,#void_action_group,#void_comment_textarea{margin-left:12px;}
 

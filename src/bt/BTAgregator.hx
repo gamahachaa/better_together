@@ -1,6 +1,7 @@
 package bt;
 
 //import haxe.Http;
+import bt.queries.BTVoided;
 import haxe.Json;
 import lrs.Access;
 import lrs.vendors.Connector;
@@ -28,7 +29,10 @@ class BTAgregator extends Agregator
 		super(new LLAccess(ll));
 
 	}
-	
+	public function getVoided(id:String)
+	{
+		 fetch(new BTVoided(id));
+	}
 	/*public function getBasicBTThisMonth(nt:String)
 	{
 		#if debug

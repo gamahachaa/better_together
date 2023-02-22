@@ -91,9 +91,10 @@ void_comment_tooltip;Beschreibe hier deine Argumente, um dieses better together 
 void_statement_id_label;ID
 void_statement_id_tooltip;QAST-ID des Better Together
 void_checking_the_record;Suche in der Datenbank ...
+void_already_voided;Dieser BT wurde \nam {1} \n(von {0}) annulliert.
 void_comment_needed;Du musst erklären, warum du das Better Together zu aktualisieren oder zu entkräften willst!
 void_incorrect_id;Dies ist keine QAST Better Togther ID!
-void_unknown_error;Diese ID ist unbekannt (vielleicht wurde sie bereits storniert)!
+void_unknown_error;Diese ID ist unbekannt !
 void_type_of_query;Schlechter Antrag.
 void_not_allowed;Du bist nicht berechtigt, dieses Better Together zu stornieren!
 

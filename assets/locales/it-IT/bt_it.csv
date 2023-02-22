@@ -93,9 +93,10 @@ void_comment_tooltip;Descrivi qui le tue argomentazioni per aggiornare o invalid
 void_statement_id_label;ID da aggiornare
 void_statement_id_tooltip;ID QAST Better Together
 void_checking_the_record;Sto cercando nel database ...
+void_already_voided;Questo BT è stato annullato \nsu {1} \n(da {0}).
 void_comment_needed;Devi spiegare perché vuoi aggiornare o invalidare questo Better Together!
 void_incorrect_id;Questo non è un ID QAST Better Togther!
-void_unknown_error;Questo ID è sconosciuto (forse è già stato cancellato)!
+void_unknown_error;Questo ID è sconosciuto !
 void_type_of_query;Richiesta errata.
 void_not_allowed;Non puoi cancellare questo articolo Better Together!
 

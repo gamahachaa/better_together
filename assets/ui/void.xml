@@ -9,13 +9,13 @@
 			omitRoot="true" />
 	</hbox>
 	<vbox height="78%"
-		width="100%">
+		width="100%" id="void_box">
 		<label id="void_statement_id_label" styleName="h2" text="{{void_statement_id_label}}" />
 		<textfield id="void_statement_id_textfield"
 			placeholder="{{void_statement_id_tooltip}}"
 			width="15%" />
 		<label id="action_label" styleName="h2" text="{{action_label}}" />
-		<group id="void_action_group" layout="VerticalLayout">
+		<group id="void_action_group" layoutName="vertical">
 			<optionbox text="{{action_coaching}}" id="action_coaching" styleName="radio_btn" />
 			<optionbox text="{{action_grouptraining}}" id="action_grouptraining" styleName="radio_btn" />
 			<!--<optionbox text="{{action_bt_wrongly_filed_in}}" id="action_warning" styleName="radio_btn" />-->

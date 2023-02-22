@@ -26,7 +26,11 @@ EFFBB8 grayish pink2
    drop-shadow(DISTANCE, ANGLE, COLOR, ALPHA, blurX, blurY, strength, quality, inner);
    drop-shadow(1, 45, #000000, 1, 4, 2, 1, 3, false);
 */
-
+#thumbnail{
+	border-radius: 32px;
+	width:32px;
+	height:32px;
+}
 #main{
 	background-color: #000000;
 	padding-left:8px;
@@ -134,5 +138,9 @@ textfield, textarea{
 	padding-right:4px;
 	padding-top:2px;
 	padding-bottom:2px;
+}
+
+#void_box, #void_statement_id_textfield, #void_action_group, #void_comment_textarea{
+	margin-left:12px;
 }
 

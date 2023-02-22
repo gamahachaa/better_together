@@ -103,9 +103,10 @@ void_comment_tooltip;Décris ici tes arguments pour metter à jour ou invalider 
 void_statement_id_label;ID à mettre à jour
 void_statement_id_tooltip;Identifiant QAST du Better Together
 void_checking_the_record;Je cherche dans la base de donnée ...
+void_already_voided;Ce BT a été annulé \nle {1} \npar ({0}) ...
 void_comment_needed;Tu dois expliquer pourquoi tu veux metter à jour ou invalider ce better together !
 void_incorrect_id;Ce n'est pas une ID QAST Better Togther !
-void_unknown_error;Cet identifiant est inconnu (peut-être a-il déjà été annulé) !
+void_unknown_error;Cet identifiant est inconnu !
 void_type_of_query;Mauvaise requête.
 void_not_allowed;Tu n'est pas autorisé à corriger ce Better Together !
 

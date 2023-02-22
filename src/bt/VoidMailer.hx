@@ -16,7 +16,7 @@ class VoidMailer extends MailHelper
 	{
 		super(url);
 	}
-	public function buildBody(initialRef:String, newREf:String, coach:Coach, comment:String, action:String)
+	public function buildBody(initialRef:String, newREf:String, coach:Coach, comment:String, action:String, subject:String)
 	{
 		var body = '<h1>${"HELLO".T()},</h1>';
 		var verb = switch (action){
@@ -39,10 +39,16 @@ class VoidMailer extends MailHelper
 		body = body + coach.buildEmailBody();
 		body = body + 'Qast-id of this action: <strong>$newREf</strong><br/><br/><span>';
 		setBody(body, true, " #maincontent{font-size:1,3rem; background-color:#eee; padding:4px;} #end{color:#666;}");
+		
+		#if debug
+		setTo(["bruno.baudry@salt.ch"]);
+		#else
 		setTo([BT_MAIL]);
+		#end
 		setBcc(["bruno.baudry@salt.ch"]);
 		setFrom(coach.getSimpleEmail());
-		setSubject('[Better Together] ${coach.sAMAccountName} $verb $initialRef' );
+		//setSubject('[Better Together] ${coach.sAMAccountName} $verb $initialRef' );
+		setSubject('RE: $subject' );
 		
 	}
 

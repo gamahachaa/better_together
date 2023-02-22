@@ -10,7 +10,7 @@
 	
 	<group id="langSwitcher_group"
 		layout="horizontal"
-		width="45%">
+		width="35%">
 		<optionbox userData="en-GB"
 			text="EN"
 			id="en"
@@ -25,9 +25,11 @@
 			text="IT"
 			id="it" />
 	</group>
+	
 	<label text=""
 		textAlign="left"
 		id="version_label"
 		width="15%" />
 	<button id="logoff_button" icon="images/logoff_button.png"/>
+	<image id="thumbnail" style="border:1px solid $normal-border-color" width="64px"/>
 </hbox>

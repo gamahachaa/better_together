@@ -13,6 +13,7 @@
 -lib utils
 -lib quality
 -lib csv
+-lib openfl
 -cp src
 -cp modules
 -cp C:/HaxeToolkit/haxe/lib/haxeui-core/git
