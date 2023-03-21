@@ -6,6 +6,7 @@ import haxe.crypto.Base64;
 import haxe.ds.StringMap;
 import haxe.io.Bytes;
 import haxe.ui.Toolkit;
+import haxe.ui.ToolkitAssets;
 import haxe.ui.components.Button;
 import haxe.ui.components.CheckBox;
 import haxe.ui.components.Column;
@@ -23,6 +24,7 @@ import haxe.ui.containers.TreeViewNode;
 import haxe.ui.containers.VBox;
 import haxe.ui.containers.dialogs.Dialog.DialogButton;
 import haxe.ui.containers.dialogs.Dialog.DialogEvent;
+import haxe.ui.containers.dialogs.Dialogs;
 import haxe.ui.containers.dialogs.MessageBox;
 import haxe.ui.core.Component;
 import haxe.ui.data.ArrayDataSource;
@@ -37,6 +39,7 @@ import http.MailHelper.Result;
 import js.Browser;
 import ldap.Attributes;
 import ldap.Results;
+import mail.Params.ImageData;
 //import openfl.display.Bitmap;
 //import openfl.display.BitmapData;
 import xapi.activities.Definition;
@@ -51,6 +54,7 @@ using regex.ExpReg;
  * ...
  * @author bb
  */
+
 typedef DropDownItem =
 {
 	var text:String;
@@ -168,6 +172,14 @@ class BTApp extends AppBase
 	var debugMail:http.MailHelper;
 	var external_dealers:Array<Record>;
 	var globalNoTL:Array<String>;
+	var printSreen:ImageData;
+	var reasons_printscreen_title_label:Label;
+	var reasons_printscreen_button:Button;
+	var printScreenWeigthtMegas:Float;
+	//var printscreenExt;
+	//var printscreenFileName;
+	//var printscreenByteData;
+	public var reasons_printscreen_image:Image;
 	//static inline var NEW_LINE:String = "\n";
 	public static inline var CAT_AGENT:String = "catAgent";
 	public static inline var CAT_PROCESS:String = "catProcess";
@@ -190,20 +202,11 @@ class BTApp extends AppBase
 		super(BTMailer, BTTracker, "better_together");
 		allSelected = false;
 		this.whenAppReady = loadContent;
+		//initImage();
 		init();
 		justLoaded = true;
 		globalNoTL = [];
-		//app.ready(onAppReady);
-		//Toolkit.assets.getText("data/dealers.csv");
 
-		//trace(Lambda.find(external_dealers, (e:Record)->(e[0] == "100291")));
-		//trace(Lambda.find(external_dealers, (e:Record)->(e[0] == "115633")));
-		//trace(Lambda.find(external_dealers, (e:Record)->(e[0] == "999999")));
-		//for (i in external_dealers)
-		//{
-		//trace(i, i[0],i[1]);
-		//
-		//}
 	}
 	function reset(?initial:Bool=true)
 	{
@@ -215,7 +218,7 @@ class BTApp extends AppBase
 				checkVersion();// check if new app version before init
 			}
 			initCatTree(initial);
-
+			initImage();
 			details_person_selector_display_box.hidden = true;
 			_selectedCat = "";
 			toValidate = [];
@@ -235,6 +238,21 @@ class BTApp extends AppBase
 			trace(e);
 		}
 
+	}
+
+	function initImage()
+	{
+		reasons_printscreen_title_label.text = "";
+		printSreen =
+		{
+			name : "",
+			bytes : null
+		}
+		printScreenWeigthtMegas = 0;
+		//reasons_printscreen_button.text = "{{reasons_printscreen_button}}";
+		reasons_printscreen_image.resource = null;
+		reasons_printscreen_button.text = "{{reasons_printscreen_button}}";
+		reasons_printscreen_button.icon = "images/picture_small.png";
 	}
 	/**
 	 * set the categorie tree
@@ -259,9 +277,6 @@ class BTApp extends AppBase
 		?fromParams:Bool = true
 	)
 	{
-		#if debug
-		//trace("bt.BTApp::buildTree", fromParams);
-		#end
 
 		var reasonsparams = "";
 		if (fromParams && Main.PARAMS.get("cat") != null && Main.PARAMS.get("cat").trim() !="" )
@@ -298,9 +313,6 @@ class BTApp extends AppBase
 				for (i in val)
 				{
 					subNode = n.addNode({text: cast(i, String).T(), value:i});
-					//#if debug
-					//trace("bt.BTApp::buildTree::subNode", subNode.data.value );
-					//#end
 					if (fromParams && reasonsparams.indexOf( subNode.data.value) >-1)
 					{
 						reasons_categories_tree.selectedNode = subNode;
@@ -428,40 +440,25 @@ class BTApp extends AppBase
 				trace("bt.BTApp::loadContent");
 
 				#end
-				try{
-				var thumbnail:Image = mainApp.findComponent("thumbnail", Image);
-				 var img = Browser.document.createImageElement();
-				img.src = 'data:image/jpeg;base64,${monitoringData.coach.thumbnailphoto}';
-				thumbnail.resource = img; 
-				 img.onload = function(){ 
-					thumbnail.resource = img; }; 
+				try
+				{
+					var thumbnail:Image = mainApp.findComponent("thumbnail", Image);
+					var img = Browser.document.createImageElement();
+					img.src = 'data:image/jpeg;base64,${monitoringData.coach.thumbnailphoto}';
+					thumbnail.resource = img;
+					img.onload = function()
+					{
+						thumbnail.resource = img;
+					};
 				}
-				
+
 				catch (e)
 				{
 					trace(e);
-				 //var imageString = Base64.encode(Bytes.ofString(StringTools.urlDecode(monitoringData.coach.thumbnailphoto)), false);
+
 				}
-				 
-				 //img.src = "data:image/jpeg;base64," + imageString; 
-				 
-				 
-				//var imageString = Base64.encode(Bytes.ofString(StringTools.urlDecode(monitoringData.coach.thumbnailphoto)),false);
-						  
-				//
-				//var bit:BitmapData = new BitmapData(100, 100);
-				//var bit:Bitmap = new Bitmap();
-				//bit.
-				//thumbnail.resource = 
-				
-                //trace(thumbnail.resource);
-				//var img:js.html.Image = new js.html.Image(100, 100);
-				//img.src = 
-				//thumbnail.resource = img;
 				super.loadContent();
-				
-				
-				 
+
 			}
 
 		}
@@ -481,49 +478,15 @@ class BTApp extends AppBase
 			[details_person_selector_display_tableview, details_person_selector_input_textarea],
 			cast(mailHelper, BTMailer),
 			monitoringData.coach,
-			xapitracker.statementsRefs
+			xapitracker.statementsRefs,
+			printSreen
 		);
 		storingBT.message = "SENDING_EMAILS".T() + " " + mailsToSend;
 		//mainApp.addComponent(preloader);// add a image container in the footer or in a dialogbox
 	}
 	function tests()
 	{
-		var map:Map<String,Int> = [];
-		map.set("2deux", 2);
-		map.set("3trois", 3);
-		map.set("1un", 1);
-		trace(map);
-		trace(LocaleManager.instance.language);
-		var m = Lambda.filter( map, e -> e != 1 );
 
-		//var m = map.remove("trois");
-		var k = map.keys();
-		var m:Array<String> = [for (i in k) i ];
-		trace( m);
-		m.sort(function (a, b)
-		{
-
-			return
-				if (a == b)
-			{
-				trace("equal");
-				0;
-			}
-			else if (a > b)
-			{
-				trace("superior");
-				1;
-			}
-			else
-			{
-				trace("inferiror");
-				-1;
-			}
-		}
-			  );
-
-		//trace(map, m, k);
-		trace( m);
 	}
 
 	function fetchAllComponents()
@@ -549,6 +512,7 @@ class BTApp extends AppBase
 	function fetchBoxes()
 	{
 		details_person_selector_display_box = mainApp.findComponent("details_person_selector_display_box", VBox);
+		reasons_printscreen_image  = mainApp.findComponent("reasons_printscreen_image", Image);
 	}
 
 	function fetchInteractions()
@@ -570,14 +534,131 @@ class BTApp extends AppBase
 	{
 		var details_person_selector_button:Button = mainApp.findComponent("details_person_selector_button", Button);
 		details_person_selector_button.onClick = onSearchAgent;
-		//var logoff_button = mainApp.findComponent("logoff_button", Button);
-		//logoff_button.text = this.monitoringData.coach.sAMAccountName;
-		//logoff_button.onClick = function (e) {this.cookie.clearCockie(); Browser.location.reload() ; };
-		//var send_button:Button = mainApp.findComponent("send_button", Button);
-
-		//send_button.onClick = onSendClicked;
+		reasons_printscreen_button = mainApp.findComponent("reasons_printscreen_button", Button);
+		reasons_printscreen_button.onClick = openImage;
 	}
 
+	function openImage(_)
+	{
+		#if debug
+		trace("bt.BTApp::openImage");
+		#end
+		var hadIssues = true;
+		try
+		{
+			if (this.printSreen.name != "")
+			{
+				initImage();
+
+			}
+			else
+			{
+				Dialogs.openBinaryFile("Open Image File", [ {label: "Image File", extension: "png, jpg, jpeg"}], function(selectedFile)
+				{
+
+					if (selectedFile != null)
+					{
+
+						#if debug
+						trace("bt.BTApp::openImage","selected file != null", selectedFile.name, selectedFile.isBinary, selectedFile.bytes.length);
+						#end
+
+						if (selectedFile.bytes != null)
+						{
+							printScreenWeigthtMegas = Math.round(selectedFile.bytes.length * 100 / 1048576) / 100;
+							if (selectedFile.bytes.length > 1048576*2)
+							{
+								var msg = new MessageBox();
+								//printScreenWeigthtMegas = Math.round(selectedFile.bytes.length * 100 / 1048576) / 100;
+								msg.title = "File error";
+								msg.type = MessageBoxType.TYPE_ERROR;
+								msg.text = 'File ${printSreen.name} is too big !\n($printScreenWeigthtMegas Megas, Bro !)';
+								msg.show();
+								initImage();
+
+							}
+							else
+							{
+								//printScreenWeigthtMegas = Math.round(selectedFile.bytes.length * 100 / 1048576) / 100;
+								printSreen.name = selectedFile.name;
+								printSreen.bytes= Base64.urlEncode(selectedFile.bytes);
+								hadIssues = false;
+								//updateTabs(selectedFile.bytes,fileName,ext );
+								updateTabs( );
+								reasons_printscreen_button.text = "Cancel";
+								reasons_printscreen_button.icon = "images/picture_small_cancel.png";
+								//reasons_printscreen_button.invalidateComponent();
+								//trace(reasons_printscreen_button.text);
+							}
+
+						}
+					}
+					else
+					{
+						#if debug
+						trace("bt.BTApp::openImage","selected file = null");
+						#end
+					}
+
+				});
+			}
+		}
+		catch (e)
+		{
+			trace(e);
+		}
+		if (hadIssues)
+		{
+			/*#if debug
+			trace("bt.BTApp::openImage : ISSUE ");
+			#end
+			 */
+		}
+	}
+	//private function updateTabs(byteData:Bytes = null, filename:String = "", extension:String= "")
+	private function updateTabs()
+	{
+		#if debug
+		trace("bt.BTApp::updateTabs");
+		#end
+		var _byteData:Bytes = Base64.urlDecode(printSreen.bytes);
+
+		reasons_printscreen_image.resource = null;
+		ToolkitAssets.instance.imageFromBytes(_byteData, function(imageInfo)
+		{
+			if (imageInfo != null)
+			{
+				#if debug
+				trace("bt.BTApp::updateTabs::reasons_printscreen_image", reasons_printscreen_image.originalWidth, reasons_printscreen_image.height, reasons_printscreen_image.actualComponentWidth);
+				trace(imageInfo.width, imageInfo.height);
+				#end
+				try
+				{
+					var ratio = if ( imageInfo.width > imageInfo.height)
+					{
+						380 / imageInfo.width;
+					}
+					else
+					{
+						380 / imageInfo.height;
+					}
+					reasons_printscreen_image.imageScale = ratio;
+					reasons_printscreen_image.resource = imageInfo.data;
+					reasons_printscreen_title_label.text = printSreen.name +'\n ${imageInfo.width} × ${imageInfo.height} (pixels) \n$printScreenWeigthtMegas Mb';
+				}
+				catch (e:Exception)
+				{
+					var errorMB:MessageBox = new MessageBox();
+					errorMB.title = "Image error";
+					errorMB.text = e.message;
+					errorMB.show();
+					initImage();
+				}
+			}
+		});
+		//dataViewTabs.pageIndex = indexToSelect;
+
+	}
 	function fetchDropdowns()
 	{
 		details_tools_dropdown = mainApp.findComponent("details_tools_dropdown", DropDown);
@@ -631,6 +712,7 @@ class BTApp extends AppBase
 		details_process_label = mainApp.findComponent("details_process_label", Label);
 		details_tools_label = mainApp.findComponent("details_tools_label", Label);
 		details_product_label = mainApp.findComponent("details_product_label", Label);
+		reasons_printscreen_title_label = mainApp.findComponent("reasons_printscreen_title_label", Label);
 	}
 
 	/**************************************************
@@ -1182,14 +1264,14 @@ class BTApp extends AppBase
 	 * EVENTS
 	/*****************************************************
 	/*****************************************************/
+	/**
+	 *
+	 * @param	e
+	 */
 	function onTreeChanged(e:UIEvent):Void
 	{
-		#if debug
-		//trace("bt.BTApp::onTreeChanged");
-		#end
 		if (reasons_categories_tree.selectedNode == null) return;
-		//var tree:TreeView = cast(e.target, TreeView);
-		//var tree:TreeView = cast(e.target, TreeView);
+
 		var selectedNode:TreeViewNode = reasons_categories_tree.selectedNode;
 
 		if (selectedNode.numComponents == 1 )
@@ -1200,8 +1282,6 @@ class BTApp extends AppBase
 			_selectedCat = "";
 			reasons_categories_label.text = LocaleManager.instance.lookupString("{{reasons_categories_label}}");
 		}
-		//trace(sentence);
-		//trace(LocaleManager.instance.lookupString(display));
 		Lambda.iter(allInteractiveComps, removeMandatoryClass);
 		if (_selectedCat != "")
 		{
@@ -1209,10 +1289,11 @@ class BTApp extends AppBase
 			strictProcess = ["catProcess_dysfunction","catProcess_wrongdocumentation"].indexOf( _selectedCat)> -1;
 			Lambda.iter(toValidate, addMandatoryClass);
 		}
-		#if debug
-		//trace("bt.BTApp::onTreeChanged::_selectedCat", _selectedCat);
-		#end
 	}
+	/**
+	 *
+	 * @param	e
+	 */
 	function onSearchAgent(e:MouseEvent)
 	{
 
@@ -1225,6 +1306,12 @@ class BTApp extends AppBase
 			this.logger.searchMany(details_person_selector_input_textarea.text.split("\n"), true);
 		}
 	}
+	/**
+	 *
+	 * @param	many
+	 * @param	rejected
+	 * @param	leavers
+	 */
 	function onManyFound(many:Array<Actor>, rejected:Array<String>, leavers:Array<Actor>):Void
 	{
 		//if (rejected.length > 0 || notFound > 0)
@@ -1233,39 +1320,33 @@ class BTApp extends AppBase
 		var leaversNts = Lambda.map(leavers,(e)->(e.sAMAccountName));
 		if (rejected.length > 0 )
 		{
-			var stores = Lambda.filter(rejected, (e:String)->(return e.toLowerCase().indexOf("sst_") == 0));
-			var indirects = Lambda.filter(rejected, (e:String)->(return ExpReg.SAP_DEALER_CODE.STRING_TO_REG().match(e) && Lambda.exists(external_dealers,(r)->(r[0]==e))));
-			//trace(indirects);
-			//trace(Lambda.exists(external_dealers,(r)->(r[0]=="100291")));
-			//var indirect = Lambda.filter(rejected, (e:String)->(return Lambda.filter(external_dealers, (d:Record)->(d[0]) e.STRING_TO_REG(SAP_DEALER_CODE) == 0));
-
+			var stores = Lambda.filter(
+				rejected,
+				(e:String)->(return e.toLowerCase().indexOf("sst_") == 0)
+			);
+			var indirects = Lambda.filter(
+				rejected,
+				(e:String)->(return ExpReg.SAP_DEALER_CODE.STRING_TO_REG().match(e) && Lambda.exists(external_dealers, (r)->(r[0] == e)))
+			);
 			if (stores.length > 0)
 			{
-				rejected = Lambda.filter(rejected, (e:String)->(return e.toLowerCase().indexOf("sst_") != 0));
+				rejected = Lambda.filter(
+					rejected,
+					(e:String)->(return e.toLowerCase().indexOf("sst_") != 0)
+				);
 
 				many = Lambda.concat(many, Lambda.map(stores, mapStoresEmailToActor));
 			}
 			if (indirects.length > 0)
 			{
-				rejected =  Lambda.filter(rejected,
-										  (e:String)->( return !(ExpReg.SAP_DEALER_CODE.STRING_TO_REG().match(e) && Lambda.exists(external_dealers, (r)->(r[0] == e))))
-										 );
+				rejected =  Lambda.filter(
+								rejected,
+								(e:String)->( return !(ExpReg.SAP_DEALER_CODE.STRING_TO_REG().match(e) && Lambda.exists(external_dealers, (r)->(r[0] == e))))
+							);
 				many = Lambda.concat(many, Lambda.map(indirects, mapIndirect));
 			}
-
-			//var mb = new MessageBox();
-			//mb.type = MessageBoxType.TYPE_WARNING;
-			//mb.title = "search_many_agent_error_title".T();
-			//mb.message = "search_many_agent_error_content".T(rejected.length, rejected.join("\n"));
-			//mb.showDialog(true);
 		}
-		#if debug
-		//trace("bt.BTApp::onManyFound::many", many );
-		#end
-		#if debug
-		//trace("bt.BTApp::onManyFound::rejected", rejected );
-		//trace("bt.BTApp::onManyFound::notFound", notFound );
-		#end
+
 		if (rejected.length > 0 || leaversNts.length > 0 ) showErrorDialog( rejected, leaversNts );
 
 		details_person_selector_display_tableview.dataSource.clear();
@@ -1330,9 +1411,7 @@ class BTApp extends AppBase
 			msg.messageLabel.htmlText = "warn_several_cases_message".T();
 			msg.width = 500;
 			msg.onDialogClosed = (e:DialogEvent)->(if (e.button == DialogButton.YES) doTracking());
-			//trace(validatorDictionary.get(details_customer_id_textfield).value.length);
-			//trace(validatorDictionary.get(details_customer_so_textfield).value.length);
-			//trace(validatorDictionary.get(details_person_selector_display_tableview).value.length);
+
 			if (validatorDictionary.get(details_person_selector_display_tableview).value.length > 1 &&
 					(validatorDictionary.get(details_customer_id_textfield).value.length > 1 ||
 					 validatorDictionary.get(details_customer_so_textfield).value.length > 1))
@@ -1347,21 +1426,13 @@ class BTApp extends AppBase
 	}
 	override function onMailSucces(r:Result)
 	{
-		#if debug
-		//trace("bt.BTApp::onMailSucces");
-		#end
 		debounce = true;
 		mailsToSend--;
 		if (mailsToSend == 0)
 		{
-			#if debug
-			//trace("bt.BTApp::onMailSucces mailsToSend",mailsToSend);
-			#end
-			//storingBT.message = "All done !";
 			storingBT.message = "EMAIL_SENT_SUCCESFULLY".T();
 			storingBT.disabled = false;
 			reset(false);
-
 		}
 		else
 		{
@@ -1370,9 +1441,6 @@ class BTApp extends AppBase
 	}
 	override function onTracking(success:Bool)
 	{
-
-		//super.onTracking(success);
-
 		if (success)
 			sendEmail();
 		else
@@ -1391,10 +1459,6 @@ class BTApp extends AppBase
 	{
 		super.onLangChanged(e);
 		initCatTree(true);
-		#if debug
-		//trace("CLOSING".TR_PLUS_EN());
-		#end
-
 	}
 
 }

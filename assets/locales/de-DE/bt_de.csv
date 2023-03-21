@@ -7,6 +7,9 @@ cctl_checkbox;Cc an
 app_label;Better Together
 version_label;v
 cctl_label;fabien.renard@salt.ch
+reasons_printscreen_label;Bild (png oder jpg, max 2M)
+reasons_printscreen_button;hochladen
+reasons_printscreen_button_cancel;Abbrechen
 reasons_categories_label;Ich möchte melden, dass:
 reasons_categories_tree_alert;Du musst zuerst einen Grund auswählen!
 reasons_description_defect_label;Was ist passiert?
@@ -90,6 +93,8 @@ void_comment_label;Details
 void_comment_tooltip;Beschreibe hier deine Argumente, um dieses better together zu aktualisieren oder zu entkräften.
 void_statement_id_label;ID
 void_statement_id_tooltip;QAST-ID des Better Together
+void_subject_id_label;Erstes Betreff
+void_subject_id_tooltip;Erstes Betreff
 void_checking_the_record;Suche in der Datenbank ...
 void_already_voided;Dieser BT wurde \nam {1} \n(von {0}) annulliert.
 void_comment_needed;Du musst erklären, warum du das Better Together zu aktualisieren oder zu entkräften willst!

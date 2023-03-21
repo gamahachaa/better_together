@@ -1,5 +1,7 @@
 package bt;
+
 import bt.BTApp.Validator;
+import haxe.crypto.Base64;
 import haxe.ui.components.TextArea;
 import haxe.ui.core.Component;
 import haxe.ui.locale.LocaleManager;
@@ -9,6 +11,9 @@ import roles.Actor;
 import roles.Coach;
 import xapi.types.StatementRef;
 import xapi.Params;
+import mail.Params as MailParams;
+import mail.Params.ImageData;
+import mail.Results as MailResults;
 using Lambda;
 using StringTools;
 using helpers.Translator;
@@ -23,8 +28,10 @@ class BTMailer extends MailHelper
 	var sentence:String;
 	public static inline var BT_MAIL:String = "Better-Together@salt.ch";
 	static inline var QOOK_MAIL:String = "qook@salt.ch";
+	static inline var REPLACEWITHSUBJECT:String = "REPLACEWITHSUBJECT";
 	static inline var CUSTOM_STYLE:String = "table, td, th {border: 3px solid gray;} #end{color:#666;}";
 	static var coach:Coach;
+	static inline var PRINT_SCREEN_TAG:String = "<PRINTSCREEN/>";
 
 	public function new(url:String)
 	{
@@ -37,12 +44,13 @@ class BTMailer extends MailHelper
 		bodyFilter:Array<Component>,
 		mail:BTMailer,
 		coach:Coach,
-		stmtRefs:Array<StatementRef>
+		stmtRefs:Array<StatementRef>,
+		printscreen:ImageData
 	):Int
 	{
 		BTMailer.coach = coach;
 		var agentRelated = cat.indexOf(BTApp.CAT_AGENT)>-1;
-		var processRelated = cat.indexOf(BTApp.CAT_PROCESS) >-1;//remove
+		//var processRelated = cat.indexOf(BTApp.CAT_PROCESS) >-1;//remove
 		var mainSubject = '';
 		var personsInvolved = cast(map.get(listMapper).value, Array<Dynamic>);
 		#if !debug
@@ -51,12 +59,14 @@ class BTMailer extends MailHelper
 		//var ccs = [coach.mbox.substr(7)];
 		var ccs = ["bruno.baudry@salt.ch"];
 		#end
-        var needsTranslation:Bool = (LocaleManager.instance.language.indexOf("en") == -1);
+		var needsTranslation:Bool = (LocaleManager.instance.language.indexOf("en") == -1);
 		var nbOfMailsToSend = 0;
 		var stmtRefIndex = 0;
 		var coachBody = coach.buildEmailBody();
 		var body = '<h1>${"HELLO".T()}';
-
+		#if debug
+		trace("bt.BTMailer::BATCH_SEND::printscreen", printscreen );
+		#end
 		if (agentRelated)
 		{
 			nbOfMailsToSend = personsInvolved.length;
@@ -66,39 +76,48 @@ class BTMailer extends MailHelper
 				try
 				{
 					//body += ' ${i.firstName},</h1>';
-					
+
 					body += ' ${i.manager.firstName},</h1>';
 					body += mail.setBTFeedbackBody(
-						needsTranslation, 
-						stmtRefs[stmtRefIndex++], 
-						map, 
-						bodyFilter, 
-						coachBody, 
+						needsTranslation,
+						stmtRefs[stmtRefIndex++],
+						map,
+						bodyFilter,
+						coachBody,
 						cast(i, Actor));
-					mail.setBody(body);
-					
+
 					if (agentRelated)
 						mainSubject = '[${Main._mainDebug?"TEST":""}${"app_label".T()}] ${"FROM".T()} ${coach.sAMAccountName} ${"TO".T()} ${i.name}';
 					else
 						mainSubject = '[${Main._mainDebug?"TEST":""} ${"app_label".T()}] ${"FROM".T()} ${coach.sAMAccountName}';
-					
-					//mail.setSubject(subject + " " + mail.sentence);
-					mail.setSubject(mainSubject);
-					
-					
+					var finalSubject = mainSubject + " " + mail.sentence;
+
+					body = body.replace(REPLACEWITHSUBJECT, "&" + Params.SUBJECT + "=" + finalSubject.urlEncode());
+
+					mail.setSubject(finalSubject);
+					mail.setBody(body);
+
 					mail.setFrom(coach.mbox.substr(7)); // if spamm qook@salt.ch
 					#if debug
-
-					mail.setTo(["bruno.baudry@salt.ch"]);
-					//mail.setTo([BT_MAIL]);
-					mail.setCc(ccs);
+						mail.setTo(["bruno.baudry@salt.ch"]);
+						//mail.setTo([BT_MAIL]);
+						mail.setCc(ccs);
 					#else
-					mail.setCc(agentRelated? Lambda.concat(ccs, [i.manager.mbox.substr(7)]):ccs);
-					mail.setTo([BT_MAIL]);
-					mail.setBcc(["bruno.baudry@salt.ch"]);
+						mail.setCc(agentRelated? Lambda.concat(ccs, [i.manager.mbox.substr(7)]):ccs);
+						mail.setTo([BT_MAIL]);
+						mail.setBcc(["bruno.baudry@salt.ch"]);^
+					
 					#end
 					//mail.setTo([BT_MAIL]);
+					#if debug
+					trace("bt.BTMailer::BATCH_SEND WTF2");
+					#end
 					
+					if (printscreen.bytes != null)
+					{
+						mail.addImageAttachement( printscreen, PRINT_SCREEN_TAG);
+					}
+
 					#if debug
 					if ( Main._mainDebug)
 						mail.send(true);
@@ -118,30 +137,44 @@ class BTMailer extends MailHelper
 		else
 		{
 			nbOfMailsToSend = 1;
-			
-			
-			
+
 			body += ',</h1>';
 			body += mail.setBTFeedbackBody(needsTranslation, stmtRefs[0], map, bodyFilter, coachBody);
 			mail.setBody(body);
-			
+
 			mainSubject ='[${Main._mainDebug?"TEST":""}${"app_label".T()}] ${"FROM".T()} ${coach.sAMAccountName}';
 			//mail.setSubject(subject + " " + mail.sentence);
-			mail.setSubject(mainSubject);
-			
+			//mail.setSubject(mainSubject);
+
+			var finalSubject = mainSubject + " " + mail.sentence;
+
+			//mail.setBody(StringTools.replace(body,REPLACEWITHSUBJECT,finalSubject));
+
+			body = body.replace(REPLACEWITHSUBJECT, "&" + Params.SUBJECT + "=" + finalSubject.urlEncode());
+
+			mail.setBody(body);
+			mail.setSubject(finalSubject);
+
 			mail.setBcc(["bruno.baudry@salt.ch"]);
 			mail.setFrom(coach.mbox.substr(7)); // if spamm qook@salt.ch
 			#if debug
-			mail.setCc(ccs);
-			//mail.setTo([coach.mbox.substr(7)]);
-			//mail.setCc(Lambda.concat(ccs, [coach.manager.mbox.substr(7)]));
-			mail.setTo(["bruno.baudry@salt.ch"]);
-			//mail.setCc(ccs);
-			//mail.setTo([BT_MAIL]);
-			#else
-			mail.setCc(Lambda.concat(ccs,[coach.manager.mbox.substr(7)]));
-			mail.setTo([BT_MAIL]);
+				mail.setCc(ccs);
+				//mail.setTo([coach.mbox.substr(7)]);
+				//mail.setCc(Lambda.concat(ccs, [coach.manager.mbox.substr(7)]));
+				mail.setTo(["bruno.baudry@salt.ch"]);
+
+				#else
+				mail.setCc(Lambda.concat(ccs,[coach.manager.mbox.substr(7)]));
+				mail.setTo([BT_MAIL]);
 			#end
+			if (printscreen.bytes != null)
+			{
+				//mail.set
+				//mail.setParameter(MailParams.IMAGE, Base64.encode( printscreen.bytes ));
+				//mail.setParameter(MailParams.IMAGE_FULL_NAME, printscreen.name );
+				//mail.setParameter(MailParams.STRING_TO_REPLACE, PRINT_SCREEN_TAG) ;
+				mail.addImageAttachement( printscreen, PRINT_SCREEN_TAG);
+			}
 
 			#if debug
 			if ( Main._mainDebug)
@@ -168,7 +201,7 @@ class BTMailer extends MailHelper
 	{
 		var body = "";
 		var catReg = new EReg("^cat[A-Z]{1}[a-zA-Z_]+","g");
-		
+
 		var t = [];
 		var validatedComps = [];
 		var v:Validator;
@@ -179,7 +212,7 @@ class BTMailer extends MailHelper
 				//if (skips.indexOf(k) ==-1) t.push(i);
 				if (skips.indexOf(k) ==-1) validatedComps.push(k);
 			}
-			
+
 			//t.sort((a, b)->(return a.order - b.order));
 			validatedComps.sort((a, b)->(return validated.get(a).order - validated.get(b).order));
 
@@ -191,10 +224,10 @@ class BTMailer extends MailHelper
 					//val = v.value;
 
 					body += '<h3>';
-					
+
 					body += needsTranslation ?v.label.id.TR_PLUS_EN():v.label.text;
 					body += '</h3>';
-					
+
 					if (catReg.match(v.value))
 						body += '<p>${buildSentenceForCategory(v.value,personInvolved,needsTranslation)}</p>';
 					else if (Std.isOfType(v.value, Array))
@@ -212,28 +245,31 @@ class BTMailer extends MailHelper
 					}
 					else
 						body += '<p>${v.value}</p>';
-						
+
 				}
 
 			}
-            body = body.replace("*", "");
+			body = body + PRINT_SCREEN_TAG + "<br/>" ;
+			body = body.replace("*", "");
 			body = body + (needsTranslation ?"CLOSING".TR_PLUS_EN():"CLOSING".T());
 			body = body + "<br/>" + BTMailer.coach.firstName ;
-			body = body + "<br/>";
+			body = body + "<br/>" ;
 			body = body + "<br/>";
 			body = body + "<span id='end'>";
-			
+
 			body = body + coachBody;
-			//var s = subjectInTheMail + " " + this.sentence; 
+			//var s = subjectInTheMail + " " + this.sentence;
 			body = body + '</span><br/>';
-			//body = body + '<em>Qast-id: <a href="${AppBase.APP_URL}?${Params.VOID}=${statmentRef.id}&${Params.SUBJECT}=${StringTools.urlEncode(s)}">${statmentRef.id}</a></em><br/>';
+
+			body = body + '<p>To approve/void this feedback follow <a href="${AppBase.APP_URL}?${Params.VOID}=${statmentRef.id}${REPLACEWITHSUBJECT}">this link</a></p>';
+			body = body + '<em>Qast-id: ${statmentRef.id}</em><br/>';
 		}
 		catch (e)
 		{
 			trace(e);
 		}
 		#if debug
-		trace("bt.BTMailer::setBTFeedbackBody::body", body );                 
+		trace("bt.BTMailer::setBTFeedbackBody::body", body );
 		#end
 		return body;
 	}
@@ -243,24 +279,22 @@ class BTMailer extends MailHelper
 		//var you="";
 		var agentCat = "";
 		var bodySentence = "";
-		//#if debug
-		//trace("bt.BTMailer::buildSentenceForCategory",  cat);
-		//#end
+
 		try{
 			var s:Array<String> = cat.split(BTApp.CAT_STRING_SEPERATOR);
 			//sentence = "";
 			while (s.length >0)
 			{
-				if(needsTranslation)
+				if (needsTranslation)
 					bodySentence = s.join(BTApp.CAT_STRING_SEPERATOR).TR_PLUS_EN() + " " + bodySentence ;
 				else
 					bodySentence = s.join(BTApp.CAT_STRING_SEPERATOR).T() + " " + bodySentence ;
 				s.pop();
 			}
 			if (needsTranslation)
-			agentCat = "catAgent".TR_PLUS_EN();
+				agentCat = "catAgent".TR_PLUS_EN();
 			else
-			agentCat = "catAgent".T();
+				agentCat = "catAgent".T();
 			//you = "you".T();
 
 			//#if debug

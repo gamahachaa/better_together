@@ -33,8 +33,32 @@ EFFBB8 grayish pink2
 }
 #main{
 	background-color: #000000;
+	/*padding-left:8px;
+	padding-right:8px;*/
+}
+#content_box{
 	padding-left:8px;
 	padding-right:8px;
+}
+#block_top_left{
+	background-color: $bg-color-05;
+	padding:4px;
+}
+#reasons_description_box{
+	background-color: $bg-color-02;
+	padding:4px;
+}
+#details_customer_box{
+	background-color: $bg-color-03;
+	padding:4px;
+}
+#details_sub_box{
+	background-color: $bg-color-04;
+	padding:4px;
+}
+#details_person_box{
+	background-color: $bg-color-05;
+	padding:4px;
 }
 .alert{
 	border-color:$highlight-color;
@@ -55,12 +79,19 @@ textfield, textarea{
 	font-size: 1rem;
 	color: $title-color-light;
 }
+.p{
+	color: $paragraph-color;
+	padding-left:1rem;
+}
 #logoff_button{
 	color:$highlight-color;
 }
 #send_button{
 	font-size: 1.5rem;
 	color:$highlight-color;
+}
+#reasons_printscreen_title_label{
+	 color:$highlight-color;
 }
 #app_label, #send_button, .button{
 	font-family: 'Inspiration', cursive !important;
@@ -90,12 +121,32 @@ textfield, textarea{
 
 
 /************* BOXES */
-#reasons_description_box, #details_customer_box
+/*#reasons_description_box, #details_customer_box, #details_sub_box, #header*/
+#header
 {
-	background-color: #111;
-	padding: 4px;
+	/*background-color: #222;*/
+	/*padding-bottom: 4px;*/
+	/*border-bottom: 2px solid #111;*/
+	align-content:center;
 }
-
+#header > group, #header > label, #header > button, #header > image{
+	margin-top: 12px;
+}
+/*#reasons_description_box
+{
+	border-top: 2px solid #222;
+	border-right: 2px solid #222;
+}
+#details_sub_box
+{
+	border-bottom: 2px solid #222;
+	border-left: 2px solid #222;
+}
+#details_customer_box
+{
+	border-left: 2px solid #222; 
+}
+*/
 /****************************************************/
 /****************************************************/
 /***************** LOGIN PAGE ***********************/

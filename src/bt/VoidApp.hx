@@ -27,7 +27,7 @@ using string.StringUtils;
  */
 class VoidApp extends AppBase
 {
-	var void_statement_id_textfield:TextField;
+	var void_statement_id_content_label:Label;
 	var void_comment_textarea:TextArea;
 	var gotStoredStatement:Bool;
 	var statement_id_toVoid:String;
@@ -41,6 +41,7 @@ class VoidApp extends AppBase
 	var action:String;
 	var aggregator:BTAgregator;
 	var voidedSubject:String;
+	var void_subject_id_content_label:Label;
 
 	public function new()
 	{
@@ -99,15 +100,25 @@ class VoidApp extends AppBase
 
 	function prepareUI()
 	{
-		void_statement_id_textfield = mainApp.findComponent("void_statement_id_textfield", TextField);
+		void_statement_id_content_label = mainApp.findComponent("void_statement_id_content_label", Label);
+		void_subject_id_content_label = mainApp.findComponent("void_subject_id_content_label", Label);
 		var void_comment_label = mainApp.findComponent("void_comment_label", Label);
 		void_comment_label.onClick = (e)->markdownHelper.showDialog(true);
 		void_comment_textarea = mainApp.findComponent("void_comment_textarea", TextArea);
 		void_action_group = mainApp.findComponent("void_action_group", Group);
 		//void_action_group.verticalAlign = true;
 		void_action_group.onChange = function (e) {action = e.target.id ; };
-		void_statement_id_textfield.text = Main.PARAMS.get(Params.VOID);
-		voidedSubject = Main.PARAMS.get(Params.SUBJECT).urlDecode();
+		void_statement_id_content_label.text = Main.PARAMS.get(Params.VOID);
+		if (Main.PARAMS.has(Params.SUBJECT)){
+			voidedSubject = Main.PARAMS.get(Params.SUBJECT).urlDecode();
+			void_subject_id_content_label.text =  voidedSubject;
+			#if debug
+			trace("bt.VoidApp::prepareUI::voidedSubject", voidedSubject );
+			#end
+		}
+		else{
+			voidedSubject = "";
+		}
 	}
 
 	function prepareMEssageBox()
@@ -129,7 +140,7 @@ class VoidApp extends AppBase
 	}
 	override function onSend(e)
 	{
-		statement_id_toVoid = void_statement_id_textfield.text;
+		statement_id_toVoid = void_statement_id_content_label.text;
 		void_comment = void_comment_textarea.text;
 		storingBT.title = "Warning !";
 		storingBT.message = "";
@@ -293,7 +304,7 @@ class VoidApp extends AppBase
 
 	function reset(?initial:Bool = true)
 	{
-		statement_id_toVoid = void_statement_id_textfield.text ="";
+		statement_id_toVoid = void_statement_id_content_label.text ="";
 		void_comment = void_comment_textarea.text = "";
 		mainApp.removeComponent(preloader);
 		storingBT.disabled = false;

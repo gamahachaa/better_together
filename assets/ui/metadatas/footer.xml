@@ -9,6 +9,6 @@
 			<checkbox id="cctl_checkbox" selected="false" text="{{cctl_checkbox}}" hidden="false"  horizontalAlign="right"/>
 			<label text="{{cctl_text}}" id="cctl_label" horizontalAlign="right" />
 		</hbox-->
-		<button id="send_button" text="{{send_button}}" width="30%" horizontalAlign="right" icon="images/send_btn.png" styleName="button" />
+		<button id="send_button" text="{{send_button}}" width="20%" horizontalAlign="right" icon="images/send_btn_small.png" styleName="button" />
 	
 </vbox>

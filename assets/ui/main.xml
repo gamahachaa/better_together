@@ -15,18 +15,49 @@
 			height="100%"
 			width="50%"
 			styleName="topic">
-			<vbox id="reasons_categories_box"
-				height="50%"
-				width="100%">
-				<label id="reasons_categories_label"
-					text="{{reasons_categories_label}}"
-					height="7%"
-					styleName="h2"
-					width="50%" />
-				<tree-view id="reasons_categories_tree"
-					height="92%"
-					width="60%" />
-			</vbox>
+			<hbox width="100%"
+				height="55%" id="block_top_left">
+				<vbox id="reasons_categories_box"
+					height="100%"
+					width="58%">
+					<label id="reasons_categories_label"
+						text="{{reasons_categories_label}}"
+						height="7%"
+						styleName="h2"
+						width="100%" />
+					<tree-view id="reasons_categories_tree"
+						height="92%"
+						width="100%" />
+				</vbox>
+				<vbox id="reasons_printscreen"
+					height="100%"
+					width="42%">
+					<label id="reasons_printscreen_label"
+						text="{{reasons_printscreen_label}}"
+						styleName="h2"
+						width="100%"
+						height="7%" />
+					
+					<box text="Image"
+						width="100%"
+						height="80%">
+						<scrollview width="100%"
+							height="100%">
+							<image id="reasons_printscreen_image"
+								imageScale=".3" />
+						</scrollview>
+					</box>
+					<hbox width="100%"
+							height="13%">
+						<label id="reasons_printscreen_title_label" width="70%" textAlign="right" />
+						<button id="reasons_printscreen_button"
+							text="{{reasons_printscreen_button}}"
+							width="30%"
+							height="96%"
+							icon="images/picture_small.png" />
+					</hbox>
+				</vbox>
+			</hbox>
 			<hbox id="reasons_description_box"
 				height="45%"
 				width="100%">
@@ -41,7 +72,7 @@
 					<textarea id="reasons_description_defect_textarea"
 						placeholder="{{reasons_description_defect_textarea_tooltip}}"
 						height="92%"
-						width="80%" />
+						width="100%" />
 				</vbox>
 				<vbox id="reasons_description_fix_box"
 					height="100%"
@@ -54,7 +85,7 @@
 					<textarea id="reasons_description_fix_textarea"
 						placeholder="{{reasons_description_fix_textarea_tooltip}}"
 						height="92%"
-						width="80%" />
+						width="100%" />
 				</vbox>
 			</hbox>
 		</vbox>
@@ -79,7 +110,7 @@
 					<textarea id="details_customer_id_textfield"
 						placeholder="{{details_customer_id_textfield_tooltip}}"
 						height="80%"
-						width="50%" />
+						width="60%" />
 				</vbox>
 				<vbox id="details_customer_so_box"
 					height="100%"
@@ -92,21 +123,21 @@
 					<textarea id="details_customer_so_textfield"
 						placeholder="{{details_customer_so_textfield_tooltip}}"
 						height="80%"
-						width="50%" />
+						width="60%" />
 				</vbox>
 				<vbox id="details_product_box"
-						height="50%"
-						width="100%">
-						<label id="details_product_label"
-							text="{{details_product_label}}"
-							styleName="h2"
-							height="20%"
-							width="100%" />
-						<dropdown id="details_product_dropdown"
-							width="200"
-							dropdownWidth="200"
-							dropdownHeight="220"
-							text="{{details_product_dropdown}}" />
+					height="100%"
+					width="25%">
+					<label id="details_product_label"
+						text="{{details_product_label}}"
+						styleName="h2"
+						height="10%"
+						width="100%" />
+					<dropdown id="details_product_dropdown"
+						width="200"
+						dropdownWidth="200"
+						dropdownHeight="220"
+						text="{{details_product_dropdown}}" />
 				</vbox>
 			</hbox>
 			<hbox id="details_sub_box"
@@ -114,7 +145,7 @@
 				width="100%">
 				<vbox id="details_process_box"
 					height="100%"
-					width="70%">
+					width="75%">
 					<label id="details_process_label"
 						text="{{details_process_label}}"
 						height="20%"
@@ -127,7 +158,7 @@
 				</vbox>
 				<vbox id="details_tools_box"
 					height="100%"
-					width="30%">
+					width="25%">
 					<label id="details_tools_label"
 						text="{{details_tools_label}}"
 						height="30%"
@@ -141,17 +172,17 @@
 				</vbox>
 			</hbox>
 			<hbox id="details_person_box"
-				height="35%"
+				height="40%"
 				width="100%">
 				<vbox id="details_person_selector_box"
 					height="100%"
 					width="35%">
 					<label id="details_person_label"
 						text="{{details_person_label}}"
-						height="7%"
+						height="10%"
 						styleName="h2"
 						width="100%" />
-					<hbox height="92%"
+					<hbox height="90%"
 						width="100%">
 						<textarea id="details_person_selector_input_textarea"
 							height="100%"
@@ -201,7 +232,7 @@
 				</vbox>
 			</hbox>
 			<vbox id="footer"
-				height="15%"
+				height="5%"
 				width="100%">
 				<import resource="assets/ui/metadatas/footer.xml"
 					omitRoot="true" />

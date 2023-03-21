@@ -47,8 +47,9 @@ class VoidMailer extends MailHelper
 		#end
 		setBcc(["bruno.baudry@salt.ch"]);
 		setFrom(coach.getSimpleEmail());
-		//setSubject('[Better Together] ${coach.sAMAccountName} $verb $initialRef' );
-		setSubject('RE: $subject' );
+		if(subject == "")
+			setSubject('[Better Together] ${coach.sAMAccountName} $verb $initialRef' );
+		else setSubject('RE: $subject' );
 		
 	}
 

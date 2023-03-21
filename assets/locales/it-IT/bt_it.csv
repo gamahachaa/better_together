@@ -7,6 +7,9 @@ cctl_checkbox;Cc a
 app_label;Better Together
 version_label;v
 cctl_label;fabien.renard@salt.ch
+reasons_printscreen_label;Immagine (png o jpg, max 2M)
+reasons_printscreen_button;Caricare
+reasons_printscreen_button_cancel;Annullare
 reasons_categories_label;Voglio segnalare che:
 reasons_categories_tree_alert;Devi prima selezionare un motivo!
 reasons_description_defect_label;Cos'è successo?
@@ -92,6 +95,8 @@ void_comment_label;Details
 void_comment_tooltip;Descrivi qui le tue argomentazioni per aggiornare o invalidare questo migliore insieme.
 void_statement_id_label;ID da aggiornare
 void_statement_id_tooltip;ID QAST Better Together
+void_subject_id_label;Oggetto iniziale
+void_subject_id_tooltip;Oggetto iniziale
 void_checking_the_record;Sto cercando nel database ...
 void_already_voided;Questo BT è stato annullato \nsu {1} \n(da {0}).
 void_comment_needed;Devi spiegare perché vuoi aggiornare o invalidare questo Better Together!

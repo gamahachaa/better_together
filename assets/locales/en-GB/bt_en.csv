@@ -7,6 +7,9 @@ cctl_checkbox;Cc to
 app_label;Better Together
 version_label;v
 cctl_label;fabien.renard@salt.ch
+reasons_printscreen_label;Image (png or jpg, max 2Mb)
+reasons_printscreen_button;Upload
+reasons_printscreen_button_cancel;Cancel
 reasons_categories_label;I want to report that:
 reasons_categories_tree_alert;You must first select a reason!
 reasons_description_defect_label;What happened?
@@ -99,6 +102,8 @@ void_comment_label;Details
 void_comment_tooltip;Describe here your arguments to update or invalidate this better together.
 void_statement_id_label;ID to update
 void_statement_id_tooltip;Better Together QAST ID
+void_subject_id_label;Initial Subject
+void_subject_id_tooltip;Initial Subject
 void_checking_the_record;I search in the database ...
 
 void_already_voided;This BT was cancelled \non {1} \n(by {0}).

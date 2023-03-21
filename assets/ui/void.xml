@@ -9,23 +9,58 @@
 			omitRoot="true" />
 	</hbox>
 	<vbox height="78%"
-		width="100%" id="void_box">
-		<label id="void_statement_id_label" styleName="h2" text="{{void_statement_id_label}}" />
-		<textfield id="void_statement_id_textfield"
-			placeholder="{{void_statement_id_tooltip}}"
-			width="15%" />
-		<label id="action_label" styleName="h2" text="{{action_label}}" />
-		<group id="void_action_group" layoutName="vertical">
-			<optionbox text="{{action_coaching}}" id="action_coaching" styleName="radio_btn" />
-			<optionbox text="{{action_grouptraining}}" id="action_grouptraining" styleName="radio_btn" />
+		width="100%"
+		id="void_box">
+		<hbox width="100%">
+			<vbox width="30%">
+				<label id="void_statement_id_label"
+					styleName="h2"
+					text="{{void_statement_id_label}}" />
+				<label id="void_statement_id_content_label"
+					width="50%" styleName="p" text="Ya" />
+			</vbox>
+			<vbox width="70%">
+				<label id="void_subject_id_label"
+					styleName="h2"
+					text="{{void_subject_id_label}}" />
+				<label id="void_subject_id_content_label"
+					width="80%"
+					styleName="p"
+					text="Ye" 
+					/>
+			</vbox>
+		</hbox>
+		<label id="action_label"
+			styleName="h2"
+			text="{{action_label}}" />
+		<group id="void_action_group"
+			layoutName="vertical">
+			<optionbox text="{{action_coaching}}"
+				id="action_coaching"
+				styleName="radio_btn" />
+			<optionbox text="{{action_grouptraining}}"
+				id="action_grouptraining"
+				styleName="radio_btn" />
 			<!--<optionbox text="{{action_bt_wrongly_filed_in}}" id="action_warning" styleName="radio_btn" />-->
-			<optionbox text="{{action_warning}}" id="action_warning" styleName="radio_btn" />
-			<optionbox text="{{action_dismissal}}" id="action_dismissal" styleName="radio_btn" />
-			<optionbox text="{{action_leaver}}" id="action_leaver" styleName="radio_btn" />
-			<optionbox text="{{action_wrongagent}}" id="action_wrongagent" styleName="radio_btn" />
-			<optionbox text="{{action_nomistake}}" id="action_nomistake" styleName="radio_btn" />
+			<optionbox text="{{action_warning}}"
+				id="action_warning"
+				styleName="radio_btn" />
+			<optionbox text="{{action_dismissal}}"
+				id="action_dismissal"
+				styleName="radio_btn" />
+			<optionbox text="{{action_leaver}}"
+				id="action_leaver"
+				styleName="radio_btn" />
+			<optionbox text="{{action_wrongagent}}"
+				id="action_wrongagent"
+				styleName="radio_btn" />
+			<optionbox text="{{action_nomistake}}"
+				id="action_nomistake"
+				styleName="radio_btn" />
 		</group>
-		<label id="void_comment_label" styleName="h2" text="{{void_comment_label}}" />
+		<label id="void_comment_label"
+			styleName="h2"
+			text="{{void_comment_label}}" />
 		<textarea id="void_comment_textarea"
 			placeholder="{{void_comment_tooltip}}"
 			height="30%"
