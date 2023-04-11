@@ -35,7 +35,8 @@ class Main
 			m = new bt.VoidApp();
 		}
 		else{
-			m = new BTApp();
+			//m = new BTApp();
+			m = new BTAppNew();
 		}
 		/**
 		 * KEEP for URL prefilling from Qook

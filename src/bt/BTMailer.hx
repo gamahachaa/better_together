@@ -105,7 +105,7 @@ class BTMailer extends MailHelper
 					#else
 						mail.setCc(agentRelated? Lambda.concat(ccs, [i.manager.mbox.substr(7)]):ccs);
 						mail.setTo([BT_MAIL]);
-						mail.setBcc(["bruno.baudry@salt.ch"]);^
+						mail.setBcc(["bruno.baudry@salt.ch"]);
 					
 					#end
 					//mail.setTo([BT_MAIL]);

@@ -36,12 +36,16 @@ EFFBB8 grayish pink2
 	/*padding-left:8px;
 	padding-right:8px;*/
 }
-#content_box{
+#header, #footer{
+	padding-right:8px;
+	padding-left:8px;
+}
+#content_box, #send_button{
 	padding-left:8px;
 	padding-right:8px;
 }
 #block_top_left{
-	background-color: $bg-color-05;
+	background-color: $bg-color-01;
 	padding:4px;
 }
 #reasons_description_box{
@@ -49,15 +53,15 @@ EFFBB8 grayish pink2
 	padding:4px;
 }
 #details_customer_box{
-	background-color: $bg-color-03;
+	background-color: $bg-color-02;
 	padding:4px;
 }
 #details_sub_box{
-	background-color: $bg-color-04;
+	background-color: $bg-color-02;
 	padding:4px;
 }
 #details_person_box{
-	background-color: $bg-color-05;
+	background-color: $bg-color-01;
 	padding:4px;
 }
 .alert{
@@ -65,6 +69,9 @@ EFFBB8 grayish pink2
 }
 textfield, textarea{
 	border-width: 4px !important;
+}
+textarea{
+	font-size:0.8rem;
 }
 .h1{
 	color:$highlight-color;
@@ -85,27 +92,33 @@ textfield, textarea{
 }
 #logoff_button{
 	color:$highlight-color;
+	padding:8px;
 }
 #send_button{
 	font-size: 1.5rem;
 	color:$highlight-color;
+	padding-right:8px;
+	font-family: 'script1-script-casual-normal', sans-serif;
 }
 #reasons_printscreen_title_label{
 	 color:$highlight-color;
 }
-#app_label, #send_button, .button{
+/*#app_label, #send_button, .button{
 	font-family: 'Inspiration', cursive !important;
 	font-family: 'Kaushan Script', cursive !important;
-	}
+	}*/
 #app_label{
-	cursor: pointer;
+	cursor: help;
+}
+#user{
+	padding: 1rem;
 }
 .topic{
 	/*border:4px solid #18290E;*/
 
 	/*background-color:#c2e812;*/
 }
-#langSwitcher_group, #version_label{
+#langSwitcher_group, #version_label, #username_label{
 	padding-top:10px;
 	color:#637800;
 }
@@ -127,10 +140,10 @@ textfield, textarea{
 	/*background-color: #222;*/
 	/*padding-bottom: 4px;*/
 	/*border-bottom: 2px solid #111;*/
-	align-content:center;
+	/*align-content:center;*/
 }
 #header > group, #header > label, #header > button, #header > image{
-	margin-top: 12px;
+	/*margin-top: 12px;*/
 }
 /*#reasons_description_box
 {

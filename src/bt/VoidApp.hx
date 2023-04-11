@@ -14,6 +14,7 @@ import http.MailHelper.Result;
 import regex.ExpReg;
 import thx.DateTime;
 import thx.Dates;
+import views.VoidView;
 import xapi.Agent;
 import xapi.Params;
 using regex.ExpReg;
@@ -46,7 +47,9 @@ class VoidApp extends AppBase
 	public function new()
 	{
 		Toolkit.theme = "dark";
-		super(VoidMailer, BTTracker, "better_together");
+		//super(VoidMailer, BTTracker, "better_together");
+		super("better_together");
+		
 		aggregator = new BTAgregator();
 		aggregator.signal.add(onAggregator);
 		action = "";
@@ -56,7 +59,7 @@ class VoidApp extends AppBase
 		this.whenAppReady = loadContent;
 		init();
 		this.xapitracker.dispatcher.add( onXapi );
-
+        this.setAppComponents(VoidMailer, BTTracker, VoidView);
 	}
 
 	function onAggregator(result:Array<Dynamic>)
@@ -83,7 +86,7 @@ class VoidApp extends AppBase
 		try
 		{
 			if (loginApp != null) app.removeComponent(loginApp);
-			this.mainApp = ComponentMacros.buildComponent("assets/ui/void.xml");
+			this.mainApp = haxe.ui.ComponentBuilder.fromFile("assets/ui/void.xml");
 			prepareUI();
 			prepareMEssageBox();
 			this.prepareHeader();

@@ -125,3 +125,6 @@ action_leaver;Leaver (SST seulement)
 action_wrongagent;Wrong agent (invalidate)
 action_nomistake;No mistake made (invalidate)
 action_needed;Tu dois sélectionner une raison principale !
+
+DEFAULT_INFO_TITLE;INFO ! Syntaxe Markdown
+DEFAULT_INFO_DESC;Utilisez la syntaxe markdown simple suivante. <br><br><br><br>table><tr><td>Markdown</td><td>&rarr;</td><td> Formated</td></tr><tr><td></tr><td></td><td><td></td></tr><tr><td>**Bold**</td><td>&rarr;</td><td> <strong>Bold</strong></td></tr><tr><td>_italic_</td><td>&rarr ; </td><td> <em>italic</em ></td></tr><tr><td> </td><td> <td> </td><td> </td></tr></tr><td><td>Liste non ordonnée</td><td> </td><td></tr><tr><td>- item1<br>- item2</td><td>&rarr ; </td><td> <ul><li>élément1</li><li>élément2</li></ul></td></tr><tr><td><td></td><td>Liste ordonnée</td><<td></td></tr><tr><td>1. item1<br>1. item2</td><td>&rarr;</td><td> <ol><li>item1</li><li>item2</li></ol></td></tr></table>(L'espace après '-' ou '1.' est nécessaire et vous devez faire un retour à la ligne après chaque élément de la liste).

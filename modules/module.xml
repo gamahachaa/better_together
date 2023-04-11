@@ -45,7 +45,7 @@
 					  prefix="mailer"
 					  />		
 		</locale>
-		<!--<locale id="en" resource="locale/en-GB/tm_en.properties" />-->
+		<!--<locale id="en" resource="locale/en-GB/tm_en.csv" />-->
 		<!--<locale id="de" resource="locale/de-DE/tm_de.txt" />-->
 		<!--<locale id="fr" resource="locale/fr-FR/tm_fr.txt" />-->
 		<!--<locale id="it" resource="locale/it-IT/tm_it.txt" />-->
@@ -56,11 +56,8 @@
 	<themes>
         <default>
             <var name="highlight-color" value="#c2e812" />
-            <var name="bg-color-01" value="#23001E" />
-            <var name="bg-color-02" value="#5B3000" />
-            <var name="bg-color-03" value="#1E352F" />
-            <var name="bg-color-04" value="#114455" />
-            <var name="bg-color-05" value="#1D2900" />
+            <var name="bg-color-01" value="#664114" />
+            <var name="bg-color-02" value="#4B4107" />
            
             <var name="title-color" value="#4fd1d9" />
             <var name="title-color-light" value="#96e4e8" />

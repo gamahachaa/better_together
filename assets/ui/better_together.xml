@@ -1,15 +1,14 @@
 <vbox id="main"
-	width="100%"
-	height="100%">
-	<style source="../css/main.css" />
-	<hbox id="header"
+	width="100%" height="100%">
+	<!--style source="../css/main.css" /-->
+	<!--<hbox id="header>
 		height="7%"
 		width="100%">
 		<import resource="assets/ui/metadatas/header.xml"
 			omitRoot="true" />
-	</hbox>
+	</hbox-->
 	<hbox id="content_box"
-		height="88%"
+		height="100%"
 		width="100%">
 		<vbox id="reasons_box"
 			height="100%"
@@ -231,10 +230,10 @@
 			</hbox>
 		</vbox>
 	</hbox>
-	<hbox id="footer"
+	<!--hbox id="footer"
 		height="5%"
 		width="100%" horizontalAlign="center" >
 		<import resource="assets/ui/metadatas/footer.xml"
 			omitRoot="true" />
-	</hbox>
+	</hbox-->
 </vbox>

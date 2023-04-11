@@ -29,7 +29,7 @@ details_customer_so_textfield_alert;Bitte benutze eine gültige SuperOffice-Tick
 details_customer_so_textfield_alert_badFormat;Falsch formatierte Ticketnummer(n):
 details_person_label;Wer ist involviert?
 details_person_label_tooltip;NT, E-Mail-Adresse oder Vor- und Nachname gemäss Super Office (eine Person pro Zeile). Klicke dann auf das Lupensymbol, um im aktiven Mitarbeiterverzeichnis der Firma danach zu suchen.
-details_person_selector_display_label;Kontrolliere, dass es sich um die richtige Person handelt und wähle dann die Empfänger:in aus.
+details_person_selector_display_label;Wenn die richtige Person handelt ist, wähle die Empfänger:in aus.
 details_person_selector_display_tooltip;Vergewissere dich, dass es sich um die richtige Person handelt.
 details_person_selector_display_tableview_alert;Niemand wurde ausgewählt!
 details_person_selector_input_textarea_alert;Du musst mindestens eine Person hinzufügen!
@@ -113,3 +113,7 @@ action_leaver;Leaver (nür fèr SST)
 action_wrongagent;Wrong agent (invalidate)
 action_nomistake;No mistake made (invalidate)
 action_needed;Du musst einen Hauptgrund auswählen!
+
+
+DEFAULT_INFO_TITLE;INFO !! Markdown-Syntax
+DEFAULT_INFO_DESC;Verwende die folgende einfache Markdown-Syntax. <br>Sie wird im E-Mail-Bericht formatiert<br><br><table><tr><td>Markdown</td><td>&rarr;</td><td> Formatiert</td></tr><tr><td></td><td></td><td></td></td></tr><tr><td>**Bold**</td><td>&rarr;</td><td> <strong>Bold</strong></td></tr><tr><td>_italic_</td><td>&rarr; </td><td> <em>Kursiv</em ></td></tr><tr><td> </td><td> </td><td> </td></tr><tr><td></td><td>Ungeordnete Liste</td><td> </td></tr><tr><td>- Punkt1<br>- Punkt2</td><td>&rarr; </td><td> <ul><li>Punkt1</li><li>Punkt2</li></ul></td></tr><tr><td></td><td>Ungeordnete Liste</td><td></td></tr><tr><td>1. Element1<br>1. Element2</td><td>&rarr;</td><td> <ol><li>Element1</li><li>Element2</li></ol></td></tr></table>(Das Leerzeichen nach '-' oder '1.' wird benötigt und du musst nach jedem Listenelement einen Zeilenumbruch machen)

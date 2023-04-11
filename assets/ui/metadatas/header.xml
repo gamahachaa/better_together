@@ -1,16 +1,22 @@
-<hbox id="header"
-	height="2%"
-	width="100%">
-	<label id="app_label"
-		text="{{app_label}}"
-		height="5%"
-		width="40%" 
-		styleName="h1"
-		/>
-	
+<hbox verticalAlign="center">
+	<hbox width="15%"
+		id="user"
+		height="100%">
+		<image id="thumbnail"
+			width="72px"
+			horizontalAlign="center"
+			verticalAlign="center" />
+		<label text=""
+			textAlign="left"
+			id="username_label"
+			horizontalAlign="center"
+			verticalAlign="center" />
+	</hbox>
 	<group id="langSwitcher_group"
 		layout="horizontal"
-		width="35%">
+		width="25%"
+		height="100%"
+		horizontalAlign="center">
 		<optionbox userData="en-GB"
 			text="EN"
 			id="en"
@@ -25,11 +31,16 @@
 			text="IT"
 			id="it" />
 	</group>
-	
-	<label text=""
-		textAlign="left"
-		id="version_label"
-		width="15%" />
-	<button id="logoff_button" icon="images/logoff_button.png"/>
-	<image id="thumbnail" style="border:1px solid $normal-border-color" width="64px"/>
+	<label id="app_label"
+		text="{{app_label}}"
+		horizontalAlign="center"
+		height="100%"
+		width="55%"
+		styleName="h1" />
+	<button id="logoff_button"
+		icon="images/logoff_button.png"
+		horizontalAlign="center"
+		
+		width="5%"
+		height="100%" />
 </hbox>

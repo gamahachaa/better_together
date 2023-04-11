@@ -115,3 +115,6 @@ action_leaver;Leaver (Solamente SST)
 action_wrongagent;Wrong agent (invalidate)
 action_nomistake;No mistake made (invalidate)
 action_needed;Devi selezionare un motivo principale!
+
+DEFAULT_INFO_TITLE;INFO ! Sintassi Markdown
+DEFAULT_INFO_DESC;Usa la seguente semplice sintassi markdown. <br>Sarà formattato nel rapporto e-mail<br><br><table><tr><td>Markdown</td><td>&rarr;</td><td> Formattato</td></tr><tr><td></td><td></td></td></td></tr><tr><td>**Bold**</td><td>&rarr;</td><td> <strong>Bold</strong></td></tr><tr><td>_italic_</td><td>&rarr; </td><td> <em>italic</em ></td></tr><tr><td> </td><td> </td><td> <td> </td></tr><tr><td></td><td>Lista non ordinata</td><td> </td></tr><tr><td>- item1<br>- item2</td><td>&rarr; </td><td> <ul><li>item1</li><li>item2</li></ul></td></tr><tr><td></td><td>Elenco ordinato</td><td></td></tr><tr>1. item1<br>1. item2</td><td>&rarr;</td><td> <ol><li>item1</li><li>item2</li></ol></td></tr></table>(Lo spazio dopo '-' o '1.' è necessario e devi fare un'interruzione di riga dopo ogni elemento della lista)

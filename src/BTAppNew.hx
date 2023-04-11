@@ -1,16 +1,39 @@
 package;
+import bt.BTMailer;
+import bt.BTTracker;
+import haxe.ui.Toolkit;
+import haxe.ui.events.MouseEvent;
+import haxe.ui.events.UIEvent;
+import haxe.ui.styles.Parser;
+import views.MainView;
+
 
 /**
  * ...
  * @author bb
  */
-class BTAppNew extends AppBase 
+class BTAppNew extends AppBase
 {
 
-	public function new(mailerClass:Class<MailHelper>, xapiHelper:Class<XapiHelper>, appName:String, ?mainUserDirectRports:Bool=false, ?trackLogin:Bool=false) 
+	public function new( )
 	{
-		super(mailerClass, xapiHelper, appName, mainUserDirectRports, trackLogin);
-		
+		Toolkit.theme = "dark";
+        Toolkit.styleSheet.parse("assets/css/main.css");
+		//super(BTMailer, BTTracker, "better_together");
+		super("better_together");
+		//allSelected = false;
+		this.whenAppReady = loadContent;
+		this.setAppComponents(BTMailer, BTTracker, MainView);
+		//initImage();
+		init();
+		//justLoaded = true;
+		//globalNoTL = [];
+
 	}
+	/*override function loadContent()
+	{
+		this.mainApp = new MainView();
+		app.addComponent( mainApp );
+	}*/
 	
 }

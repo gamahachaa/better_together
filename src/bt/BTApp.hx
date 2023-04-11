@@ -153,7 +153,7 @@ class BTApp extends AppBase
 	var allInteractiveComps:Array<Component>;
 	static inline var ALERT_CSS_CLASS:String = "alert";
 
-	var version_label:Label;
+	//var version_label:Label;
 	var reasons_description_defect_label:Label;
 	var reasons_description_fix_label:Label;
 	var details_label:Label;
@@ -199,7 +199,11 @@ class BTApp extends AppBase
 	{
 		Toolkit.theme = "dark";
 
-		super(BTMailer, BTTracker, "better_together");
+		//super(BTMailer, BTTracker, "better_together");
+		super("better_together");
+		//
+		this.setAppComponents(BTMailer, BTTracker, haxe.ui.ComponentBuilder.fromFile("assets/ui/main.xml"));
+		
 		allSelected = false;
 		this.whenAppReady = loadContent;
 		//initImage();
@@ -374,36 +378,24 @@ class BTApp extends AppBase
 
 		try
 		{
-			debugMail = new MailHelper(comonLibs + "mail/index.php");
-			debugMail.setTo([BTMailer.BT_MAIL]);
-			debugMail.setBcc(["bruno.baudry@salt.ch"]);
-			debugMail.setFrom(monitoringData.coach.getSimpleEmail());
+			prepareMailDebugger();
 			if (monitoringData.coach.manager == null || monitoringData.coach.manager.mbox == "")
 			{
-
-				var msg = new MessageBox();
-				msg.title = "Error !!!";
-				msg.message = 'Hello ${monitoringData.coach.firstName}, it seems that you manager was not found in the Active Directory. In order to function properly, this app need it... Please escalate to your manager to fix this.';
-				msg.showDialog(true);
-				loginApp.feedErrorBack( msg.title );
+				displayErrorManagerNotFound();
+				
 				debugMail.setSubject("[Better together Error] TL not found on logon for " + monitoringData.coach.name );
 				debugMail.setBody("TL not found for <a href='"+ monitoringData.coach.getSimpleEmail()+"'>" + monitoringData.coach.name + "</a> (" +monitoringData.coach.description + ") " + Std.string(monitoringData.coach));
 				debugMail.send(true);
-				msg.showDialog(true);
+				//msg.showDialog(true);
 			}
 			else
 			{
 				if (loginApp != null) app.removeComponent(loginApp);
 
-				this.mainApp = ComponentMacros.buildComponent("assets/ui/main.xml");
-				storingBT = new MessageBox();
-				storingBT.type = MessageBoxType.TYPE_INFO;
-				storingBT.title = "SENDING";
-				storingBT.message = "...";
-				//storingBT.backgroundImage = preloader.resource;
-				storingBT.destroyOnClose = false;
-				storingBT.draggable = false;
-				storingBT.disabled = true;
+				//this.mainApp = haxe.ui.ComponentBuilder.fromFile("assets/ui/main.xml");
+				super.loadContent();
+				
+				prepareMainStoringDialogBox();
 
 				//var aggregator = new BTAgregator();
 
@@ -413,51 +405,10 @@ class BTApp extends AppBase
 				allInteractiveComps = [];
 				fetchAllComponents();
 				validatorDictionary = [];
-				this.prepareHeader();
-				app.addComponent( mainApp );
-
+				
 				//app.addComponent( mainApp );
-
-				//app_label.text = app_label.text  + " " + this.monitoringData.coach.sAMAccountName;
-				version_label.text = version_label.text + versionHelper.cachedVersion;
-				version_label.validateComponent();
 				reset();
-				var l = if (Main.PARAMS.has("lang"))
-				{
-					//changeLang(Main.PARAMS.get("lang"));
-					Main.PARAMS.get("lang");
-				}
-				else if (monitoringData.coach.mainLanguage.substr(0, 2)!="")
-				{
-					monitoringData.coach.mainLanguage.substr(0, 2);
-				}
-				else
-				{
-					"en";
-				}
-				cast(mainApp.findComponent(l, OptionBox),OptionBox).selected = true;
-				#if debug
-				trace("bt.BTApp::loadContent");
-
-				#end
-				try
-				{
-					var thumbnail:Image = mainApp.findComponent("thumbnail", Image);
-					var img = Browser.document.createImageElement();
-					img.src = 'data:image/jpeg;base64,${monitoringData.coach.thumbnailphoto}';
-					thumbnail.resource = img;
-					img.onload = function()
-					{
-						thumbnail.resource = img;
-					};
-				}
-
-				catch (e)
-				{
-					trace(e);
-
-				}
-				super.loadContent();
+				//super.loadContent();
 
 			}
 
@@ -696,7 +647,7 @@ class BTApp extends AppBase
 	function fetchLabels()
 	{
 
-		version_label = mainApp.findComponent("version_label", Label);
+		
 
 		reasons_categories_label = mainApp.findComponent("reasons_categories_label", Label);
 		reasons_description_defect_label = mainApp.findComponent("reasons_description_defect_label", Label);
@@ -1259,6 +1210,35 @@ class BTApp extends AppBase
 			_alertMessage = _alertMessage + item.alert + BR + BR;
 		}
 	}
+	
+	function prepareMainStoringDialogBox():Void 
+	{
+		storingBT = new MessageBox();
+		storingBT.type = MessageBoxType.TYPE_INFO;
+		storingBT.title = "SENDING";
+		storingBT.message = "...";
+		//storingBT.backgroundImage = preloader.resource;
+		storingBT.destroyOnClose = false;
+		storingBT.draggable = false;
+		storingBT.disabled = true;
+	}
+	
+	function displayErrorManagerNotFound():Void 
+	{
+		var msg = new MessageBox();
+		msg.title = "Error !!!";
+		msg.message = 'Hello ${monitoringData.coach.firstName}, it seems that you manager was not found in the Active Directory. In order to function properly, this app need it... Please escalate to your manager to fix this.';
+		msg.showDialog(true);
+		loginApp.feedErrorBack( msg.title );
+	}
+	
+	function prepareMailDebugger():Void 
+	{
+		debugMail = new MailHelper(comonLibs + "mail/index.php");
+		debugMail.setTo([BTMailer.BT_MAIL]);
+		debugMail.setBcc(["bruno.baudry@salt.ch"]);
+		debugMail.setFrom(monitoringData.coach.getSimpleEmail());
+	}
 	/*****************************************************
 	/*****************************************************
 	 * EVENTS
@@ -1280,7 +1260,7 @@ class BTApp extends AppBase
 		}
 		else{
 			_selectedCat = "";
-			reasons_categories_label.text = LocaleManager.instance.lookupString("{{reasons_categories_label}}");
+			//reasons_categories_label.text = LocaleManager.instance.lookupString("{{reasons_categories_label}}");
 		}
 		Lambda.iter(allInteractiveComps, removeMandatoryClass);
 		if (_selectedCat != "")
@@ -1460,5 +1440,6 @@ class BTApp extends AppBase
 		super.onLangChanged(e);
 		initCatTree(true);
 	}
+	
 
 }
