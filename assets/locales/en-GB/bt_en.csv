@@ -73,7 +73,7 @@ catAgent_answering_insuficientlangskills;did not have sufficient language skills
 
 
 catAgent_misbehaviour;misbehaved by
-
+catAgent_misbehaviour_forcedcontract;creating / extending a contract without the customer's consent.
 catAgent_misbehaviour_tool;using a tool incorrectly. *
 catAgent_misbehaviour_attitude;exhibiting an unprofessional attitude (disrespectful). *
 catAgent_misbehaviour_noinfo;not answering the customer's query. *

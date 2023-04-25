@@ -73,7 +73,7 @@ catAgent_answering_storeredirect;mais a incorrectement redirigé le client vers 
 catAgent_answering_insuficientlangskills;mais n'avait pas de compétences linguistiques suffisantes *
 
 catAgent_misbehaviour;a mal agit, car
-
+catAgent_misbehaviour_forcedcontract;il a créé / renouvelé un contrat sans le consentement du client.
 catAgent_misbehaviour_tool;il n'a pas utilisé correctement un outil. *
 catAgent_misbehaviour_attitude;il a eu une attitude non professionnelle. (irrespectueuse)*
 catAgent_misbehaviour_noinfo;il n'a pas répondu à la demande client. *

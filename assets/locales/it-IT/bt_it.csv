@@ -68,7 +68,9 @@ catAgent_answering_noret;ma ha fatto un nuovo ordine invece di fare un rinnovo. 
 catAgent_answering_storeredirect;e lo ha erroneamente reindirizzato allo Store *
 catAgent_answering_insuficientlangskills;senza possedere sufficienti competenze linguistiche *
 
+
 catAgent_misbehaviour;ha agito male in quanto
+catAgent_misbehaviour_forcedcontract;ha creato/rinnovato un contratto senza il consenso del cliente.
 catAgent_misbehaviour_tool;non ha usato correttamente uno strumento *
 catAgent_misbehaviour_attitude;ha avuto un atteggiamento poco professionale. (irrispettoso) *
 catAgent_misbehaviour_noinfo;non ha risposto alla richiesta del cliente. *

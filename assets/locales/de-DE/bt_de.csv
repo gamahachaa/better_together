@@ -66,12 +66,13 @@ catAgent_answering_noret;einen Neuvertrag statt einer Vertragsverlängerung abge
 catAgent_answering_storeredirect;hat die Kund:in fälschlicherweise zum Store geschickt *
 catAgent_answering_insuficientlangskills;verfügte nicht über ausreichende Sprachkenntnisse *
 
-catAgent_misbehaviour;hat sich falsch verhalten,
-catAgent_misbehaviour_tool;indem er:sie ein Tool falsch bedient hat. *
-catAgent_misbehaviour_attitude;indem er:sie ein unprofessionelles Verhalten an den Tag gelegt hat. (respektlos) *
-catAgent_misbehaviour_noinfo;indem er die Anfrage des Kunden nicht beantwortet hat. *
-catAgent_misbehaviour_winback;indem er eine Kündigung (Winback oder Store) nicht eingegeben hat *
-catAgent_misbehaviour_equipementticket;indem er kein Ticket für die Geräterückgabe erstellt hat *
+catAgent_misbehaviour;hat sich falsch verhalten, indem er:sie
+catAgent_misbehaviour_forcedcontract;einen Vertrag ohne die Zustimmung des K abgeschlossen oder verlängert hat.
+catAgent_misbehaviour_tool;ein Tool falsch bedient hat. *
+catAgent_misbehaviour_attitude;ein unprofessionelles Verhalten an den Tag gelegt hat. (respektlos) *
+catAgent_misbehaviour_noinfo;die Anfrage des Kunden nicht beantwortet hat. *
+catAgent_misbehaviour_winback;eine Kündigung (Winback oder Store) nicht eingegeben hat *
+catAgent_misbehaviour_equipementticket;kein Ticket für die Geräterückgabe erstellt hat *
 
 catProcess;ein Prozess 
 catProcess_dysfunction;,in Qoom/Qoof, funktioniert nicht.

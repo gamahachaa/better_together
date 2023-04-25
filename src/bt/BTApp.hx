@@ -109,6 +109,7 @@ class BTApp extends AppBase
 					'catAgent_answering_insuficientlangskills'
 				],
 				"catAgent_misbehaviour" => [
+					'catAgent_misbehaviour_forcedcontract',
 					'catAgent_misbehaviour_noinfo',
 					'catAgent_misbehaviour_tool',
 					'catAgent_misbehaviour_attitude',
