@@ -49,10 +49,10 @@
 					</box>
 					<hbox width="100%"
 							height="13%">
-						<label id="reasons_printscreen_title_label" width="70%" textAlign="right" />
+						<label id="reasons_printscreen_title_label" width="60%" textAlign="right" />
 						<button id="reasons_printscreen_button"
 							text="{{reasons_printscreen_button}}"
-							width="30%"
+							width="40%"
 							height="96%"
 							icon="images/picture_small.png" />
 					</hbox>

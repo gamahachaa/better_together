@@ -8,7 +8,7 @@ app_label;Better Together
 version_label;v
 cctl_label;fabien.renard@salt.ch
 reasons_printscreen_label;Bild (png oder jpg, max 2M)
-reasons_printscreen_button;hochladen
+reasons_printscreen_button;Hochladen
 reasons_printscreen_button_cancel;Abbrechen
 reasons_categories_label;Ich möchte melden, dass:
 reasons_categories_tree_alert;Du musst zuerst einen Grund auswählen!

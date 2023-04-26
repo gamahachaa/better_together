@@ -1,12 +1,12 @@
 package bt;
 
 import bt.BTApp.Validator;
-import haxe.crypto.Base64;
-import haxe.ui.components.TextArea;
+//import haxe.crypto.Base64;
+//import haxe.ui.components.TextArea;
 import haxe.ui.core.Component;
 import haxe.ui.locale.LocaleManager;
 import http.MailHelper;
-import regex.ExpReg;
+//import regex.ExpReg;
 import roles.Actor;
 import roles.Coach;
 import xapi.types.StatementRef;
@@ -105,7 +105,7 @@ class BTMailer extends MailHelper
 					#else
 						mail.setCc(agentRelated? Lambda.concat(ccs, [i.manager.mbox.substr(7)]):ccs);
 						mail.setTo([BT_MAIL]);
-						mail.setBcc(["bruno.baudry@salt.ch"]);^
+						mail.setBcc([QOOK_MAIL]);
 					
 					#end
 					//mail.setTo([BT_MAIL]);
@@ -155,7 +155,7 @@ class BTMailer extends MailHelper
 			mail.setBody(body);
 			mail.setSubject(finalSubject);
 
-			mail.setBcc(["bruno.baudry@salt.ch"]);
+			mail.setBcc([QOOK_MAIL]);
 			mail.setFrom(coach.mbox.substr(7)); // if spamm qook@salt.ch
 			#if debug
 				mail.setCc(ccs);

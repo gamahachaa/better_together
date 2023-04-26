@@ -586,7 +586,7 @@ class BTApp extends AppBase
 								hadIssues = false;
 								//updateTabs(selectedFile.bytes,fileName,ext );
 								updateTabs( );
-								reasons_printscreen_button.text = "Cancel";
+								reasons_printscreen_button.text = "{{reasons_printscreen_button_cancel}}";
 								reasons_printscreen_button.icon = "images/picture_small_cancel.png";
 								//reasons_printscreen_button.invalidateComponent();
 								//trace(reasons_printscreen_button.text);
