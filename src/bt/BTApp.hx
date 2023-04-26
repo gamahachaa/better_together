@@ -1166,6 +1166,7 @@ class BTApp extends AppBase
 					'catAgent_answering_wrongoption'|
 					'catAgent_answering_wrongcaraactivation'|
 					'catAgent_answering_noret' |
+					'catAgent_misbehaviour_forcedcontract' |
 					"catAgent_misbehaviour_noinfo"
 					: [
 					details_process_textfield,
